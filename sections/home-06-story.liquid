@@ -1,0 +1,52 @@
+{%- if section.settings.show_section -%}
+      <section class="home_story_section">
+        <div class="padding-section-medium">
+          <div class="page-width">
+            <div class="home_story_wrap">
+              <div class="component_divider_line"></div>
+              <div class="spacer-xsmall"></div>
+              <h2 class="heading-style-h6">Who we are</h2>
+              <div class="spacer-xsmall"></div>
+              <div class="spacer-medium"></div>
+              <div class="home_story_description">
+                <p id="typewriter" class="heading-style-h3">Panthor is the only machine built to deliver unmatched whole-body strength training for dedicated athletes. <br><br>Experience a machine designed to honour the human body in motion, crafted from lavish materials that stand out in any environment we inhabit.</p>
+              </div>
+              <div class="spacer-medium"></div>
+              <div class="button-group">
+                <a href="{{ routes.root_url }}pages/about" class="button-secondary w-button">Learn more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="home_story_vector_background"><img src="{{ 'panthor-gradient-icon.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'panthor-gradient-icon-p-500.png' | asset_url }} 500w, {{ 'panthor-gradient-icon-p-800.png' | asset_url }} 800w, {{ 'panthor-gradient-icon-p-1080.png' | asset_url }} 1080w, {{ 'panthor-gradient-icon-p-1600.png' | asset_url }} 1600w, {{ 'panthor-gradient-icon.webp' | asset_url }} 1728w" alt="" class="home_story_vector"></div>
+      </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home — Story",
+  "tag": "section",
+  "class": "shopify-section-home-story",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show this section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Imported from Webflow"
+    },
+    {
+      "type": "paragraph",
+      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home — Story"
+    }
+  ]
+}
+{% endschema %}

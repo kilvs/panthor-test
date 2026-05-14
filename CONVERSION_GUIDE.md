@@ -197,7 +197,173 @@ For each source HTML page:
    { "sections": { "main": { "type": "page-<name>" } }, "order": ["main"] }
    ```
 
-**Splitting further**: if the merchant needs to reorder/edit individual blocks, slice the section into one section file per top-level `<section>` element on the page and add each to the JSON template's `order` array. Default: one section per page (simpler, equally valid OS 2.0).
+**Splitting further** *(recommended for the homepage and any landing page the merchant should be able to rearrange)*: slice into one section file per top-level `<section>` element on the page and list each in the JSON template's `order` array. See §6.1.
+
+---
+
+## 6.1 Per-block split recipe
+
+Goal: every top-level `<section class="...">` in a Webflow page becomes a standalone Shopify section file, with at minimum a **show / hide toggle** and a **product picker** for any commerce CTA, so the merchant can rearrange/edit blocks in the theme editor.
+
+### Webflow's two section flavours
+
+Look at the outermost class on each `<section>` — the prefix tells you whether the block is reusable or page-specific. **Audit this before naming any files.**
+
+| Webflow class prefix | Meaning | Shopify file location |
+|---|---|---|
+| `home_*_section`, `about_*_section`, `shop_*_section`, `blog_*_section`, `article_*_section`, `contact_*_section`, `product_*_section` | **Page-specific** — appears on one page only (the home banner, the blog header, etc.) | `sections/<page>-<NN>-<slug>.liquid` |
+| `component_*_section` | **Reusable component** — Webflow's design system intends it to appear on multiple pages (newsletter sign-up, news feed, FAQ, testimonials, etc.) | `sections/component-<slug>.liquid` |
+
+Run this audit on a fresh Webflow export to see which components are reused and where:
+
+```bash
+for f in *.html; do
+  printf "\n--- %s ---\n" "$f"
+  grep -oE '<section[^>]*class="[^"]*component_[a-z_]+_section[^"]*"' "$f" \
+    | grep -oE 'component_[a-z_]+_section' | sort -u
+done
+```
+
+### Naming convention
+
+**Page-specific sections** — keep the page prefix and a 2-digit order index so the file list reads in render order:
+
+```
+sections/home-01-banner.liquid          # home_banner_section
+sections/home-02-overview.liquid        # home_overview_section
+sections/home-06-story.liquid           # home_story_section
+sections/about-01-intro.liquid          # about_intro_section
+sections/article-01-hero.liquid         # article_hero_section
+```
+
+**Reusable component sections** — flat name, no page prefix, no order index (each page that uses it picks its own position in its own JSON template):
+
+```
+sections/component-marquee.liquid
+sections/component-explore.liquid
+sections/component-blurb.liquid
+sections/component-platform.liquid
+sections/component-product-overview.liquid
+sections/component-testimonial.liquid
+sections/component-faq.liquid
+sections/component-newsletter.liquid
+sections/component-news.liquid
+```
+
+A Shopify section file is its own **type** — multiple JSON templates can reference the same type, so the markup lives once and stays in sync everywhere it's used.
+
+### Minimum schema every split section gets
+
+```liquid
+{%- if section.settings.show_section -%}
+<!-- ...original Webflow markup verbatim... -->
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home — Banner",
+  "tag": "section",
+  "class": "shopify-section-home-banner",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true },
+    { "type": "header", "content": "Imported from Webflow" },
+    { "type": "paragraph", "content": "Edit text/images here as you split further. Default values match the static export." }
+  ],
+  "presets": [{ "name": "Home — Banner" }]
+}
+{% endschema %}
+```
+
+**Why `show_section` defaults to `true`**: the page renders identically to the Webflow original out of the box. Merchants can toggle a section off without deleting it.
+
+### When a section contains a commerce CTA
+
+Add a `product` picker + `cta_url_fallback` + `cta_label` to the schema:
+
+```json
+{ "type": "product", "id": "cta_product", "label": "Product for primary CTA" },
+{ "type": "url",     "id": "cta_url",     "label": "Custom URL (overrides product)" },
+{ "type": "text",    "id": "cta_label",   "label": "CTA button label", "default": "Buy Now" }
+```
+
+Then in the markup:
+
+```liquid
+{%- assign _cta_url = section.settings.cta_url -%}
+{%- if _cta_url == blank and section.settings.cta_product -%}
+  {%- assign _cta_url = section.settings.cta_product.url -%}
+{%- endif -%}
+{%- assign _cta_url = _cta_url | default: routes.collections_url | append: '/all' -%}
+<a href="{{ _cta_url }}" class="button-primary w-button">{{ section.settings.cta_label | default: 'Buy Now' }}</a>
+```
+
+Same pattern for **collection** pickers (use `"type": "collection"`), **blog** pickers, **link_list** pickers.
+
+### Conditional visibility for blocks within a section
+
+Inside repeating areas (testimonials, FAQ items, news cards), use `schema.blocks` so merchants can add/remove items. The render loop is:
+
+```liquid
+{%- for block in section.blocks -%}
+  {%- if block.settings.is_visible -%}
+    <div {{ block.shopify_attributes }}>…{{ block.settings.heading }}…</div>
+  {%- endif -%}
+{%- endfor -%}
+```
+
+With block schema:
+
+```json
+"blocks": [
+  {
+    "type": "item",
+    "name": "Item",
+    "settings": [
+      { "type": "checkbox", "id": "is_visible", "label": "Visible", "default": true },
+      { "type": "text", "id": "heading", "label": "Heading" }
+    ]
+  }
+]
+```
+
+### `templates/index.json` after splitting
+
+Each section gets its own entry, with the `type` matching the section file name (page-specific or component). Multiple page templates can reuse the same component types.
+
+```json
+{
+  "sections": {
+    "banner":           { "type": "home-01-banner",             "settings": { "show_section": true } },
+    "overview":         { "type": "home-02-overview",           "settings": { "show_section": true } },
+    "marquee":          { "type": "component-marquee",          "settings": { "show_section": true } },
+    "explore":          { "type": "component-explore",          "settings": { "show_section": true } },
+    "blurb":            { "type": "component-blurb",            "settings": { "show_section": true } },
+    "story":            { "type": "home-06-story",              "settings": { "show_section": true } },
+    "platform":         { "type": "component-platform",         "settings": { "show_section": true } },
+    "product-overview": { "type": "component-product-overview", "settings": { "show_section": true } },
+    "testimonial":      { "type": "component-testimonial",      "settings": { "show_section": true } },
+    "faq":              { "type": "component-faq",              "settings": { "show_section": true } },
+    "newsletter":       { "type": "component-newsletter",       "settings": { "show_section": true } },
+    "news":             { "type": "component-news",             "settings": { "show_section": true } }
+  },
+  "order": ["banner","overview","marquee","explore","blurb","story","platform","product-overview","testimonial","faq","newsletter","news"]
+}
+```
+
+Then on every *other* page that uses the same component, reference the same `type` in that page's JSON template — for example `templates/page.about.json` includes `"newsletter": { "type": "component-newsletter" }` and gets the same section automatically. Update the markup once, all pages get it.
+
+Delete the old monolithic `sections/page-<name>.liquid` after splitting — keeping both leaves dead code.
+
+### Automation
+
+The split is mechanical — write it once as a Node script. The script:
+
+1. Reads `sections/page-<name>.liquid`.
+2. Slices `<section class="...">…</section>` blocks at the **outermost** depth (be careful: some Webflow pages have nested `<section>` tags — match by indentation level, not just `<section>`).
+3. Writes each to `sections/<page>-<NN>-<slug>.liquid` with the minimum schema appended.
+4. Generates a fresh `templates/<page>.json` with sections listed in render order.
+
+Save the script alongside `convert.cjs` — it's reusable across Webflow exports.
 
 ---
 

@@ -1,0 +1,83 @@
+{%- if section.settings.show_section -%}
+      <section class="component_marquee_section">
+        <div class="background-color-alternate">
+          <div class="component_marquee_container">
+            <div class="spacer-medium"></div>
+            <div class="component_marquee_wrap">
+              <div class="component_marquee">
+                <div class="component_marquee_clone">
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Space Efficient</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">All exercises in one machine</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Variable Resistance</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Space Efficient</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">All exercises in one machine</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Variable Resistance</p>
+                  </div>
+                </div>
+                <div class="component_marquee_clone">
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Space Efficient</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">All exercises in one machine</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Variable Resistance</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Space Efficient</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">All exercises in one machine</p>
+                  </div>
+                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                    <p class="heading-style-h6">Variable Resistance</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-medium"></div>
+          </div>
+        </div>
+      </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Marquee",
+  "tag": "section",
+  "class": "shopify-section-component-marquee",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show this section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Imported from Webflow"
+    },
+    {
+      "type": "paragraph",
+      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee"
+    }
+  ]
+}
+{% endschema %}

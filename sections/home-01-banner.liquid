@@ -1,0 +1,66 @@
+{%- if section.settings.show_section -%}
+{%- liquid
+  assign primary_url = section.settings.primary_cta_url
+  if primary_url == blank and section.settings.primary_cta_product != blank
+    assign primary_url = section.settings.primary_cta_product.url
+  endif
+  assign primary_url = primary_url | default: routes.collections_url | append: '/all'
+
+  assign secondary_url = section.settings.secondary_cta_url
+  if secondary_url == blank and section.settings.secondary_cta_page != blank
+    assign secondary_url = section.settings.secondary_cta_page.url
+  endif
+  assign secondary_url = secondary_url | default: routes.root_url | append: 'pages/about'
+-%}
+      <section class="home_banner_section">
+        <div class="padding-section-regular">
+          <div class="page-width">
+            <div class="home_banner_content">
+              <div class="home_banner_heading">
+                <h1>{{ section.settings.heading | default: 'Panthor Complete Strength System' }}</h1>
+              </div>
+              <div class="spacer-regular"></div>
+              <div class="home_banner_description">
+                <p>{{ section.settings.description | default: 'Discover true distinction with whole-body strength training in one complete, unique system, designed to ensure you feel victorious in every session. Transform your fitness journey with a machine that takes fitness goals from achievable to inevitable.' }}</p>
+              </div>
+              <div class="spacer-medium"></div>
+              <div class="button-group">
+                {%- if section.settings.show_primary_cta -%}
+                  <a href="{{ primary_url }}" class="button-primary w-button">{{ section.settings.primary_cta_label | default: 'Buy Now' }}</a>
+                {%- endif -%}
+                {%- if section.settings.show_secondary_cta -%}
+                  <a href="{{ secondary_url }}" class="button-secondary w-button">{{ section.settings.secondary_cta_label | default: 'About Panthor' }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Home — Banner",
+  "tag": "section",
+  "class": "shopify-section-home-banner",
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Panthor Complete Strength System" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Discover true distinction with whole-body strength training in one complete, unique system, designed to ensure you feel victorious in every session. Transform your fitness journey with a machine that takes fitness goals from achievable to inevitable." },
+    { "type": "header", "content": "Primary CTA (Buy Now)" },
+    { "type": "checkbox", "id": "show_primary_cta", "label": "Show primary CTA", "default": true },
+    { "type": "text", "id": "primary_cta_label", "label": "Label", "default": "Buy Now" },
+    { "type": "product", "id": "primary_cta_product", "label": "Product (link target)", "info": "Linked product takes precedence over the custom URL." },
+    { "type": "url", "id": "primary_cta_url", "label": "Custom URL (fallback)" },
+    { "type": "header", "content": "Secondary CTA (About)" },
+    { "type": "checkbox", "id": "show_secondary_cta", "label": "Show secondary CTA", "default": true },
+    { "type": "text", "id": "secondary_cta_label", "label": "Label", "default": "About Panthor" },
+    { "type": "page", "id": "secondary_cta_page", "label": "Page (link target)", "info": "Linked page takes precedence over the custom URL." },
+    { "type": "url", "id": "secondary_cta_url", "label": "Custom URL (fallback)" }
+  ],
+  "presets": [
+    { "name": "Home — Banner" }
+  ]
+}
+{% endschema %}

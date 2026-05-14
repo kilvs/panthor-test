@@ -1,0 +1,61 @@
+{%- if section.settings.show_section -%}
+      <section class="component_newsletter_section">
+        <div class="padding-section-regular">
+          <div class="page-width-narrower">
+            <div class="component_newsletter_wrap">
+              <div class="component_newsletter_wrap_item">
+                <div class="component_newsletter_headline">
+                  <h2>Never Miss an Update</h2>
+                  <div class="spacer-small"></div>
+                  <p>Stay updated on the latest Panthor product news and releases.</p>
+                </div>
+              </div>
+              <div class="component_newsletter_wrap_item">
+                <div class="component_newsletter_block w-form">
+                  {%- form 'customer', id: 'wf-form-Newsletter-Form', class: 'component_newsletter_form' -%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <label for="Email-Newsletter" class="form_label">Email</label>
+                    <input class="form_input w-input" maxlength="256" name="contact[email]" data-name="Email Newsletter" placeholder="panthor@email.com" type="email" id="Email-Newsletter" required="">
+                    <div class="spacer-medium"></div>
+                    <label class="w-checkbox form_checkbox_field"><input type="checkbox" name="contact[accepts_marketing]" id="Newsletter-Terms" data-name="Newsletter Terms" required="" class="w-checkbox-input form_checkbox"><span class="text-size-tiny w-form-label" for="Newsletter-Terms">I confirm I wish to receive emails from Panthor. You may opt out of these emails at any time.</span></label>
+                    <div class="spacer-medium"></div>
+                    <div class="button-group"><input type="submit" data-wait="Please wait..." class="button-tertiary w-button" value="Submit"></div>
+                    {% render 'wf-form-states', form: form %}
+                  {%- endform -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="component_newsletter_vector_wrap"><img src="{{ 'panthor-watermark-faded-landscape.svg' | asset_url }}" loading="lazy" width="679" height="539" alt="" class="component_newsletter_vector"></div>
+      </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "shopify-section-component-newsletter",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show this section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Imported from Webflow"
+    },
+    {
+      "type": "paragraph",
+      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

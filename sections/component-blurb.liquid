@@ -1,0 +1,128 @@
+{%- if section.settings.show_section -%}
+      <section data-w-id="0f933f72-e676-29c9-3370-2df4c335e6ca" class="component_blurb_section">
+        <div class="background-color-primary">
+          <div class="padding-section-regular">
+            <div class="page-width">
+              <div class="component_blurb_headline">
+                <div class="component_divider_line"></div>
+                <div class="spacer-medium"></div>
+                <h2>What can Panthor Complete Strength Do?</h2>
+                <div class="spacer-small"></div>
+                <div class="component_blurb_description">
+                  <p>Panthor is the ultimate solution to take your fitness goals from achievable to inevitable. Every single session. Every drop of sweat. Victorious right from the get-go.</p>
+                </div>
+              </div>
+              <div class="spacer-xlarge"></div>
+              <div class="component_blurb_list">
+                <div class="component_blurb_item">
+                  <div class="component_blurb_card"><img src="{{ 'full-body_2.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" srcset="{{ 'full-body_2full-body.webp' | asset_url }} 500w, {{ 'full-body_2full-body.webp' | asset_url }} 800w, {{ 'full-body_2.webp' | asset_url }} 886w" class="component_blurb_image">
+                    <div class="spacer-regular"></div>
+                    <div class="component_divider_line"></div>
+                    <div class="spacer-xsmall"></div>
+                    <h3 class="heading-style-h5">full body</h3>
+                    <div class="spacer-xsmall"></div>
+                    <div class="component_blurb_description w-richtext">
+                      <ul role="list">
+                        <li>Squat Press</li>
+                      </ul>
+                      <ul role="list">
+                        <li>Jammer Press</li>
+                      </ul>
+                      <ul role="list">
+                        <li>Lunges*</li>
+                      </ul>
+                      <ul role="list">
+                        <li>Deadlifts*</li>
+                      </ul>
+                    </div>
+                    <div class="component_blurb_bottom">
+                      <div class="spacer-xsmall"></div>
+                      <p>+ More</p>
+                      <div class="spacer-xxsmall"></div>
+                      <p class="component_blurb_note">* multiple angles and variations</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="component_blurb_item is-2">
+                  <div class="component_blurb_card"><img src="{{ 'lower-body_3.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" srcset="{{ 'lower-body_3lower-body.webp' | asset_url }} 500w, {{ 'lower-body_3lower-body.webp' | asset_url }} 800w, {{ 'lower-body_3.webp' | asset_url }} 886w" class="component_blurb_image">
+                    <div class="spacer-regular"></div>
+                    <div class="component_divider_line"></div>
+                    <div class="spacer-xsmall"></div>
+                    <h3 class="heading-style-h5">Lower body</h3>
+                    <div class="spacer-xsmall"></div>
+                    <div class="component_blurb_description w-richtext">
+                      <ul role="list">
+                        <li>Kickbacks*</li>
+                        <li>Hamstring Curls</li>
+                        <li>Leg Extensions</li>
+                        <li>Leg Presses*</li>
+                        <li>Glute Bridges</li>
+                      </ul>
+                    </div>
+                    <div class="component_blurb_bottom">
+                      <div class="spacer-xsmall"></div>
+                      <p>+ More</p>
+                      <div class="spacer-xxsmall"></div>
+                      <p class="component_blurb_note">* multiple angles and variations</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="component_blurb_item is-3">
+                  <div class="component_blurb_card"><img src="{{ 'upper-body_2.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" srcset="{{ 'upper-body_2upper-body.webp' | asset_url }} 500w, {{ 'upper-body_2upper-body.webp' | asset_url }} 800w, {{ 'upper-body_2.webp' | asset_url }} 886w" class="component_blurb_image">
+                    <div class="spacer-regular"></div>
+                    <div class="component_divider_line"></div>
+                    <div class="spacer-xsmall"></div>
+                    <h3 class="heading-style-h5">Upper Body</h3>
+                    <div class="spacer-xsmall"></div>
+                    <div class="component_blurb_description w-richtext">
+                      <ul role="list">
+                        <li>Shoulder Press</li>
+                        <li>Chest Press*</li>
+                        <li>Lat Pull Down</li>
+                        <li>Bicep &amp; Triceps*</li>
+                        <li>Rows*</li>
+                      </ul>
+                    </div>
+                    <div class="component_blurb_bottom">
+                      <div class="spacer-xsmall"></div>
+                      <p>+ More</p>
+                      <div class="spacer-xxsmall"></div>
+                      <p class="component_blurb_note">* multiple angles and variations</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Blurb",
+  "tag": "section",
+  "class": "shopify-section-component-blurb",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show this section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Imported from Webflow"
+    },
+    {
+      "type": "paragraph",
+      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blurb"
+    }
+  ]
+}
+{% endschema %}

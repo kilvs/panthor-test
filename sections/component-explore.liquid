@@ -1,0 +1,82 @@
+{%- if section.settings.show_section -%}
+      <section data-wf--explore--variant="base" class="component_explore_section">
+        <div class="padding-section-xlarge">
+          <div class="page-width-narrower">
+            <div class="max-width-large">
+              <div class="component_explore_headline">
+                <h2>Explore Panthor Configurations</h2>
+                <div class="spacer-regular"></div>
+                <p>Panthor: the sophisticated, uncompromising strength system engineered for athletes who demand flexibility, style, and unrivalled ergonomics in their pursuit of mastery and victory.</p>
+              </div>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="component_explore_list">
+              <div data-wf--explore-card---darker--variant="base" class="component_explore_item">
+                <div class="explore_card_wrap"><img src="{{ 'bolt-down-standing_1.webp' | asset_url }}" loading="lazy" width="454" height="300" alt="" sizes="(max-width: 479px) 100vw, 454px" srcset="{{ 'bolt-down-standing_1bolt-down-standing.webp' | asset_url }} 500w, {{ 'bolt-down-standing_1bolt-down-standing.webp' | asset_url }} 800w, {{ 'bolt-down-standing_1.webp' | asset_url }} 906w" class="component_explore_image">
+                  <div class="component_explore_card background-color-dark"><img src="{{ 'panthor-gradient-bg.webp' | asset_url }}" loading="lazy" width="51" height="34" alt="" class="component_explore_icon">
+                    <div class="spacer-regular"></div>
+                    <h3 class="explore_card_heading text-style-normal">Bolt Down</h3>
+                    <div class="spacer-small"></div>
+                    <p>Our most compact setup, measuring just 1.8m x 0.3m with only 1m of operational space required at the front. Ideal for maximum floor space efficiency.</p>
+                  </div>
+                </div>
+              </div>
+              <div data-wf--explore-card---darker--variant="base" class="component_explore_item">
+                <div class="explore_card_wrap"><img src="{{ 'freestanding-placeholder_1.webp' | asset_url }}" loading="lazy" width="454" height="300" alt="" sizes="(max-width: 479px) 100vw, 454px" srcset="{{ 'freestanding-placeholder_1freestanding-placeholder.webp' | asset_url }} 500w, {{ 'freestanding-placeholder_1freestanding-placeholder.webp' | asset_url }} 800w, {{ 'freestanding-placeholder_1.webp' | asset_url }} 908w" class="component_explore_image">
+                  <div class="component_explore_card background-color-dark"><img src="{{ 'panthor-gradient-bg.webp' | asset_url }}" loading="lazy" width="51" height="34" alt="" class="component_explore_icon">
+                    <div class="spacer-regular"></div>
+                    <h3 class="explore_card_heading text-style-normal">Freestanding</h3>
+                    <div class="spacer-small"></div>
+                    <p>A retrofittable platform measuring 1.8m x 1m, designed with tapered edges for accessibility and a sleek aesthetic. Compatible with the Panthor bespoke bench, but also fully functional as a standalone unit for use with your own equipment, or none at all.</p>
+                  </div>
+                </div>
+              </div>
+              <div data-wf--explore-card---darker--variant="base" class="component_explore_item">
+                <div class="explore_card_wrap"><img src="{{ 'bench-placeholder_1.webp' | asset_url }}" loading="lazy" width="454" height="300" alt="" sizes="(max-width: 479px) 100vw, 454px" srcset="{{ 'bench-placeholder_1bench-placeholder.webp' | asset_url }} 500w, {{ 'bench-placeholder_1bench-placeholder.webp' | asset_url }} 800w, {{ 'bench-placeholder_1.webp' | asset_url }} 906w" class="component_explore_image">
+                  <div class="component_explore_card background-color-dark"><img src="{{ 'panthor-gradient-bg.webp' | asset_url }}" loading="lazy" width="51" height="34" alt="" class="component_explore_icon">
+                    <div class="spacer-regular"></div>
+                    <h3 class="explore_card_heading text-style-normal">Bench</h3>
+                    <div class="spacer-small"></div>
+                    <p>Custom-built to pair with the Panthor system. Removable and stowable, with three adjustable pads for versatile support across a wide range of exercises: seated leg curls, 45° leg press, preacher curls, lying hamstring curl, supported kickbacks, back extensions, incline/decline bench press, sit-ups, and more.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="button-group is-center">
+              <a href="{{ routes.collections_url }}/all" class="button-primary w-button">Customise your machine</a>
+            </div>
+          </div>
+        </div>
+        <div class="component_explore_vector_wrap"><img src="{{ 'panthor-watermark-faded.svg' | asset_url }}" loading="lazy" width="995" height="759" alt="" class="component_explore_vector"></div>
+      </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Explore",
+  "tag": "section",
+  "class": "shopify-section-component-explore",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show this section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Imported from Webflow"
+    },
+    {
+      "type": "paragraph",
+      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Explore"
+    }
+  ]
+}
+{% endschema %}

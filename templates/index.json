@@ -1,11 +1,30 @@
 {
   "sections": {
-    "main": {
-      "type": "page-index",
-      "settings": {}
-    }
+    "banner":           { "type": "home-01-banner",             "settings": { "show_section": true } },
+    "overview":         { "type": "home-02-overview",           "settings": { "show_section": true } },
+    "marquee":          { "type": "component-marquee",          "settings": { "show_section": true } },
+    "explore":          { "type": "component-explore",          "settings": { "show_section": true } },
+    "blurb":            { "type": "component-blurb",            "settings": { "show_section": true } },
+    "story":            { "type": "home-06-story",              "settings": { "show_section": true } },
+    "platform":         { "type": "component-platform",         "settings": { "show_section": true } },
+    "product-overview": { "type": "component-product-overview", "settings": { "show_section": true } },
+    "testimonial":      { "type": "component-testimonial",      "settings": { "show_section": true } },
+    "faq":              { "type": "component-faq",              "settings": { "show_section": true } },
+    "newsletter":       { "type": "component-newsletter",       "settings": { "show_section": true } },
+    "news":             { "type": "component-news",             "settings": { "show_section": true } }
   },
   "order": [
-    "main"
+    "banner",
+    "overview",
+    "marquee",
+    "explore",
+    "blurb",
+    "story",
+    "platform",
+    "product-overview",
+    "testimonial",
+    "faq",
+    "newsletter",
+    "news"
   ]
 }
