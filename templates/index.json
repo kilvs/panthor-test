@@ -1,17 +1,102 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "banner":           { "type": "home-01-banner",             "settings": { "show_section": true } },
-    "overview":         { "type": "home-02-overview",           "settings": { "show_section": true } },
-    "marquee":          { "type": "component-marquee",          "settings": { "show_section": true } },
-    "explore":          { "type": "component-explore",          "settings": { "show_section": true } },
-    "blurb":            { "type": "component-blurb",            "settings": { "show_section": true } },
-    "story":            { "type": "home-06-story",              "settings": { "show_section": true } },
-    "platform":         { "type": "component-platform",         "settings": { "show_section": true } },
-    "product-overview": { "type": "component-product-overview", "settings": { "show_section": true } },
-    "testimonial":      { "type": "component-testimonial",      "settings": { "show_section": true } },
-    "faq":              { "type": "component-faq",              "settings": { "show_section": true } },
-    "newsletter":       { "type": "component-newsletter",       "settings": { "show_section": true } },
-    "news":             { "type": "component-news",             "settings": { "show_section": true } }
+    "banner": {
+      "type": "home-01-banner",
+      "settings": {
+        "show_section": true,
+        "heading": "Panthor Complete Strength System",
+        "description": "Discover true distinction with whole-body strength training in one complete, unique system, designed to ensure you feel victorious in every session. Transform your fitness journey with a machine that takes fitness goals from achievable to inevitable.",
+        "show_primary_cta": true,
+        "primary_cta_label": "Buy Now",
+        "primary_cta_product": "",
+        "primary_cta_url": "",
+        "show_secondary_cta": true,
+        "secondary_cta_label": "About Panthor",
+        "secondary_cta_page": "",
+        "secondary_cta_url": ""
+      }
+    },
+    "overview": {
+      "type": "home-02-overview",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "marquee": {
+      "type": "component-marquee",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "explore": {
+      "type": "component-explore",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "blurb": {
+      "type": "component-blurb",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "story": {
+      "type": "home-06-story",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "platform": {
+      "type": "component-platform",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "product-overview": {
+      "type": "component-product-overview",
+      "settings": {
+        "show_section": true,
+        "heading": "Apparel & Accesories",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "show_shop_all": true,
+        "shop_all_label": "Shop All",
+        "shop_all_url": "",
+        "featured_collection": "frontpage"
+      }
+    },
+    "testimonial": {
+      "type": "component-testimonial",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "faq": {
+      "type": "component-faq",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "newsletter": {
+      "type": "component-newsletter",
+      "settings": {
+        "show_section": true
+      }
+    },
+    "news": {
+      "type": "component-news",
+      "settings": {
+        "show_section": true
+      }
+    }
   },
   "order": [
     "banner",
