@@ -1,0 +1,1452 @@
+<main class="main-wrapper">
+      <section class="product_detail_section">
+        <div class="page-width">
+          <div class="product_detail_breadcrumbs">
+            <a href="{{ routes.collections_url }}/all" class="product_detail_breadcrumb_link">Shop All</a>
+            <div class="product_detail_breadcrumb_icon w-embed"><svg width="6" height="8" viewbox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.47099 7.79976L5.27565 3.9951L1.47099 0.19043L0.52832 1.1331L3.39032 3.9951L0.52832 6.8571L1.47099 7.79976Z" fill="white"></path>
+              </svg></div>
+            {%- assign _cat_collection = product.collections.first -%}
+            <a href="{{ _cat_collection.url | default: routes.collections_url | append: '/all' }}" class="product_detail_breadcrumb_link">{{ _cat_collection.title | default: 'Category' }}</a>
+            <div class="product_detail_breadcrumb_icon w-embed"><svg width="6" height="8" viewbox="0 0 6 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.47099 7.79976L5.27565 3.9951L1.47099 0.19043L0.52832 1.1331L3.39032 3.9951L0.52832 6.8571L1.47099 7.79976Z" fill="white"></path>
+              </svg></div>
+            <a href="{{ product.url | default: '#' }}" aria-current="page" class="product_detail_breadcrumb_link w--current">{{ product.title | default: 'Product name' }}</a>
+          </div>
+          <div class="spacer-regular"></div>
+          <div class="product_detail_grid">
+            <div class="product_detail_grid_item">
+              <div class="product_detail_featured_image_wrap">
+                {%- if product != blank and product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 1360 }}" loading="lazy" width="680" height="600" alt="{{ product.featured_image.alt | escape }}" sizes="(max-width: 767px) 100vw, 680px" class="product_detail_featured_image">
+                {%- else -%}
+                  <img src="{{ 'featured-image_1.webp' | asset_url }}" loading="lazy" width="680" height="600" alt="" srcset="{{ 'featured-image_1featured-image.webp' | asset_url }} 500w, {{ 'featured-image_1featured-image.webp' | asset_url }} 800w, {{ 'featured-image_1featured-image.webp' | asset_url }} 1080w, {{ 'featured-image_1.webp' | asset_url }} 1360w" sizes="(max-width: 767px) 100vw, 680px" class="product_detail_featured_image">
+                {%- endif -%}
+              </div>
+              <div class="product_gallery_wrap">
+                <div class="product_gallery">
+                  <div class="product_gallery_nav_item">
+                    <div id="gallery-prev" class="product_gallery_nav swiper-button-prev">
+                      <div class="product_gallery_nav_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6.29303 11.9496L0.586032 6.24264L6.29303 0.535645L7.70703 1.94964L3.41403 6.24264L7.70703 10.5356L6.29303 11.9496Z" fill="black"></path>
+                        </svg></div>
+                    </div>
+                  </div>
+                  <div class="product_gallery_swiper_box">
+                    <div class="gallery-container">
+                      <div id="product-gallery-slider" class="product_image_swiper swiper">
+                        <div class="product_image_swiper_wrap swiper-wrapper">
+                          {%- if product != blank and product.media.size > 0 -%}
+                            {%- for media in product.media -%}
+                              <div class="product_image_slide swiper-slide"><img src="{{ media | image_url: width: 1360 }}" loading="lazy" width="113" height="96" alt="{{ media.alt | escape }}" class="product_gallery_image"></div>
+                            {%- endfor -%}
+                          {%- else -%}
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'featured-image_1.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" sizes="113px" srcset="{{ 'featured-image_1featured-image.webp' | asset_url }} 500w, {{ 'featured-image_1featured-image.webp' | asset_url }} 800w, {{ 'featured-image_1featured-image.webp' | asset_url }} 1080w, {{ 'featured-image_1.webp' | asset_url }} 1360w" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-1.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-2.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-3.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-4.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-5.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-1.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                            <div class="product_image_slide swiper-slide"><img src="{{ 'product-2.webp' | asset_url }}" loading="lazy" width="113" height="96" alt="" class="product_gallery_image"></div>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="product_gallery_nav_item">
+                    <div id="gallery-next" class="product_gallery_nav swiper-button-next">
+                      <div class="product_gallery_nav_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1.70697 11.9496L7.41397 6.24264L1.70697 0.535645L0.292969 1.94964L4.58597 6.24264L0.292969 10.5356L1.70697 11.9496Z" fill="black"></path>
+                        </svg></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hide w-embed w-script">
+                  <script>
+  runOnDomReady(() => {
+     initSlider("#product-gallery-slider", {
+    			slidesPerView: 5,
+    			spaceBetween: 16,
+          navigation:{
+          	 nextEl: '#gallery-next',
+   					 prevEl: '#gallery-prev',
+          },
+          breakpoints: {
+           0: {
+           		slidesPerView: 1
+           },
+       		 992: {
+           		slidesPerView: 3,
+              initialSlide: 1
+           },
+           1280: {
+           		slidesPerView: 5,
+              initialSlide: 1
+           }
+          }
+  		});
+      });
+</script>
+                </div>
+              </div>
+            </div>
+            <div class="product_detail_grid_item">
+              <div class="product_detail_wrap">
+                <h1 class="product_detail_name">{{ product.title | default: 'Panthor Complete Strength System' }}</h1>
+                <p class="heading-style-h3">{% if product != blank %}{{ product.price | money }}{% else %}$50,000{% endif %}</p>
+                <div class="component_product_rating">
+                  <div class="component_product_rating_item">
+                    <div class="product_rating_icon_list"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"></div>
+                  </div>
+                  <div class="component_product_rating_item">
+                    <p>(4.8 stars) • 10 reviews</p>
+                  </div>
+                </div>
+                {% if product != blank and product.description != blank %}
+                  <div class="text-size-medium">{{ product.description }}</div>
+                {% else %}
+                  <p class="text-size-medium">Train like a beast without compromising on style with the Panthor Complete Strength System. With over 50 strength exercises in one sleek, space-saving machine, this is the tool to take your goals from achievable to inevitable.</p>
+                {% endif %}
+                <div class="product_detail_addon_wrap">
+                  <div class="product_detail_addon">
+                    <p class="text-size-medium text-weight-medium">Installation Cost*</p>
+                    <p class="heading-style-h6">$000</p>
+                  </div>
+                  <div class="component_divider_line"></div>
+                  <p>This is an additional cost that is mandatory to purchasing the Panthor Complete Strength System</p>
+                </div>
+                {%- form 'product', product, id: 'wf-form-Product', class: 'product_form' -%}
+                <div class="product_variant_wrap">
+                  <p>{{ product.options_with_values.first.name | default: 'Type of Panthor' }}</p>
+                  <div class="spacer-small"></div>
+                  <div class="product_variant_list">
+                    {%- if product != blank and product.variants.size > 1 -%}
+                      {%- for variant in product.variants -%}
+                        <button type="submit" name="id" value="{{ variant.id }}" class="button-secondary is-variant{% if variant.id == product.selected_or_first_available_variant.id %} is-active{% endif %}"{% unless variant.available %} disabled{% endunless %}>{{ variant.title }}</button>
+                      {%- endfor -%}
+                    {%- elsif product != blank -%}
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                      <button type="button" class="button-secondary is-variant is-active">{{ product.selected_or_first_available_variant.title | default: product.title }}</button>
+                    {%- else -%}
+                      <button type="button" class="button-secondary is-variant">Bolt Down</button>
+                      <button type="button" class="button-secondary is-variant">Freestanding</button>
+                      <button type="button" class="button-secondary is-variant">With Bench</button>
+                    {%- endif -%}
+                  </div>
+                </div>
+                <div class="product_detail_note">
+                  <h3 class="heading-style-h6">Customise</h3>
+                  <div class="spacer-regular"></div>
+                  <p>NOTE: Customisations may incur additional fees to be quoted on an individual basis and one of the team will be in touch to discuss options with them.</p>
+                </div>
+                <div class="product_quantity_wrap">
+                  <p class="text-size-medium">Quantity</p>
+                  <div class="spacer-small"></div>
+                  <div class="product_quantity_field"><button type="button" class="product_quantity_control" data-qty-step="-1">
+                      <div class="product_quantity_icon w-embed"><svg width="16" height="25" viewbox="0 0 14 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M0 0.5H14V2.5H0V0.5Z" fill="white"></path>
+                        </svg></div>
+                    </button><input type="number" name="quantity" min="1" value="1" class="product_quantity_input"><button type="button" class="product_quantity_control" data-qty-step="1">
+                      <div class="product_quantity_icon w-embed"><svg width="25" height="25" viewbox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 11.5H13V5.5H11V11.5H5V13.5H11V19.5H13V13.5H19V11.5Z" fill="white"></path>
+                        </svg></div>
+                    </button></div>
+                </div>
+                <div class="product_total">
+                  <div class="product_total_wrap">
+                    <p class="text-size-medium text-weight-medium text-style-allcaps">Total</p>
+                    <p class="heading-style-h6">{% if product != blank %}{{ product.selected_or_first_available_variant.price | money }}{% else %}$55,000{% endif %}</p>
+                  </div>
+                  <div class="spacer-xsmall"></div>
+                  <div class="component_divider_line"></div>
+                </div>
+                <button type="submit" name="add" class="button-primary"{% if product != blank and product.selected_or_first_available_variant.available == false %} disabled{% endif %}>{% if product != blank and product.selected_or_first_available_variant.available == false %}Sold out{% else %}Add to cart{% endif %}</button>
+                {%- endform -%}
+                <div class="product_finance_wrap">
+                  <div class="product_finance">
+                    <p class="text-align-center">See Finance Options</p>
+                    <div class="product_finance_list">
+                      <div class="product_finance_list_item">
+                        <div class="product_finance_button"><img src="{{ 'klarna.svg' | asset_url }}" loading="lazy" width="78" height="17" alt="" class="product_finance_image"></div>
+                      </div>
+                      <div class="product_finance_list_item">
+                        <div class="product_finance_button"><img src="{{ 'hsbc.svg' | asset_url }}" loading="lazy" width="78" height="17" alt="" class="product_finance_image"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="product_accordion_list">
+                  <div data-hover="false" data-delay="0" class="product_accordion w-dropdown">
+                    <div class="product_accordion_toggle w-dropdown-toggle">
+                      <div class="heading-style-h6 text-color-secondary">Details</div>
+                      <div class="product_accordion_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.39819 7.13216C7.17851 7.35183 6.82241 7.35183 6.60274 7.13216L0.867876 1.39728C0.648208 1.17761 0.648208 0.821506 0.867876 0.601831L1.13305 0.336631C1.35271 0.116956 1.70887 0.116956 1.92854 0.336631L7.00046 5.40858L12.0724 0.336631C12.2921 0.116956 12.6482 0.116956 12.8679 0.336631L13.1331 0.601831C13.3527 0.821506 13.3527 1.17761 13.1331 1.39728L7.39819 7.13216Z" fill="white"></path>
+                        </svg></div>
+                    </div>
+                    <nav class="product_accordion_content_wrap w-dropdown-list">
+                      <div class="product_accordion_content">
+                        <p class="text-size-medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                      </div>
+                    </nav>
+                  </div>
+                  <div data-hover="false" data-delay="0" class="product_accordion w-dropdown">
+                    <div class="product_accordion_toggle w-dropdown-toggle">
+                      <div class="heading-style-h6 text-color-secondary">Customize</div>
+                      <div class="product_accordion_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.39819 7.13216C7.17851 7.35183 6.82241 7.35183 6.60274 7.13216L0.867876 1.39728C0.648208 1.17761 0.648208 0.821506 0.867876 0.601831L1.13305 0.336631C1.35271 0.116956 1.70887 0.116956 1.92854 0.336631L7.00046 5.40858L12.0724 0.336631C12.2921 0.116956 12.6482 0.116956 12.8679 0.336631L13.1331 0.601831C13.3527 0.821506 13.3527 1.17761 13.1331 1.39728L7.39819 7.13216Z" fill="white"></path>
+                        </svg></div>
+                    </div>
+                    <nav class="product_accordion_content_wrap w-dropdown-list">
+                      <div class="product_accordion_content">
+                        <p class="text-size-medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                      </div>
+                    </nav>
+                  </div>
+                  <div data-hover="false" data-delay="0" class="product_accordion w-dropdown">
+                    <div class="product_accordion_toggle w-dropdown-toggle">
+                      <div class="heading-style-h6 text-color-secondary">Shipping</div>
+                      <div class="product_accordion_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.39819 7.13216C7.17851 7.35183 6.82241 7.35183 6.60274 7.13216L0.867876 1.39728C0.648208 1.17761 0.648208 0.821506 0.867876 0.601831L1.13305 0.336631C1.35271 0.116956 1.70887 0.116956 1.92854 0.336631L7.00046 5.40858L12.0724 0.336631C12.2921 0.116956 12.6482 0.116956 12.8679 0.336631L13.1331 0.601831C13.3527 0.821506 13.3527 1.17761 13.1331 1.39728L7.39819 7.13216Z" fill="white"></path>
+                        </svg></div>
+                    </div>
+                    <nav class="product_accordion_content_wrap w-dropdown-list">
+                      <div class="product_accordion_content">
+                        <p class="text-size-medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                      </div>
+                    </nav>
+                  </div>
+                  <div data-hover="false" data-delay="0" class="product_accordion w-dropdown">
+                    <div class="product_accordion_toggle w-dropdown-toggle">
+                      <div class="heading-style-h6 text-color-secondary">Returns</div>
+                      <div class="product_accordion_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.39819 7.13216C7.17851 7.35183 6.82241 7.35183 6.60274 7.13216L0.867876 1.39728C0.648208 1.17761 0.648208 0.821506 0.867876 0.601831L1.13305 0.336631C1.35271 0.116956 1.70887 0.116956 1.92854 0.336631L7.00046 5.40858L12.0724 0.336631C12.2921 0.116956 12.6482 0.116956 12.8679 0.336631L13.1331 0.601831C13.3527 0.821506 13.3527 1.17761 13.1331 1.39728L7.39819 7.13216Z" fill="white"></path>
+                        </svg></div>
+                    </div>
+                    <nav class="product_accordion_content_wrap w-dropdown-list">
+                      <div class="product_accordion_content">
+                        <p class="text-size-medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="product_strength_section">
+        <div class="background-color-secondary">
+          <div class="padding-section-large">
+            <div class="page-width">
+              <div class="product_strength_grid">
+                <div class="product_strength_grid_item">
+                  <div class="product_strength_content">
+                    <h2 class="heading-style-h3">Strength Redefined</h2>
+                    <div class="spacer-xsmall"></div>
+                    <div class="spacer-medium"></div>
+                    <div class="product_strength_list">
+                      <div class="product_strength_item">
+                        <div class="product_strength_card"><img src="{{ 'weights.svg' | asset_url }}" loading="lazy" width="36" height="36" alt="" class="product_strength_icon">
+                          <p class="product_strength_heading">Over 50 strength exercises in one sleek, space-saving machine.</p>
+                        </div>
+                      </div>
+                      <div class="product_strength_item">
+                        <div class="product_strength_card"><img src="{{ 'muscle.svg' | asset_url }}" loading="lazy" width="36" height="36" alt="" class="product_strength_icon">
+                          <p class="product_strength_heading">Train like a beast without compromising on style.</p>
+                        </div>
+                      </div>
+                      <div class="product_strength_item">
+                        <div class="product_strength_card"><img src="{{ 'muscle.svg' | asset_url }}" loading="lazy" width="36" height="36" alt="" class="product_strength_icon">
+                          <p class="product_strength_heading">Seamless setup for anyone from teens to 70’s, rehab to bodybuilding.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="product_strength_grid_item">
+                  <div class="product_strength_image_wrap"><img src="{{ 'strength-redefined_1.webp' | asset_url }}" loading="lazy" width="672" height="476" alt="" srcset="{{ 'strength-redefined_1strength-redefined.webp' | asset_url }} 500w, {{ 'strength-redefined_1strength-redefined.webp' | asset_url }} 800w, {{ 'strength-redefined_1strength-redefined.webp' | asset_url }} 1080w, {{ 'strength-redefined_1.webp' | asset_url }} 1344w" sizes="(max-width: 767px) 100vw, 672px" class="product_strength_image"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="product_videos_section">
+        <div class="background-color-secondary">
+          <div class="padding-section-regular">
+            <div class="page-width">
+              <div class="product_videos_headline">
+                <h2>What can Panthor Complete Strength Do?</h2>
+                <div class="spacer-small"></div>
+                <div class="product_videos_description">
+                  <p class="text-size-medium">Panthor is the ultimate solution to take your fitness goals from achievable to inevitable. Every single session. Every drop of sweat. Victorious right from the get-go.</p>
+                </div>
+              </div>
+              <div class="spacer-xlarge"></div>
+              <div class="product_video-group_list">
+                <div class="product_video_group">
+                  <div class="component_divider_line"></div>
+                  <div class="spacer-small"></div>
+                  <h3 class="heading-style-h4">Full Body</h3>
+                  <div class="spacer-medium"></div>
+                  <div class="swiper-container">
+                    <div id="video-slider-1" class="product_video_swiper swiper">
+                      <div class="product_video_wrap swiper-wrapper">
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Squat Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">jammer press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">deadlifts</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Squat Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">jammer press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">deadlifts</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="product_video_group">
+                  <div class="component_divider_line"></div>
+                  <div class="spacer-small"></div>
+                  <h3 class="heading-style-h4">Lower Body</h3>
+                  <div class="spacer-medium"></div>
+                  <div class="swiper-container">
+                    <div id="video-slider-3" class="product_video_swiper swiper">
+                      <div class="product_video_wrap swiper-wrapper">
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Squat Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">jammer press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">deadlifts</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Squat Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">jammer press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">deadlifts</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="product_video_group">
+                  <div class="component_divider_line"></div>
+                  <div class="spacer-small"></div>
+                  <h3 class="heading-style-h4">Upper Body</h3>
+                  <div class="spacer-medium"></div>
+                  <div class="swiper-container">
+                    <div id="video-slider-2" class="product_video_swiper swiper">
+                      <div class="product_video_wrap swiper-wrapper">
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Shoulder Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Chest Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Lat Pull Down</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Shoulder Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Chest Press</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product_video_slide swiper-slide">
+                          <div class="product_video_card"><img class="product_video_thumb" data-slider="transform-setter" src="{{ 'video-placeholder_1.webp' | asset_url }}" width="457" height="296" alt="" sizes="(max-width: 479px) 100vw, 457px" loading="lazy" srcset="{{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 500w, {{ 'video-placeholder_1video-placeholder.webp' | asset_url }} 800w, {{ 'video-placeholder_1.webp' | asset_url }} 914w">
+                            <div class="spacer-regular"></div>
+                            <div class="product_video_line"></div>
+                            <div class="spacer-xsmall"></div>
+                            <h4 class="heading-style-h5">Lat Pull Down</h4>
+                            <div class="product_video_popup">
+                              <div class="padding-global">
+                                <div class="page-width">
+                                  <div class="product_video_media_wrap">
+                                    <div class="product_video_media w-video w-embed"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div data-slider="transform-resetter" class="product_video_close"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt="" class="product_video_close_icon"></div>
+                              <div data-slider="transform-resetter" class="product_video_popup_overlay"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide w-embed w-script">
+          <script>
+  runOnDomReady(() => {
+     initSlider("#video-slider-1", {
+    			slidesPerView: 3,
+    			spaceBetween: 24,
+          on:{
+          	init: initSliderTransformRemover
+          },
+          breakpoints: {
+           0: {
+           		slidesPerView: 1
+           },
+       		 576: {
+           		slidesPerView: 2
+           },
+       		 992: {
+           		slidesPerView: 3
+           }
+          }
+  		});
+      initSlider("#video-slider-2", {
+    			slidesPerView: 3,
+    			spaceBetween: 24,
+          on:{
+          	init: initSliderTransformRemover
+          },
+          breakpoints: {
+           0: {
+           		slidesPerView: 1
+           },
+       		 576: {
+           		slidesPerView: 2
+           },
+       		 992: {
+           		slidesPerView: 3
+           }
+          }
+  		});
+      initSlider("#video-slider-3", {
+    			slidesPerView: 3,
+    			spaceBetween: 24,
+          on:{
+          	init: initSliderTransformRemover
+          },
+          breakpoints: {
+           0: {
+           		slidesPerView: 1
+           },
+       		 576: {
+           		slidesPerView: 2
+           },
+       		 992: {
+           		slidesPerView: 3
+           }
+          }
+  		});
+  });
+</script>
+        </div>
+      </section>
+      <section data-wf--explore--variant="dark" class="component_explore_section w-variant-5d091653-8229-f058-6fb1-9f8d25bfd91b">
+        <div class="padding-section-xlarge">
+          <div class="page-width-narrower">
+            <div class="max-width-large">
+              <div class="component_explore_headline">
+                <h2>Explore Panthor Configurations</h2>
+                <div class="spacer-regular"></div>
+                <p>Panthor: the sophisticated, uncompromising strength system engineered for athletes who demand flexibility, style, and unrivalled ergonomics in their pursuit of mastery and victory.</p>
+              </div>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="component_explore_list">
+              <div data-wf--explore-card---darker--variant="base" class="component_explore_item">
+                <div class="explore_card_wrap"><img src="{{ 'bolt-down-standing_1.webp' | asset_url }}" loading="lazy" width="454" height="300" alt="" sizes="(max-width: 479px) 100vw, 454px" srcset="{{ 'bolt-down-standing_1bolt-down-standing.webp' | asset_url }} 500w, {{ 'bolt-down-standing_1bolt-down-standing.webp' | asset_url }} 800w, {{ 'bolt-down-standing_1.webp' | asset_url }} 906w" class="component_explore_image">
+                  <div class="component_explore_card background-color-dark"><img src="{{ 'panthor-gradient-bg.webp' | asset_url }}" loading="lazy" width="51" height="34" alt="" class="component_explore_icon">
+                    <div class="spacer-regular"></div>
+                    <h3 class="explore_card_heading text-style-normal">Bolt Down</h3>
+                    <div class="spacer-small"></div>
+                    <p>Our most compact setup, measuring just 1.8m x 0.3m with only 1m of operational space required at the front. Ideal for maximum floor space efficiency.</p>
+                  </div>
+                </div>
+              </div>
+              <div data-wf--explore-card---darker--variant="base" class="component_explore_item">
+                <div class="explore_card_wrap"><img src="{{ 'freestanding-placeholder_1.webp' | asset_url }}" loading="lazy" width="454" height="300" alt="" sizes="(max-width: 479px) 100vw, 454px" srcset="{{ 'freestanding-placeholder_1freestanding-placeholder.webp' | asset_url }} 500w, {{ 'freestanding-placeholder_1freestanding-placeholder.webp' | asset_url }} 800w, {{ 'freestanding-placeholder_1.webp' | asset_url }} 908w" class="component_explore_image">
+                  <div class="component_explore_card background-color-dark"><img src="{{ 'panthor-gradient-bg.webp' | asset_url }}" loading="lazy" width="51" height="34" alt="" class="component_explore_icon">
+                    <div class="spacer-regular"></div>
+                    <h3 class="explore_card_heading text-style-normal">Freestanding</h3>
+                    <div class="spacer-small"></div>
+                    <p>A retrofittable platform measuring 1.8m x 1m, designed with tapered edges for accessibility and a sleek aesthetic. Compatible with the Panthor bespoke bench, but also fully functional as a standalone unit for use with your own equipment, or none at all.</p>
+                  </div>
+                </div>
+              </div>
+              <div data-wf--explore-card---darker--variant="base" class="component_explore_item">
+                <div class="explore_card_wrap"><img src="{{ 'bench-placeholder_1.webp' | asset_url }}" loading="lazy" width="454" height="300" alt="" sizes="(max-width: 479px) 100vw, 454px" srcset="{{ 'bench-placeholder_1bench-placeholder.webp' | asset_url }} 500w, {{ 'bench-placeholder_1bench-placeholder.webp' | asset_url }} 800w, {{ 'bench-placeholder_1.webp' | asset_url }} 906w" class="component_explore_image">
+                  <div class="component_explore_card background-color-dark"><img src="{{ 'panthor-gradient-bg.webp' | asset_url }}" loading="lazy" width="51" height="34" alt="" class="component_explore_icon">
+                    <div class="spacer-regular"></div>
+                    <h3 class="explore_card_heading text-style-normal">Bench</h3>
+                    <div class="spacer-small"></div>
+                    <p>Custom-built to pair with the Panthor system. Removable and stowable, with three adjustable pads for versatile support across a wide range of exercises: seated leg curls, 45° leg press, preacher curls, lying hamstring curl, supported kickbacks, back extensions, incline/decline bench press, sit-ups, and more.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="button-group is-center">
+              <a href="{{ routes.collections_url }}/all" aria-current="page" class="button-primary w-button w--current">Customise your machine</a>
+            </div>
+          </div>
+        </div>
+        <div class="component_explore_vector_wrap w-variant-5d091653-8229-f058-6fb1-9f8d25bfd91b"><img src="{{ 'panthor-watermark-faded.svg' | asset_url }}" loading="lazy" width="995" height="759" alt="" class="component_explore_vector"></div>
+      </section>
+      <section class="component_newsletter_section">
+        <div class="padding-section-regular">
+          <div class="page-width-narrower">
+            <div class="component_newsletter_wrap">
+              <div class="component_newsletter_wrap_item">
+                <div class="component_newsletter_headline">
+                  <h2>Never Miss an Update</h2>
+                  <div class="spacer-small"></div>
+                  <p>Stay updated on the latest Panthor product news and releases.</p>
+                </div>
+              </div>
+              <div class="component_newsletter_wrap_item">
+                <div class="component_newsletter_block w-form">
+                  {%- form 'customer', id: 'wf-form-Newsletter-5', class: 'component_newsletter_form' -%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <label for="Email-Newsletter-5" class="form_label">Email</label>
+                    <input class="form_input w-input" maxlength="256" name="contact[email]" data-name="Email Newsletter" placeholder="panthor@email.com" type="email" id="Email-Newsletter-5" required="">
+                    <div class="spacer-medium"></div>
+                    <label class="w-checkbox form_checkbox_field"><input type="checkbox" name="contact[accepts_marketing]" id="Newsletter-Terms-5" data-name="Newsletter Terms" required="" class="w-checkbox-input form_checkbox"><span class="text-size-tiny w-form-label" for="Newsletter-Terms-5">I confirm I wish to receive emails from Panthor. You may opt out of these emails at any time.</span></label>
+                    <div class="spacer-medium"></div>
+                    <div class="button-group"><input type="submit" data-wait="Please wait..." class="button-tertiary w-button" value="Submit"></div>
+                    {% render 'wf-form-states', form: form %}
+                  {%- endform -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="component_newsletter_vector_wrap"><img src="{{ 'panthor-watermark-faded-landscape.svg' | asset_url }}" loading="lazy" width="679" height="539" alt="" class="component_newsletter_vector"></div>
+      </section>
+      <section class="component_testimonial_section">
+        <div class="padding-section-medium">
+          <div class="page-width-full">
+            <div class="component_testimonial_container">
+              <div class="component_testimonial_nav">
+                <div id="testimonial-prev" class="component_testimonial_paginator swiper-button-prev">
+                  <div class="component_testimonial_nav_icon w-embed"><svg width="14" height="14" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8.70694 12.293L4.41394 7.99997H13.9999V5.99997H4.41394L8.70694 1.70697L7.29294 0.292969L0.585938 6.99997L7.29294 13.707L8.70694 12.293Z" fill="#FF8856"></path>
+                    </svg></div>
+                </div>
+                <div id="testimonial-next" class="component_testimonial_paginator swiper-button-next">
+                  <div class="component_testimonial_nav_icon w-embed"><svg width="14" height="14" viewbox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.293 12.293L6.707 13.707L13.414 6.99997L6.707 0.292969L5.293 1.70697L9.586 5.99997H0V7.99997H9.586L5.293 12.293Z" fill="#FF8856"></path>
+                    </svg></div>
+                </div>
+              </div>
+              <div id="testimonial-slider" class="component_testimonial_swiper swiper">
+                <div class="component_testimonial_wrap swiper-wrapper">
+                  <div class="component_testimonial_slide swiper-slide">
+                    <div class="component_testimonial_card">
+                      <div class="component_testimonial_stars"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"></div>
+                      <div class="spacer-regular"></div>
+                      <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                      <div class="spacer-regular"></div>
+                      <p class="text-weight-semibold">John Doe</p>
+                      <p>Fitness Director, Yacht Co.</p>
+                    </div>
+                  </div>
+                  <div class="component_testimonial_slide swiper-slide">
+                    <div class="component_testimonial_card">
+                      <div class="component_testimonial_stars"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"></div>
+                      <div class="spacer-regular"></div>
+                      <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                      <div class="spacer-regular"></div>
+                      <p class="text-weight-semibold">John Doe</p>
+                      <p>Fitness Director, Yacht Co.</p>
+                    </div>
+                  </div>
+                  <div class="component_testimonial_slide swiper-slide">
+                    <div class="component_testimonial_card">
+                      <div class="component_testimonial_stars"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"></div>
+                      <div class="spacer-regular"></div>
+                      <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                      <div class="spacer-regular"></div>
+                      <p class="text-weight-semibold">John Doe</p>
+                      <p>Fitness Director, Yacht Co.</p>
+                    </div>
+                  </div>
+                  <div class="component_testimonial_slide swiper-slide">
+                    <div class="component_testimonial_card">
+                      <div class="component_testimonial_stars"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"></div>
+                      <div class="spacer-regular"></div>
+                      <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                      <div class="spacer-regular"></div>
+                      <p class="text-weight-semibold">John Doe</p>
+                      <p>Fitness Director, Yacht Co.</p>
+                    </div>
+                  </div>
+                  <div class="component_testimonial_slide swiper-slide">
+                    <div class="component_testimonial_card">
+                      <div class="component_testimonial_stars"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"></div>
+                      <div class="spacer-regular"></div>
+                      <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                      <div class="spacer-regular"></div>
+                      <p class="text-weight-semibold">John Doe</p>
+                      <p>Fitness Director, Yacht Co.</p>
+                    </div>
+                  </div>
+                  <div class="component_testimonial_slide swiper-slide">
+                    <div class="component_testimonial_card">
+                      <div class="component_testimonial_stars"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon"></div>
+                      <div class="spacer-regular"></div>
+                      <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                      <div class="spacer-regular"></div>
+                      <p class="text-weight-semibold">John Doe</p>
+                      <p>Fitness Director, Yacht Co.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide w-embed w-script">
+          <script>
+  runOnDomReady(() => {
+     initSlider("#testimonial-slider", {
+    			slidesPerView: "auto",
+    			spaceBetween: 40,
+            navigation: {
+    					nextEl: '#testimonial-next',
+    					prevEl: '#testimonial-prev',
+  					},
+  		});
+  });
+</script>
+        </div>
+      </section>
+      <section class="component_faq_section">
+        <div class="background-color-primary">
+          <div class="padding-section-large">
+            <div class="page-width-narrower">
+              <div class="component_faq_headline">
+                <div class="component_divider_line"></div>
+                <div class="spacer-medium"></div>
+                <h2>FAQs</h2>
+                <div class="spacer-xsmall"></div>
+                <p>Find answers to your questions about our products and services below.</p>
+              </div>
+              <div class="spacer-xxlarge"></div>
+              <div class="component_faq_list">
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What is Panthor</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>How to order?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are your shipping options?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are your delivery timeframes?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>Can I customise my equipment?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are Panthors warranty details?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>Does Panthor have any installation requirements?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are your finance options?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+              <div class="spacer-xxlarge"></div>
+              <div class="component_faq_cta_wrap">
+                <div class="text-align-center">
+                  <h3 class="heading-style-h4">Still have questions?</h3>
+                  <div class="spacer-small"></div>
+                  <p>We&#x27;re here to help you!</p>
+                  <div class="spacer-regular"></div>
+                  <a href="{{ routes.root_url }}pages/contact" class="button-secondary w-button">Contact</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="component_product_overview_section">
+        <div class="padding-section-regular">
+          <div class="page-width">
+            <div class="component_product_overview_headline">
+              <div class="text-align-center">
+                <h2>Apparel &amp; Accesories</h2>
+                <div class="spacer-small"></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <div class="spacer-medium"></div>
+                <div class="button-group is-center">
+                  <a href="{{ routes.collections_url }}/all" class="button-secondary w-button">Shop All</a>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-xxlarge"></div>
+          </div>
+          <div class="page-width-full">
+            <div class="swiper-container">
+              <div id="product-slider" class="component_product_overview_swiper swiper">
+                <div class="component_product_overview_wrap swiper-wrapper">
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-1_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-1_1product-image-placeholder-1.webp' | asset_url }} 500w, {{ 'product-image-placeholder-1_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-2_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-2_1product-image-placeholder-2.webp' | asset_url }} 500w, {{ 'product-image-placeholder-2_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-3_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-3_1product-image-placeholder-3.webp' | asset_url }} 500w, {{ 'product-image-placeholder-3_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-1_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-1_1product-image-placeholder-1.webp' | asset_url }} 500w, {{ 'product-image-placeholder-1_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-1_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-1_1product-image-placeholder-1.webp' | asset_url }} 500w, {{ 'product-image-placeholder-1_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-2_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-2_1product-image-placeholder-2.webp' | asset_url }} 500w, {{ 'product-image-placeholder-2_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-1_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-1_1product-image-placeholder-1.webp' | asset_url }} 500w, {{ 'product-image-placeholder-1_1.webp' | asset_url }} 700w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_product_slide swiper-slide">
+                    <div class="component_product_card">
+                      <div class="component_product_card_top">
+                        <div class="product_card_image_wrap"><img src="{{ 'product-image-placeholder-4_1.webp' | asset_url }}" loading="lazy" width="350" height="400" alt="" sizes="(max-width: 479px) 100vw, 350px" srcset="{{ 'product-image-placeholder-4_1product-image-placeholder-4.webp' | asset_url }} 500w, {{ 'product-image-placeholder-4_1.webp' | asset_url }} 572w" class="component_product_card_image">
+                          <div class="component_product_image_overlay">
+                            <a data-w-id="f88ea6c6-924f-f986-556e-dc9ed864de8c" href="#" class="component_product_view_button w-inline-block">
+                              <div>View Details</div>
+                              <div class="button-secondary-icon-embed w-embed"><svg width="100%" height="100%" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M13.4697 8.53033C13.1768 8.23744 13.1768 7.76256 13.4697 7.46967C13.7626 7.17678 14.2374 7.17678 14.5303 7.46967L18.5303 11.4697C18.8232 11.7626 18.8232 12.2374 18.5303 12.5303L14.5303 16.5303C14.2374 16.8232 13.7626 16.8232 13.4697 16.5303C13.1768 16.2374 13.1768 15.7626 13.4697 15.4697L16.1893 12.75H6.5C6.08579 12.75 5.75 12.4142 5.75 12C5.75 11.5858 6.08579 11.25 6.5 11.25H16.1893L13.4697 8.53033Z" fill="currentColor"></path>
+                                </svg></div>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="spacer-small"></div>
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-small"></div>
+                      </div>
+                      <div class="component_product_card_bottom">
+                        <div class="component_product_card_bottom_item">
+                          <h3 class="heading-style-h6">Leather gym bag</h3>
+                          <p>$160</p>
+                        </div>
+                        <div class="component_product_card_add-wrap"><button class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide w-embed w-script">
+          <script>
+  runOnDomReady(() => {
+     initSlider("#product-slider", {
+    			slidesPerView: "auto",
+    			spaceBetween: 24,
+         breakpoints: {
+   				 0: {
+        		slidesPerView: 1
+  				  },
+             576: {
+        		slidesPerView: 2
+  				  },
+            768: {
+        		slidesPerView: "auto"
+  				  }
+          }
+  		});
+  });
+</script>
+        </div>
+      </section>
+      <section class="component_news_section">
+        <div class="component_news_overflow">
+          <div class="component_news_background"><img src="{{ 'panthor-watermark-faded-landscape.svg' | asset_url }}" loading="lazy" alt="" class="component_news_background_image"></div>
+          <div class="padding-section-regular">
+            <div class="page-width">
+              <div class="max-width-large align-center">
+                <div class="text-align-center">
+                  <h2>Panthor Insights and News</h2>
+                  <div class="spacer-small"></div>
+                  <p>Stay informed about our latest offerings and insights.</p>
+                  <div class="spacer-medium"></div>
+                  <a href="{{ routes.root_url }}blogs/news" class="button-secondary w-button">View All Blogs</a>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-xlarge"></div>
+            <div class="page-width-full">
+              <div class="swiper-container">
+                <div id="news-slider" class="component_news_slider swiper">
+                  <div class="component_news_wrap swiper-wrapper">
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" class="button-secondary is-icon w-inline-block">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" class="button-secondary is-icon w-inline-block">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" class="button-secondary is-icon w-inline-block">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" class="button-secondary is-icon w-inline-block">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" class="button-secondary is-icon w-inline-block">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" class="button-secondary is-icon w-inline-block">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide w-embed w-script">
+          <script>
+  runOnDomReady(() => {
+     initSlider("#news-slider", {
+    			slidesPerView: "auto",
+    			spaceBetween: 12
+  		});
+  });
+</script>
+        </div>
+      </section>
+    </main>
+<script>
+  runOnDomReady(() => {
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Imported from Webflow. Markup is preserved verbatim. To edit text/images, replace the static content in sections/page-product.liquid or split this into smaller sections."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ]
+}
+{% endschema %}

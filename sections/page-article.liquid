@@ -1,0 +1,374 @@
+<main class="main-wrapper">
+      <section class="article_hero_section">
+        <div class="page-width">
+          <div class="article_hero_wrap">
+            <div class="article_hero_wrap_item">
+              <div class="article_hero_content">
+                <a href="{{ blog.url | default: routes.root_url | append: 'blogs/news' }}" class="article_hero_link_back w-inline-block">
+                  <div class="article_hero_link_icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.29294 0.292969L0.585938 5.99997L6.29294 11.707L7.70694 10.293L3.41394 5.99997L7.70694 1.70697L6.29294 0.292969Z" fill="black"></path>
+                    </svg></div>
+                  <div class="text-weight-medium">View All</div>
+                </a>
+                <div class="spacer-medium"></div>
+                <div class="article_hero_widgets">
+                  <div class="article_hero_tag">{{ article.tags.first | default: 'Fitness' }}</div>
+                  <p>{% if article.metafields.custom.read_time %}{{ article.metafields.custom.read_time }}{% else %}5 minute read{% endif %}</p>
+                </div>
+                <div class="spacer-regular"></div>
+                <h1 class="article_hero_title">{{ article.title | default: 'Maximize Your Yacht&#x27;s Fitness Experience' }}</h1>
+                <div class="spacer-medium"></div>
+                <p>{% if article != blank %}Released on {{ article.published_at | date: '%d %b %Y' }}{% else %}Released on 15 Feb 2023{% endif %}</p>
+              </div>
+            </div>
+            <div class="article_hero_image_wrap">
+              {%- if article.image -%}
+                <img src="{{ article.image | image_url: width: 1752 }}" loading="lazy" sizes="(max-width: 1752px) 100vw, 1752px" alt="{{ article.image.alt | escape }}" class="article_hero_image">
+              {%- else -%}
+                <img src="{{ 'article-placeholder-image_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 1752px) 100vw, 1752px" srcset="{{ 'article-placeholder-image_1article-placeholder-image.webp' | asset_url }} 500w, {{ 'article-placeholder-image_1article-placeholder-image.webp' | asset_url }} 800w, {{ 'article-placeholder-image_1article-placeholder-image.webp' | asset_url }} 1080w, {{ 'article-placeholder-image_1article-placeholder-image.webp' | asset_url }} 1600w, {{ 'article-placeholder-image_1.webp' | asset_url }} 1752w" alt="" class="article_hero_image">
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="article_body_section">
+        <div class="background-color-alternate">
+          <div class="padding-section-large">
+            <div class="page-width">
+              <div class="max-width-large align-center">
+                <div class="text-rich-text w-richtext">
+                {%- if article != blank and article.content != blank -%}
+                  {{ article.content }}
+                {%- else -%}
+                  <h2>Introduction</h2>
+                  <p>Mi tincidunt elit, id quisque ligula ac diam, amet. Vel etiam suspendisse morbi eleifend faucibus eget vestibulum felis. Dictum quis montes, sit sit. Tellus aliquam enim urna, etiam. Mauris posuere vulputate arcu amet, vitae nisi, tellus tincidunt. At feugiat sapien varius id.</p>
+                  <p>Eget quis mi enim, leo lacinia pharetra, semper. Eget in volutpat mollis at volutpat lectus velit, sed auctor. Porttitor fames arcu quis fusce augue enim. Quis at habitant diam at. Suscipit tristique risus, at donec. In turpis vel et quam imperdiet. Ipsum molestie aliquet sodales id est ac volutpat.</p>
+                  <figure style="max-width:886pxpx" class="w-richtext-align-fullwidth w-richtext-figure-type-image">
+                    <div><img src="{{ 'lower-body_2.webp' | asset_url }}" loading="lazy" alt=""></div>
+                    <figcaption>Caption goes here</figcaption>
+                  </figure>
+                  <p>Dolor enim eu tortor urna sed duis nulla. Aliquam vestibulum, nulla odio nisl vitae. In aliquet pellentesque aenean hac vestibulum turpis mi bibendum diam. Tempor integer aliquam in vitae malesuada fringilla.</p>
+                  <p>Elit nisi in eleifend sed nisi. Pulvinar at orci, proin imperdiet commodo consectetur convallis risus. Sed condimentum enim dignissim adipiscing faucibus consequat, urna. Viverra purus et erat auctor aliquam. Risus, volutpat vulputate posuere purus sit congue convallis aliquet. Arcu id augue ut feugiat donec porttitor neque. Mauris, neque ultricies eu vestibulum, bibendum quam lorem id. Dolor lacus, eget nunc lectus in tellus, pharetra, porttitor.</p>
+                  <h2>Conclusion</h2>
+                  <p>Morbi sed imperdiet in ipsum, adipiscing elit dui lectus. Tellus id scelerisque est ultricies ultricies. Duis est sit sed leo nisl, blandit elit sagittis. Quisque tristique consequat quam sed. Nisl at scelerisque amet nulla purus habitasse.</p>
+                  <p>Nunc sed faucibus bibendum feugiat sed interdum. Ipsum egestas condimentum mi massa. In tincidunt pharetra consectetur sed duis facilisis metus. Etiam egestas in nec sed et. Quis lobortis at sit dictum eget nibh tortor commodo cursus.</p>
+                  <p>Odio felis sagittis, morbi feugiat tortor vitae feugiat fusce aliquet. Nam elementum urna nisi aliquet erat dolor enim. Ornare id morbi eget ipsum. Aliquam senectus neque ut id eget consectetur dictum. Donec posuere pharetra odio consequat scelerisque et, nunc tortor.Nulla adipiscing erat a erat. Condimentum lorem posuere gravida enim posuere cursus diam.</p>
+                {%- endif -%}
+                </div>
+                <div class="spacer-xlarge"></div>
+                <div class="article_body_widget_wrap">
+                  <div class="article_body_widget_wrap_item">
+                    <p class="text-size-medium text-weight-semibold">Share this Resource</p>
+                    <div class="spacer-small"></div>
+                    <div class="article_body_social_list">
+                      <a href="#" class="article_body_social_link w-inline-block">
+                        <div class="article_body_social_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="16" fill="#FF8856"></rect>
+                            <path d="M8.22172 23.7777C8.68559 24.2423 9.23669 24.6106 9.84334 24.8615C10.45 25.1123 11.1002 25.2409 11.7567 25.2397C12.4133 25.2409 13.0637 25.1123 13.6705 24.8614C14.2774 24.6105 14.8286 24.2422 15.2927 23.7777L18.1207 20.9487L16.7067 19.5347L13.8787 22.3637C13.3152 22.9247 12.5524 23.2397 11.7572 23.2397C10.962 23.2397 10.1992 22.9247 9.63572 22.3637C9.07422 21.8004 8.75892 21.0375 8.75892 20.2422C8.75892 19.4469 9.07422 18.684 9.63572 18.1207L12.4647 15.2927L11.0507 13.8787L8.22172 16.7067C7.28552 17.6452 6.75977 18.9166 6.75977 20.2422C6.75977 21.5678 7.28552 22.8393 8.22172 23.7777ZM23.7777 15.2927C24.7134 14.354 25.2388 13.0826 25.2388 11.7572C25.2388 10.4318 24.7134 9.16043 23.7777 8.22172C22.8393 7.28552 21.5678 6.75977 20.2422 6.75977C18.9166 6.75977 17.6452 7.28552 16.7067 8.22172L13.8787 11.0507L15.2927 12.4647L18.1207 9.63572C18.6842 9.07471 19.447 8.75975 20.2422 8.75975C21.0374 8.75975 21.8002 9.07471 22.3637 9.63572C22.9252 10.199 23.2405 10.9619 23.2405 11.7572C23.2405 12.5526 22.9252 13.3154 22.3637 13.8787L19.5347 16.7067L20.9487 18.1207L23.7777 15.2927Z" fill="black"></path>
+                            <path d="M12.4637 20.9498L11.0487 19.5358L19.5357 11.0498L20.9497 12.4648L12.4637 20.9498Z" fill="black"></path>
+                          </svg></div>
+                      </a>
+                      <a href="#" class="article_body_social_link w-inline-block">
+                        <div class="article_body_social_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="16" fill="#FF8856"></rect>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 7.24268C7.67157 7.24268 7 7.91425 7 8.74268V23.7427C7 24.5711 7.67157 25.2427 8.5 25.2427H23.5C24.3284 25.2427 25 24.5711 25 23.7427V8.74268C25 7.91425 24.3284 7.24268 23.5 7.24268H8.5ZM12.5208 11.2454C12.5264 12.2016 11.8106 12.7909 10.9612 12.7866C10.1611 12.7824 9.46357 12.1454 9.46779 11.2468C9.47201 10.4016 10.14 9.72243 11.0076 9.74212C11.8879 9.76181 12.5264 10.4073 12.5208 11.2454ZM16.2797 14.0044H13.7597H13.7583V22.5643H16.4217V22.3646C16.4217 21.9847 16.4214 21.6047 16.4211 21.2246C16.4203 20.2108 16.4194 19.1959 16.4246 18.1824C16.426 17.9363 16.4372 17.6804 16.5005 17.4455C16.7381 16.568 17.5271 16.0013 18.4074 16.1406C18.9727 16.2291 19.3467 16.5568 19.5042 17.0898C19.6013 17.423 19.6449 17.7816 19.6491 18.129C19.6605 19.1766 19.6589 20.2242 19.6573 21.2719C19.6567 21.6417 19.6561 22.0117 19.6561 22.3815V22.5629H22.328V22.3576C22.328 21.9056 22.3278 21.4537 22.3275 21.0018C22.327 19.8723 22.3264 18.7428 22.3294 17.6129C22.3308 17.1024 22.276 16.599 22.1508 16.1054C21.9638 15.3713 21.5771 14.7638 20.9485 14.3251C20.5027 14.0129 20.0133 13.8118 19.4663 13.7893C19.404 13.7867 19.3412 13.7833 19.2781 13.7799C18.9984 13.7648 18.7141 13.7494 18.4467 13.8033C17.6817 13.9566 17.0096 14.3068 16.5019 14.9241C16.4429 14.9949 16.3852 15.0668 16.2991 15.1741L16.2797 15.1984V14.0044ZM9.68164 22.5671H12.3324V14.01H9.68164V22.5671Z" fill="black"></path>
+                          </svg></div>
+                      </a>
+                      <a href="#" class="article_body_social_link w-inline-block">
+                        <div class="article_body_social_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="16" fill="#FF8856"></rect>
+                            <path d="M21.1761 8.24268H23.9362L17.9061 15.0201L25 24.2427H19.4456L15.0951 18.6493L10.1172 24.2427H7.35544L13.8052 16.9935L7 8.24268H12.6954L16.6279 13.3553L21.1761 8.24268ZM20.2073 22.6181H21.7368L11.8644 9.78196H10.2232L20.2073 22.6181Z" fill="black"></path>
+                          </svg></div>
+                      </a>
+                      <a href="#" class="article_body_social_link w-inline-block">
+                        <div class="article_body_social_icon w-embed"><svg width="100%" height="100%" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="32" height="32" rx="16" fill="#FF8856"></rect>
+                            <path d="M26 16.3038C26 10.7472 21.5229 6.24268 16 6.24268C10.4771 6.24268 6 10.7472 6 16.3038C6 21.3255 9.65684 25.4879 14.4375 26.2427V19.2121H11.8984V16.3038H14.4375V14.0872C14.4375 11.5656 15.9305 10.1728 18.2146 10.1728C19.3088 10.1728 20.4531 10.3693 20.4531 10.3693V12.8453H19.1922C17.95 12.8453 17.5625 13.6209 17.5625 14.4166V16.3038H20.3359L19.8926 19.2121H17.5625V26.2427C22.3432 25.4879 26 21.3257 26 16.3038Z" fill="black"></path>
+                          </svg></div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="article_body_widget_wrap_item">
+                    <div class="article_body_tag_list">
+                      {%- if article != blank and article.tags.size > 0 -%}
+                        {%- for tag in article.tags -%}
+                          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article_body_tag">{{ tag }}</a>
+                        {%- endfor -%}
+                      {%- else -%}
+                        <a href="#" class="article_body_tag">Fitness Equipment</a>
+                        <a href="#" class="article_body_tag">Luxury Yachting</a>
+                        <a href="#" class="article_body_tag">Marine Fitness</a>
+                        <a href="#" class="article_body_tag">Wellness at Sea</a>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+                <div class="spacer-large"></div>
+                <div class="component_divider_line is-dark"></div>
+                <div class="spacer-large"></div>
+                <div class="component_author_wrap">
+                  <div class="component_author_image_wrap"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="component_author_image"></div>
+                  <div class="component_author_details_wrap">
+                    <p class="text-weight-semibold">John Doe</p>
+                    <p>Fitness Expert, Panthor</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="component_news_section">
+        <div class="component_news_overflow">
+          <div class="component_news_background"><img src="{{ 'panthor-watermark-faded-landscape.svg' | asset_url }}" loading="lazy" alt="" class="component_news_background_image"></div>
+          <div class="padding-section-regular">
+            <div class="page-width">
+              <div class="max-width-large align-center">
+                <div class="text-align-center">
+                  <h2>Panthor Insights and News</h2>
+                  <div class="spacer-small"></div>
+                  <p>Stay informed about our latest offerings and insights.</p>
+                  <div class="spacer-medium"></div>
+                  <a href="{{ routes.root_url }}blogs/news" class="button-secondary w-button">View All Blogs</a>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-xlarge"></div>
+            <div class="page-width-full">
+              <div class="swiper-container">
+                <div id="news-slider" class="component_news_slider swiper">
+                  <div class="component_news_wrap swiper-wrapper">
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" aria-current="page" class="button-secondary is-icon w-inline-block w--current">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" aria-current="page" class="button-secondary is-icon w-inline-block w--current">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" aria-current="page" class="button-secondary is-icon w-inline-block w--current">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" aria-current="page" class="button-secondary is-icon w-inline-block w--current">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" aria-current="page" class="button-secondary is-icon w-inline-block w--current">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="component_news_slide swiper-slide">
+                      <div class="component_news_card"><img src="{{ 'blog-placeholder-image_1.webp' | asset_url }}" loading="lazy" width="445" height="510" alt="" srcset="{{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 500w, {{ 'blog-placeholder-image_1blog-placeholder-image.webp' | asset_url }} 800w, {{ 'blog-placeholder-image_1.webp' | asset_url }} 1029w" sizes="(max-width: 479px) 100vw, 445px" class="component_news_image">
+                        <div class="component_news_content_wrap">
+                          <div class="component_news_content">
+                            <h3 class="heading-style-h6">Innovations in Marine Fitness Equipment</h3>
+                            <div class="spacer-xsmall"></div>
+                            <p>Discover how our equipment enhances fitness on luxury yachts.</p>
+                            <div class="spacer-regular"></div>
+                            <div class="button-group">
+                              <a href="{{ routes.root_url }}blogs/news" aria-current="page" class="button-secondary is-icon w-inline-block w--current">
+                                <div>Read Article</div>
+                                <div class="button-icon w-embed"><svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.70697 11.8378L7.41397 6.13083L1.70697 0.423828L0.292969 1.83783L4.58597 6.13083L0.292969 10.4238L1.70697 11.8378Z" fill="currentColor"></path>
+                                  </svg></div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide w-embed w-script">
+          <script>
+  runOnDomReady(() => {
+     initSlider("#news-slider", {
+    			slidesPerView: "auto",
+    			spaceBetween: 12
+  		});
+  });
+</script>
+        </div>
+      </section>
+      <section class="component_platform_section">
+        <div class="padding-section-regular">
+          <div class="page-width">
+            <div class="component_platform_headline">
+              <div class="component_divider_line"></div>
+              <div class="spacer-medium"></div>
+              <h2>Environments Panthor Inhabits</h2>
+              <div class="spacer-xxsmall"></div>
+              <div class="spacer-xsmall"></div>
+              <div class="max-width-medium">
+                <p>Crafted in lavish materials and low quantities, Panthor has been designed to inhabit environments of the highest standard.</p>
+              </div>
+            </div>
+            <div class="spacer-xxlarge"></div>
+            <div class="component_platform_card_grid">
+              <div id="w-node-_7549129c-ec81-bf4c-b96f-b65b5efdfe4b-10384095" data-w-id="7549129c-ec81-bf4c-b96f-b65b5efdfe4b" class="component_platform_card_wrapper">
+                <div class="component_platform_card_content">
+                  <h3 class="heading-style-h4">Superyachts</h3>
+                  <p>Seamlessly designed to suit life at sea. Luxury, performance, and precision in motion.</p>
+                </div>
+                <div id="w-node-ae55e725-6d07-ec7e-a8e7-39acbe0b9c07-10384095" class="component_platform_card_image_wrapper"><img src="{{ 'superyachts_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'superyachts_1superyachts.webp' | asset_url }} 500w, {{ 'superyachts_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"></div>
+              </div>
+              <div id="w-node-_2bd73e41-03e4-551a-9827-4307e518f54c-10384095" data-w-id="2bd73e41-03e4-551a-9827-4307e518f54c" class="component_platform_card_wrapper">
+                <div class="component_platform_card_content">
+                  <h3 class="heading-style-h4">Boutique Studios &amp; Apartments</h3>
+                  <p>A design that feels custom-built for your luxury space, in a size that doesn’t get in the way.</p>
+                </div>
+                <div id="w-node-_2bd73e41-03e4-551a-9827-4307e518f552-10384095" class="component_platform_card_image_wrapper"><img src="{{ 'botique-studios_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'botique-studios_1botique-studios.webp' | asset_url }} 500w, {{ 'botique-studios_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"><img src="{{ 'botique-studios_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'botique-studios_1botique-studios.webp' | asset_url }} 500w, {{ 'botique-studios_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"></div>
+              </div>
+              <div id="w-node-_518c341f-4bfc-a88a-2e0c-40d9f32e96bc-10384095" data-w-id="518c341f-4bfc-a88a-2e0c-40d9f32e96bc" class="component_platform_card_wrapper">
+                <div class="component_platform_card_content">
+                  <h3 class="heading-style-h4">Private Jets</h3>
+                  <p>Take your training global, even at 40,000 feet.</p>
+                </div>
+                <div id="w-node-_518c341f-4bfc-a88a-2e0c-40d9f32e96c2-10384095" class="component_platform_card_image_wrapper"><img src="{{ 'private-jets_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'private-jets_1private-jets.webp' | asset_url }} 500w, {{ 'private-jets_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="component_newsletter_section">
+        <div class="padding-section-regular">
+          <div class="page-width-narrower">
+            <div class="component_newsletter_wrap">
+              <div class="component_newsletter_wrap_item">
+                <div class="component_newsletter_headline">
+                  <h2>Never Miss an Update</h2>
+                  <div class="spacer-small"></div>
+                  <p>Stay updated on the latest Panthor product news and releases.</p>
+                </div>
+              </div>
+              <div class="component_newsletter_wrap_item">
+                <div class="component_newsletter_block w-form">
+                  {%- form 'customer', id: 'wf-form-Newsletter-6', class: 'component_newsletter_form' -%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <label for="Email-Newsletter-6" class="form_label">Email</label>
+                    <input class="form_input w-input" maxlength="256" name="contact[email]" data-name="Email Newsletter" placeholder="panthor@email.com" type="email" id="Email-Newsletter-6" required="">
+                    <div class="spacer-medium"></div>
+                    <label class="w-checkbox form_checkbox_field"><input type="checkbox" name="contact[accepts_marketing]" id="Newsletter-Terms-6" data-name="Newsletter Terms" required="" class="w-checkbox-input form_checkbox"><span class="text-size-tiny w-form-label" for="Newsletter-Terms-6">I confirm I wish to receive emails from Panthor. You may opt out of these emails at any time.</span></label>
+                    <div class="spacer-medium"></div>
+                    <div class="button-group"><input type="submit" data-wait="Please wait..." class="button-tertiary w-button" value="Submit"></div>
+                    {% render 'wf-form-states', form: form %}
+                  {%- endform -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="component_newsletter_vector_wrap"><img src="{{ 'panthor-watermark-faded-landscape.svg' | asset_url }}" loading="lazy" width="679" height="539" alt="" class="component_newsletter_vector"></div>
+      </section>
+    </main>
+<script>
+  runOnDomReady(() => {
+     initSlider("#news-slider", {
+    			slidesPerView: "auto",
+    			spaceBetween: 12
+  		});
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Imported from Webflow. Markup is preserved verbatim. To edit text/images, replace the static content in sections/page-article.liquid or split this into smaller sections."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Article"
+    }
+  ]
+}
+{% endschema %}

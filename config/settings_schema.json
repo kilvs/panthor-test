@@ -1,0 +1,35 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Panthor (Webflow → Shopify)",
+    "theme_version": "1.0.0",
+    "theme_author": "Panthor",
+    "theme_documentation_url": "https://shopify.dev/themes",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Layout uses the original Webflow markup verbatim. CSS lives in assets/panthor-dev.css. Do not modify class names."
+      }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "text", "id": "social_facebook_link", "label": "Facebook URL", "default": "https://facebook.com/" },
+      { "type": "text", "id": "social_instagram_link", "label": "Instagram URL", "default": "https://instagram.com/" },
+      { "type": "text", "id": "social_twitter_link", "label": "X / Twitter URL", "default": "https://x.com/" },
+      { "type": "text", "id": "social_linkedin_link", "label": "LinkedIn URL", "default": "https://linkedin.com/" },
+      { "type": "text", "id": "social_youtube_link", "label": "YouTube URL", "default": "https://youtube.com/" }
+    ]
+  },
+  {
+    "name": "Currency",
+    "settings": [
+      { "type": "paragraph", "content": "Currency formatting is set in Shopify admin → Settings → General." }
+    ]
+  }
+]

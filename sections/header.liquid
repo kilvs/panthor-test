@@ -1,0 +1,113 @@
+<header class="component_header">
+  <div class="page-width">
+    <div class="component_header_wrap">
+      <div class="component_header_logo_child">
+        <a href="{{ routes.root_url }}"{% if template == 'index' %} aria-current="page"{% endif %} class="component_header_logo_link w-inline-block{% if template == 'index' %} w--current{% endif %}">
+          {%- if section.settings.logo != blank -%}
+            <img src="{{ section.settings.logo | image_url: width: 400 }}" loading="lazy" alt="{{ shop.name | escape }}" class="component_header_logo">
+          {%- else -%}
+            <div class="component_header_logo w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 193 30" fill="none">
+              <path d="M0 13.7152H19.7708C18.3787 17.5339 14.7341 20.0777 10.6517 20.0777H7.4819V29.2694H0.00154321V13.7136L0 13.7152Z" fill="currentColor"></path>
+              <path d="M7.48036 7.13477V10.8246H0V0.772217H10.6501C16.0075 0.772217 20.3505 5.09421 20.3505 10.4257C20.3505 10.5592 20.3474 10.6927 20.3428 10.8246H12.9395C13.1615 9.02037 11.8711 7.38025 10.0596 7.15932C9.92704 7.14244 9.79292 7.13477 9.65879 7.13477H7.4819H7.48036Z" fill="currentColor"></path>
+              <path d="M33.6386 13.7151H26.7132L21.5624 29.2709H29.6933L31.0408 23.9562H40.5115L41.8589 29.2709H49.9899L44.839 13.7151H37.9137L38.9312 17.7287H32.6195L33.637 13.7151H33.6386Z" fill="currentColor"></path>
+              <path d="M34.3724 10.8246H27.6721L31.0007 0.772217H40.5546L43.8832 10.8246H37.1829L35.7784 5.28446L34.3739 10.8246H34.3724Z" fill="currentColor"></path>
+              <path d="M53.0884 13.7151H59.6005V29.2709H53.0884V13.7151Z" fill="currentColor"></path>
+              <path d="M62.3232 0.772217H53.0884V10.8246H59.6005V9.69237L60.1972 10.8246H67.6236L62.3232 0.772217Z" fill="currentColor"></path>
+              <path d="M79.4011 10.8246V0.772217H72.8889V10.8246H79.4011Z" fill="currentColor"></path>
+              <path d="M69.1472 13.7151L72.889 20.8125V13.7151H79.4011V29.2709H69.9212L61.7208 13.7151H69.1472Z" fill="currentColor"></path>
+              <path d="M104.657 0.772217H83.5232V7.65181H90.3499V10.8262H97.8302V7.65181H104.657V0.772217Z" fill="currentColor"></path>
+              <path d="M90.35 13.7151H97.8303V29.2709H90.35V13.7151Z" fill="currentColor"></path>
+              <path d="M108.545 0.772217H116.026V10.8246H108.545V0.772217Z" fill="currentColor"></path>
+              <path d="M125.085 0.772217H132.565V10.8246H125.085V0.772217Z" fill="currentColor"></path>
+              <path d="M108.545 13.7151H132.565V29.2709H125.085V17.744H116.027V29.2709H108.547V13.7151H108.545Z" fill="currentColor"></path>
+              <path d="M145.531 13.7151C145.19 16.3187 145.758 18.9592 147.136 21.1976C148.602 23.4315 151.61 24.0606 153.856 22.6015C154.419 22.2363 154.9 21.7576 155.267 21.1976C156.645 18.9592 157.212 16.3187 156.872 13.7151H164.835C165.234 18.8426 163.011 23.8258 158.919 26.968C154.3 30.2451 148.101 30.2451 143.48 26.968C139.381 23.8335 137.166 18.841 137.599 13.7151H145.528H145.531Z" fill="currentColor"></path>
+              <path d="M146.016 10.8246C146.326 9.68615 146.986 8.67354 147.905 7.9279C149.838 6.41052 152.565 6.41052 154.499 7.9279C155.418 8.67201 156.077 9.68615 156.387 10.8246H164.302C163.584 6.4903 160.555 2.88634 156.395 1.41652C153.025 0.29345 149.379 0.29345 146.009 1.41652C141.849 2.88634 138.82 6.4903 138.101 10.8246H146.016Z" fill="currentColor"></path>
+              <path d="M177.077 7.13477V10.8246H169.597V0.772217H180.247C185.604 0.772217 189.947 5.09421 189.947 10.4257C189.947 10.5592 189.944 10.6927 189.94 10.8246H182.536C182.758 9.02037 181.468 7.38025 179.656 7.15932C179.524 7.14244 179.39 7.13477 179.256 7.13477H177.079H177.077Z" fill="currentColor"></path>
+              <path d="M188.814 13.7151H169.596V29.2709H177.076V18.7659H179.156L185.52 29.2709H193L185.398 16.7238C186.792 16.0502 187.973 15.01 188.813 13.7151H188.814Z" fill="currentColor"></path>
+            </svg></div>
+          {%- endif -%}
+        </a>
+      </div>
+      <div class="component_header_navigation">
+        <div class="component_header_navigation_item is-nav">
+          <div class="component_offcanvas">
+            <div class="component_nav_list_wrap">
+              <div class="component_nav_list_link">
+                {%- if section.settings.main_menu != blank and linklists[section.settings.main_menu].links.size > 0 -%}
+                  {%- for link in linklists[section.settings.main_menu].links -%}
+                    <a href="{{ link.url }}" class="component_nav_link{% if link.active %} w--current{% endif %}">{{ link.title }}</a>
+                  {%- endfor -%}
+                {%- else -%}
+                  <a href="{{ routes.collections_url }}/all" class="component_nav_link">Products</a>
+                  <a href="{{ routes.root_url }}pages/affiliates" class="component_nav_link">Affiliates</a>
+                  <a href="{{ routes.root_url }}pages/about" class="component_nav_link">About Us</a>
+                  <a href="{{ routes.root_url }}blogs/news" class="component_nav_link">Blog</a>
+                  <a href="{{ routes.root_url }}pages/contact" class="component_nav_link">Contact</a>
+                {%- endif -%}
+              </div>
+              <div class="component_nav_list_wrap_icon">
+                <div class="component_nav_icon_item hide-tablet">
+                  <a href="{{ routes.search_url }}" class="w-inline-block">
+                    <img src="{{ 'search-icon.svg' | asset_url }}" loading="lazy" width="20" height="20" alt="Search" class="component_nav_list_icon">
+                  </a>
+                </div>
+                <div class="component_nav_icon_item">
+                  <a href="{{ routes.account_url }}" class="w-inline-block">
+                    <img src="{{ 'profile-icon.svg' | asset_url }}" loading="lazy" width="20" height="20" alt="Account" class="component_nav_list_icon">
+                    <div class="show-tablet">
+                      <p class="text-color-secondary">{% if customer %}Account{% else %}Log In{% endif %}</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="component_nav_icon_item">
+                  <a href="{{ routes.cart_url }}" class="w-inline-block">
+                    <img src="{{ 'cart-icon.svg' | asset_url }}" loading="lazy" width="20" height="20" alt="Cart" class="component_nav_list_icon">
+                    <div class="show-tablet">
+                      <p class="text-color-secondary">Cart{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="component_header_navigation_item">
+          <div class="component_header_widget_wrap">
+            <div class="component_header_widget_item">
+              <a href="{{ section.settings.cta_url | default: routes.collections_url }}" class="button-primary is-widget w-button">{{ section.settings.cta_label_short | default: 'cUSTOMISE' }} <span class="hide-mobile-portrait">{{ section.settings.cta_label_mid | default: 'YOUR ' }}</span>{{ section.settings.cta_label_end | default: 'MACHINE' }}</a>
+              <a href="{{ section.settings.cta_url | default: routes.collections_url }}" class="button-secondary is-desktop w-button">{{ section.settings.cta_label_full | default: 'Customise your machine' }}</a>
+            </div>
+            <div class="component_header_widget_item is-burger">
+              <div data-w-id="ff451305-ab5f-5f04-9caf-f738f2c5f5e8" class="component_header_burger">
+                <div class="component_header_burger_line is-top"></div>
+                <div class="component_header_burger_line is-middle"></div>
+                <div class="component_header_burger_line is-bottom"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "shopify-section-header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (leave empty for default SVG)" },
+    { "type": "link_list", "id": "main_menu", "label": "Main menu", "info": "Falls back to static links if empty." },
+    { "type": "header", "content": "Customise CTA Button" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" },
+    { "type": "text", "id": "cta_label_short", "label": "CTA label (short, primary button)", "default": "cUSTOMISE" },
+    { "type": "text", "id": "cta_label_mid", "label": "CTA label (mid)", "default": "YOUR " },
+    { "type": "text", "id": "cta_label_end", "label": "CTA label (end)", "default": "MACHINE" },
+    { "type": "text", "id": "cta_label_full", "label": "CTA label (secondary button)", "default": "Customise your machine" }
+  ],
+  "presets": [
+    { "name": "Header" }
+  ]
+}
+{% endschema %}

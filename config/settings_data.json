@@ -1,0 +1,18 @@
+{
+  "current": {
+    "social_facebook_link": "https://facebook.com/",
+    "social_instagram_link": "https://instagram.com/",
+    "social_twitter_link": "https://x.com/",
+    "social_linkedin_link": "https://linkedin.com/",
+    "social_youtube_link": "https://youtube.com/"
+  },
+  "presets": {
+    "Default": {
+      "social_facebook_link": "https://facebook.com/",
+      "social_instagram_link": "https://instagram.com/",
+      "social_twitter_link": "https://x.com/",
+      "social_linkedin_link": "https://linkedin.com/",
+      "social_youtube_link": "https://youtube.com/"
+    }
+  }
+}

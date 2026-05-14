@@ -1,0 +1,106 @@
+<footer class="component_footer">
+  <div class="component_footer_logo_wrap">
+    {%- if section.settings.footer_logo != blank -%}
+      <img src="{{ section.settings.footer_logo | image_url: width: 1418 }}" loading="lazy" width="1418" height="212" alt="" class="component_footer_logo">
+    {%- else -%}
+      <img src="{{ 'panthor.svg' | asset_url }}" loading="lazy" width="1418" height="212" alt="" class="component_footer_logo">
+    {%- endif -%}
+  </div>
+  <div class="page-width">
+    <div class="component_footer_nav_wrap">
+      <div class="spacer-medium hide-tablet"></div>
+      <div class="componet_footer_nav">
+        {%- if section.settings.footer_menu != blank and linklists[section.settings.footer_menu].links.size > 0 -%}
+          {%- for link in linklists[section.settings.footer_menu].links -%}
+            <a href="{{ link.url }}" class="component_footer_nav_link{% if link.active %} w--current{% endif %}">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="{{ routes.root_url }}"{% if template == 'index' %} aria-current="page" class="component_footer_nav_link w--current"{% else %} class="component_footer_nav_link"{% endif %}>Home</a>
+          <a href="{{ routes.root_url }}pages/about" class="component_footer_nav_link">About Us</a>
+          <a href="{{ routes.collections_url }}/all" class="component_footer_nav_link">Products</a>
+          <a href="{{ routes.root_url }}pages/affiliates" class="component_footer_nav_link">Affiliates</a>
+          <a href="{{ routes.root_url }}blogs/news" class="component_footer_nav_link">Blogs</a>
+          <a href="{{ routes.root_url }}pages/contact" class="component_footer_nav_link">Contact</a>
+        {%- endif -%}
+      </div>
+      <div class="spacer-medium"></div>
+    </div>
+    <div class="component_footer_social_list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'social' -%}
+          <a href="{{ block.settings.url | default: '#' }}" class="component_footer_social_link w-inline-block"{{ block.shopify_attributes }}>
+            <div class="icon-embed w-embed">{% render 'social-icon', platform: block.settings.platform %}</div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="component_footer_bottom_wrap">
+      <div class="component_footer_bottom">
+        <div class="component_footer_bottom_item">
+          <p>{{ section.settings.copyright | default: '© 2025 Panthor. All rights reserved.' }}</p>
+        </div>
+        <div class="component_footer_bottom_item">
+          <div class="component_footer_terms">
+            <a href="{{ section.settings.privacy_url | default: '/pages/legal' }}" class="component_footer_nav_link">{{ section.settings.privacy_label | default: 'Privacy Policy' }}</a>
+            <a href="{{ section.settings.terms_url | default: '/pages/legal' }}" class="component_footer_nav_link">{{ section.settings.terms_label | default: 'Terms of Service' }}</a>
+            <a href="{{ section.settings.cookies_url | default: '/pages/legal' }}" class="component_footer_nav_link">{{ section.settings.cookies_label | default: 'Cookie Settings' }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "shopify-section-footer",
+  "settings": [
+    { "type": "image_picker", "id": "footer_logo", "label": "Footer logo (leave empty for default panthor.svg)" },
+    { "type": "link_list", "id": "footer_menu", "label": "Footer menu", "info": "Falls back to static links if empty." },
+    { "type": "text", "id": "copyright", "label": "Copyright line", "default": "© 2025 Panthor. All rights reserved." },
+    { "type": "header", "content": "Bottom legal links" },
+    { "type": "text", "id": "privacy_label", "label": "Privacy label", "default": "Privacy Policy" },
+    { "type": "url", "id": "privacy_url", "label": "Privacy URL" },
+    { "type": "text", "id": "terms_label", "label": "Terms label", "default": "Terms of Service" },
+    { "type": "url", "id": "terms_url", "label": "Terms URL" },
+    { "type": "text", "id": "cookies_label", "label": "Cookies label", "default": "Cookie Settings" },
+    { "type": "url", "id": "cookies_url", "label": "Cookies URL" }
+  ],
+  "blocks": [
+    {
+      "type": "social",
+      "name": "Social link",
+      "settings": [
+        {
+          "type": "select",
+          "id": "platform",
+          "label": "Platform",
+          "options": [
+            { "value": "facebook", "label": "Facebook" },
+            { "value": "instagram", "label": "Instagram" },
+            { "value": "twitter", "label": "X / Twitter" },
+            { "value": "linkedin", "label": "LinkedIn" },
+            { "value": "youtube", "label": "YouTube" }
+          ],
+          "default": "facebook"
+        },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "social", "settings": { "platform": "facebook" } },
+      { "type": "social", "settings": { "platform": "instagram" } },
+      { "type": "social", "settings": { "platform": "twitter" } },
+      { "type": "social", "settings": { "platform": "linkedin" } },
+      { "type": "social", "settings": { "platform": "youtube" } }
+    ]
+  },
+  "presets": [
+    { "name": "Footer" }
+  ]
+}
+{% endschema %}

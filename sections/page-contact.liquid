@@ -1,0 +1,227 @@
+<main class="main-wrapper">
+      <section class="contact_form_section">
+        <div class="page-width">
+          <div class="contact_form_grid">
+            <div class="contact_form_grid_item">
+              <div class="contact_form_wrap">
+                <div class="component_form_block w-form">
+                  {%- form 'contact', id: 'wf-form-Enquiry-Form', class: 'component_form' -%}
+                    <div class="component_form_headline">
+                      <h2 class="component_form_heading">Join Our Affiliate Program</h2>
+                      <div class="spacer-regular"></div>
+                      <p class="text-size-medium">Enquire below and we’ll get back to you soon.</p>
+                    </div>
+                    <div class="spacer-medium"></div>
+                    <div class="component_form_field_wrap">
+                      <div class="component_form_field_group"><label for="Name-3" class="form_label">Your Name</label><input class="component_form_input w-input" maxlength="256" name="contact[name]" data-name="Name" placeholder="" type="text" id="Name-3" required></div>
+                      <div class="component_form_field_group"><label for="Email-4" class="form_label">Email</label><input class="component_form_input w-input" maxlength="256" name="contact[email]" data-name="Email" placeholder="" type="email" id="Email-4" required></div>
+                      <div class="component_form_field_group"><label for="Message-3" class="form_label">Your Message</label><textarea placeholder="Write your message..." maxlength="5000" id="Message-3" name="contact[body]" data-name="Message" class="component_form_input is-textarea w-input"></textarea></div>
+                      <div class="component_form_field_group"><label class="w-checkbox component_form_checkbox"><input type="checkbox" id="Affiliate-Terms" name="contact[accepts_terms]" data-name="Affiliate Terms" required="" class="w-checkbox-input component_form_checkbox_input"><span class="form_label w-form-label" for="Affiliate-Terms">I agree to Terms</span></label></div>
+                    </div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="spacer-medium"></div>
+                    <div class="button-group"><input type="submit" data-wait="Please wait..." class="button-primary w-button" value="Submit"></div>
+                    {% render 'wf-form-states', form: form %}
+                  {%- endform -%}
+                </div>
+              </div>
+            </div>
+            <div class="contact_form_grid_item">
+              <div class="contact_form_image_wrap"><img src="{{ 'get-in-touch_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 1296px) 100vw, 1296px" srcset="{{ 'get-in-touch_1get-in-touch.webp' | asset_url }} 500w, {{ 'get-in-touch_1get-in-touch.webp' | asset_url }} 800w, {{ 'get-in-touch_1get-in-touch.webp' | asset_url }} 1080w, {{ 'get-in-touch_1.webp' | asset_url }} 1296w" alt="" class="contact_form-image"></div>
+            </div>
+          </div>
+        </div>
+        <div class="contact_form-vector_wrap"><img src="{{ 'panthor-gradient-icon.webp' | asset_url }}" loading="lazy" sizes="(max-width: 1728px) 100vw, 1728px" srcset="{{ 'panthor-gradient-icon-p-500.png' | asset_url }} 500w, {{ 'panthor-gradient-icon-p-800.png' | asset_url }} 800w, {{ 'panthor-gradient-icon-p-1080.png' | asset_url }} 1080w, {{ 'panthor-gradient-icon-p-1600.png' | asset_url }} 1600w, {{ 'panthor-gradient-icon.webp' | asset_url }} 1728w" alt="" class="contact_form_vector"></div>
+      </section>
+      <section data-w-id="50094555-78cb-5536-c510-0580da8f2645" class="contact_details_section">
+        <div class="background-color-secondary">
+          <div class="padding-section-large">
+            <div class="page-width">
+              <div class="contact_details_wrap">
+                <div class="component_divider_line"></div>
+                <div class="spacer-regular"></div>
+                <div class="max-width-large">
+                  <h2>Let’s Get Moving</h2>
+                  <div class="spacer-regular"></div>
+                  <p>We’re here to help you with any inquiries to get you moving ahead.</p>
+                </div>
+                <div class="spacer-xxlarge"></div>
+                <div class="contact_details_list">
+                  <div class="contact_details_item">
+                    <a href="#" class="contact_details_card w-inline-block"><img src="{{ 'email.svg' | asset_url }}" loading="lazy" width="24" height="24" alt="" class="contat_details_icon">
+                      <div class="spacer-regular"></div>
+                      <h1 class="heading-style-h4">Email</h1>
+                      <div class="spacer-small"></div>
+                      <p>Reach us at hello@panthor.com for any questions.</p>
+                      <div class="spacer-regular"></div>
+                      <p>hello@relume.io</p>
+                    </a>
+                  </div>
+                  <div class="contact_details_item">
+                    <a href="#" class="contact_details_card w-inline-block"><img src="{{ 'live-support.svg' | asset_url }}" loading="lazy" width="24" height="24" alt="" class="contat_details_icon">
+                      <div class="spacer-regular"></div>
+                      <h1 class="heading-style-h4">Live Support</h1>
+                      <div class="spacer-small"></div>
+                      <p>Reach us at hello@panthor.com for any questions.</p>
+                      <div class="spacer-regular"></div>
+                      <p>Start Chat Now</p>
+                    </a>
+                  </div>
+                  <div class="contact_details_item">
+                    <a href="#" class="contact_details_card w-inline-block"><img src="{{ 'phone.svg' | asset_url }}" loading="lazy" width="24" height="24" alt="" class="contat_details_icon">
+                      <div class="spacer-regular"></div>
+                      <h1 class="heading-style-h4">Phone</h1>
+                      <div class="spacer-small"></div>
+                      <p>Call us anytime at +1 (555) 000-0000.</p>
+                      <div class="spacer-regular"></div>
+                      <p>+1 (555) 000-0000</p>
+                    </a>
+                  </div>
+                  <div class="contact_details_item">
+                    <a href="#" class="contact_details_card w-inline-block"><img src="{{ 'location.svg' | asset_url }}" loading="lazy" width="24" height="24" alt="" class="contat_details_icon">
+                      <div class="spacer-regular"></div>
+                      <h1 class="heading-style-h4">Office</h1>
+                      <div class="spacer-small"></div>
+                      <p>Visit us at our headquarters in Sydney, Australia.</p>
+                      <div class="spacer-regular"></div>
+                      <p>123 Sample St, Sydney NSW 2000 AU</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact_details_vector_wrap"><img src="{{ 'panthor-dark-watermark_1.svg' | asset_url }}" loading="lazy" alt="" class="contact_details_vector"></div>
+      </section>
+      <section class="component_faq_section">
+        <div class="background-color-primary">
+          <div class="padding-section-large">
+            <div class="page-width-narrower">
+              <div class="component_faq_headline">
+                <div class="component_divider_line"></div>
+                <div class="spacer-medium"></div>
+                <h2>FAQs</h2>
+                <div class="spacer-xsmall"></div>
+                <p>Find answers to your questions about our products and services below.</p>
+              </div>
+              <div class="spacer-xxlarge"></div>
+              <div class="component_faq_list">
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What is Panthor</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>How to order?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are your shipping options?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are your delivery timeframes?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>Can I customise my equipment?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are Panthors warranty details?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>Does Panthor have any installation requirements?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
+                  <div class="component_faq_toggle w-dropdown-toggle">
+                    <div>What are your finance options?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                  </div>
+                  <nav class="component_faq_content_wrap w-dropdown-list">
+                    <div class="component_faq_content">
+                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+              <div class="spacer-xxlarge"></div>
+              <div class="component_faq_cta_wrap">
+                <div class="text-align-center">
+                  <h3 class="heading-style-h4">Still have questions?</h3>
+                  <div class="spacer-small"></div>
+                  <p>We&#x27;re here to help you!</p>
+                  <div class="spacer-regular"></div>
+                  <a href="{{ routes.root_url }}pages/contact" aria-current="page" class="button-secondary w-button w--current">Contact</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+<script>
+  runOnDomReady(() => {
+  });
+</script>
+
+
+{% schema %}
+{
+  "name": "Contact",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Imported from Webflow. Markup is preserved verbatim. To edit text/images, replace the static content in sections/page-contact.liquid or split this into smaller sections."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact"
+    }
+  ]
+}
+{% endschema %}
