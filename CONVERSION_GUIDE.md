@@ -135,10 +135,13 @@ Copy from `index.html`'s head/body skeleton. Key edits:
 ```liquid
 {%- liquid
   case template
-    when 'index'         ; assign wf_page_id = '<homepage data-wf-page>'
-    when 'product'       ; assign wf_page_id = '<product data-wf-page>'
-    # ...
-    else                 ; assign wf_page_id = '<homepage data-wf-page>'
+    when 'index'
+      assign wf_page_id = '<homepage data-wf-page>'
+    when 'product'
+      assign wf_page_id = '<product data-wf-page>'
+    # ...one statement per line inside {% liquid %} — semicolons are NOT valid separators
+    else
+      assign wf_page_id = '<homepage data-wf-page>'
   endcase
 -%}
 <!DOCTYPE html>
@@ -305,35 +308,109 @@ Then in `theme.liquid`: `{% sections 'header-group' %}`.
 
 ---
 
-## 11. Verification
+## 11. Required Shopify theme files (don't skip!)
+
+A Webflow export has none of these. Shopify rejects the theme — with the (misleading) error **"Role can't be set to main: missing required file layout/theme.liquid"** — if any are absent at publish time. Add stubs even when you don't have Webflow designs for them.
+
+### Layout
+- `layout/theme.liquid` — main wrapper for every chromed page.
+- `layout/password.liquid` — wrapper for the storefront password page. Should just render `{{ content_for_layout }}`; the form belongs in a section.
+
+### Templates
+- `templates/index.{liquid,json}`
+- `templates/product.{liquid,json}`
+- `templates/collection.{liquid,json}`
+- `templates/list-collections.{liquid,json}` — the `/collections` route. Easy to miss.
+- `templates/page.{liquid,json}` (+ alternates like `page.about.json`)
+- `templates/blog.{liquid,json}`
+- `templates/article.{liquid,json}`
+- `templates/search.{liquid,json}`
+- `templates/cart.{liquid,json}`
+- `templates/404.{liquid,json}`
+- `templates/password.{liquid,json}` — content for the password page. The layout alone isn't enough.
+- `templates/gift_card.liquid` — **must be `.liquid`, not `.json`** (it's a full standalone HTML doc, no theme layout).
+
+### Customer templates (all 7 required, all `.liquid`)
+- `templates/customers/account.liquid`
+- `templates/customers/activate_account.liquid`
+- `templates/customers/addresses.liquid`
+- `templates/customers/login.liquid`
+- `templates/customers/order.liquid`
+- `templates/customers/register.liquid`
+- `templates/customers/reset_password.liquid`
+
+Each uses a built-in Shopify form: `customer_login`, `create_customer`, `customer_address`, `reset_customer_password`, `recover_customer_password`, `activate_customer_password`. Stub them with the Webflow form classes (`component_form`, `w-input`, `w-button`) so existing CSS styles them automatically.
+
+### Config & locales
+- `config/settings_schema.json`
+- `config/settings_data.json`
+- `locales/en.default.json` (at minimum — other locales optional)
+
+### One-liner check before pushing
+
+```bash
+for f in layout/theme.liquid layout/password.liquid \
+  templates/index.json templates/product.json templates/collection.json \
+  templates/list-collections.json templates/page.json templates/blog.json \
+  templates/article.json templates/search.json templates/cart.json \
+  templates/404.json templates/password.json templates/gift_card.liquid \
+  templates/customers/account.liquid templates/customers/activate_account.liquid \
+  templates/customers/addresses.liquid templates/customers/login.liquid \
+  templates/customers/order.liquid templates/customers/register.liquid \
+  templates/customers/reset_password.liquid \
+  config/settings_schema.json config/settings_data.json \
+  locales/en.default.json; do
+    [ -e "$f" ] || echo "MISSING: $f"
+done
+```
+
+---
+
+## 12. Verification
 
 1. `shopify theme dev --store <dev>.myshopify.com`
 2. Visit every route and side-by-side compare to the original Webflow HTML:
    - `/` `/products/<test>` `/collections/all` `/blogs/news` `/blogs/news/<article>`
    - `/pages/about`, `/pages/contact`, `/pages/legal`, etc.
    - `/cart` `/search` `/404` `/password`
+   - `/account`, `/account/login`, `/account/register`
+   - `/collections` (list-collections)
 3. Browser DevTools: confirm no 404s on assets, no JS errors, fonts load.
 4. Theme editor: open each template, reorder a section on the homepage, confirm preview updates (with refresh for Webflow animations).
 5. Submit the contact form — verify email in admin → Settings → Notifications.
 6. Submit the newsletter — verify a customer is created with `newsletter` tag.
-7. `shopify theme check` — fix flagged issues *without* touching the original Webflow markup.
+7. **Try publishing** in Shopify Admin → Themes → "Publish". This is the only way to catch missing-required-template errors *before* customers see them. If you get **"Role can't be set to main: missing required file …"**, the named file is missing OR contains a Liquid parse error (Shopify reports parse errors as missing). Don't trust the error text literally — check §13 for both root causes.
+8. `shopify theme check` — fix flagged issues *without* touching the original Webflow markup.
 
 ---
 
-## 12. Common gotchas
+## 13. Common gotchas
 
+- **"Missing required file layout/theme.liquid" when the file exists.** This error fires when (a) any required template from §11 is actually missing, OR (b) `layout/theme.liquid` has a Liquid parse error that prevents loading. Shopify reports parse failures as if the file were missing.
+- **`{% liquid %}` tag uses one statement per line.** Semicolons are NOT valid separators. This crashes parsing silently and triggers the "missing layout/theme.liquid" error above. ❌ `when 'index' ; assign x = 'a'` ✅
+  ```liquid
+  {%- liquid
+    case template
+      when 'index'
+        assign x = 'a'
+      when 'product'
+        assign x = 'b'
+    endcase
+  -%}
+  ```
 - **Flat assets**: Shopify rejects subdirs in `assets/`. Flatten ruthlessly.
 - **Double `<main>`**: each Webflow page has its own `<main class="main-wrapper">`. Don't wrap `{{ content_for_layout }}` with another `<main>` in `theme.liquid`.
 - **Form `action` URLs**: Webflow forms post to `webflow.com`. After conversion to `{% form %}`, the action is replaced by Shopify — old `action=...` attrs are ignored.
 - **Class names**: do NOT rename. Webflow JS, GSAP triggers, and CSS all depend on them.
 - **`url(...)` in inline `<style>` blocks**: rare but check. Same rewrite rule as in CSS files.
 - **HTTP vs HTTPS**: Webflow's CDN scripts already use `https://`. Leave them.
-- **Customer account pages**: not in this conversion — Shopify uses fallback templates if not provided. Add `templates/customers/*.liquid` later if you want them styled to match.
 - **Cart drawer / line item properties**: Webflow doesn't model these. Add later via section blocks if needed.
+- **`gift_card.liquid` is a full HTML doc** — it doesn't go through `layout/theme.liquid` and must contain its own `<!DOCTYPE html>` / `<head>` / `<body>` and load its own CSS. Don't reference `{{ content_for_header }}` from theme.liquid here.
+- **`layout/password.liquid` and `templates/password.json` are separate.** The layout is just the HTML shell; the form/section goes in the template. Putting the form in the layout works visually but breaks the principle that templates own their content and editor sections.
 
 ---
 
-## 13. What this conversion does NOT do
+## 14. What this conversion does NOT do
 
 - Re-style any element. CSS is byte-identical.
 - Rebuild the JS bundle. Webflow's `panthor-dev.js` ships verbatim.
