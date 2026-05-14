@@ -1,24 +1,39 @@
 {%- if section.settings.show_section -%}
+{%- liquid
+  assign cta_url = section.settings.cta_url
+  if cta_url == blank and section.settings.cta_page != blank
+    assign cta_url = section.settings.cta_page.url
+  endif
+  assign cta_url = cta_url | default: routes.root_url | append: 'pages/about'
+-%}
       <section class="home_story_section">
         <div class="padding-section-medium">
           <div class="page-width">
             <div class="home_story_wrap">
               <div class="component_divider_line"></div>
               <div class="spacer-xsmall"></div>
-              <h2 class="heading-style-h6">Who we are</h2>
+              <h2 class="heading-style-h6">{{ section.settings.eyebrow | default: 'Who we are' }}</h2>
               <div class="spacer-xsmall"></div>
               <div class="spacer-medium"></div>
               <div class="home_story_description">
-                <p id="typewriter" class="heading-style-h3">Panthor is the only machine built to deliver unmatched whole-body strength training for dedicated athletes. <br><br>Experience a machine designed to honour the human body in motion, crafted from lavish materials that stand out in any environment we inhabit.</p>
+                <p id="typewriter" class="heading-style-h3">{{ section.settings.body | default: 'Panthor is the only machine built to deliver unmatched whole-body strength training for dedicated athletes. <br><br>Experience a machine designed to honour the human body in motion, crafted from lavish materials that stand out in any environment we inhabit.' }}</p>
               </div>
               <div class="spacer-medium"></div>
-              <div class="button-group">
-                <a href="{{ routes.root_url }}pages/about" class="button-secondary w-button">Learn more</a>
-              </div>
+              {%- if section.settings.show_cta -%}
+                <div class="button-group">
+                  <a href="{{ cta_url }}" class="button-secondary w-button">{{ section.settings.cta_label | default: 'Learn more' }}</a>
+                </div>
+              {%- endif -%}
             </div>
           </div>
         </div>
-        <div class="home_story_vector_background"><img src="{{ 'panthor-gradient-icon.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'panthor-gradient-icon-p-500.png' | asset_url }} 500w, {{ 'panthor-gradient-icon-p-800.png' | asset_url }} 800w, {{ 'panthor-gradient-icon-p-1080.png' | asset_url }} 1080w, {{ 'panthor-gradient-icon-p-1600.png' | asset_url }} 1600w, {{ 'panthor-gradient-icon.webp' | asset_url }} 1728w" alt="" class="home_story_vector"></div>
+        <div class="home_story_vector_background">
+          {%- if section.settings.background_image != blank -%}
+            <img src="{{ section.settings.background_image | image_url: width: 1728 }}" loading="lazy" sizes="100vw" alt="" class="home_story_vector">
+          {%- else -%}
+            <img src="{{ 'panthor-gradient-icon.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'panthor-gradient-icon-p-500.png' | asset_url }} 500w, {{ 'panthor-gradient-icon-p-800.png' | asset_url }} 800w, {{ 'panthor-gradient-icon-p-1080.png' | asset_url }} 1080w, {{ 'panthor-gradient-icon-p-1600.png' | asset_url }} 1600w, {{ 'panthor-gradient-icon.webp' | asset_url }} 1728w" alt="" class="home_story_vector">
+          {%- endif -%}
+        </div>
       </section>
 {%- endif -%}
 
@@ -28,25 +43,20 @@
   "tag": "section",
   "class": "shopify-section-home-story",
   "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_section",
-      "label": "Show this section",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Imported from Webflow"
-    },
-    {
-      "type": "paragraph",
-      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
-    }
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Who we are" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Panthor is the only machine built to deliver unmatched whole-body strength training for dedicated athletes.</p><p>Experience a machine designed to honour the human body in motion, crafted from lavish materials that stand out in any environment we inhabit.</p>" },
+    { "type": "header", "content": "Call to action" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show button", "default": true },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Learn more" },
+    { "type": "page", "id": "cta_page", "label": "Page (link target)" },
+    { "type": "url", "id": "cta_url", "label": "Custom URL (fallback)" },
+    { "type": "header", "content": "Background" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image (leave empty for default gradient)" }
   ],
   "presets": [
-    {
-      "name": "Home — Story"
-    }
+    { "name": "Home — Story" }
   ]
 }
 {% endschema %}

@@ -5,36 +5,32 @@
             <div class="component_platform_headline">
               <div class="component_divider_line"></div>
               <div class="spacer-medium"></div>
-              <h2>Environments Panthor Inhabits</h2>
+              <h2>{{ section.settings.heading | default: 'Environments Panthor Inhabits' }}</h2>
               <div class="spacer-xxsmall"></div>
               <div class="spacer-xsmall"></div>
               <div class="max-width-medium">
-                <p>Crafted in lavish materials and low quantities, Panthor has been designed to inhabit environments of the highest standard.</p>
+                <p>{{ section.settings.description | default: 'Crafted in lavish materials and low quantities, Panthor has been designed to inhabit environments of the highest standard.' }}</p>
               </div>
             </div>
             <div class="spacer-xxlarge"></div>
             <div class="component_platform_card_grid">
-              <div id="w-node-_7549129c-ec81-bf4c-b96f-b65b5efdfe4b-10384095" data-w-id="7549129c-ec81-bf4c-b96f-b65b5efdfe4b" class="component_platform_card_wrapper">
-                <div class="component_platform_card_content">
-                  <h3 class="heading-style-h4">Superyachts</h3>
-                  <p>Seamlessly designed to suit life at sea. Luxury, performance, and precision in motion.</p>
-                </div>
-                <div id="w-node-ae55e725-6d07-ec7e-a8e7-39acbe0b9c07-10384095" class="component_platform_card_image_wrapper"><img src="{{ 'superyachts_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'superyachts_1superyachts.webp' | asset_url }} 500w, {{ 'superyachts_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"></div>
-              </div>
-              <div id="w-node-_2bd73e41-03e4-551a-9827-4307e518f54c-10384095" data-w-id="2bd73e41-03e4-551a-9827-4307e518f54c" class="component_platform_card_wrapper">
-                <div class="component_platform_card_content">
-                  <h3 class="heading-style-h4">Boutique Studios &amp; Apartments</h3>
-                  <p>A design that feels custom-built for your luxury space, in a size that doesn’t get in the way.</p>
-                </div>
-                <div id="w-node-_2bd73e41-03e4-551a-9827-4307e518f552-10384095" class="component_platform_card_image_wrapper"><img src="{{ 'botique-studios_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'botique-studios_1botique-studios.webp' | asset_url }} 500w, {{ 'botique-studios_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"><img src="{{ 'botique-studios_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'botique-studios_1botique-studios.webp' | asset_url }} 500w, {{ 'botique-studios_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"></div>
-              </div>
-              <div id="w-node-_518c341f-4bfc-a88a-2e0c-40d9f32e96bc-10384095" data-w-id="518c341f-4bfc-a88a-2e0c-40d9f32e96bc" class="component_platform_card_wrapper">
-                <div class="component_platform_card_content">
-                  <h3 class="heading-style-h4">Private Jets</h3>
-                  <p>Take your training global, even at 40,000 feet.</p>
-                </div>
-                <div id="w-node-_518c341f-4bfc-a88a-2e0c-40d9f32e96c2-10384095" class="component_platform_card_image_wrapper"><img src="{{ 'private-jets_1.webp' | asset_url }}" loading="lazy" sizes="100vw" srcset="{{ 'private-jets_1private-jets.webp' | asset_url }} 500w, {{ 'private-jets_1.webp' | asset_url }} 728w" alt="" class="component_platform_card_item_image"></div>
-              </div>
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'card' -%}
+                  <div class="component_platform_card_wrapper" {{ block.shopify_attributes }}>
+                    <div class="component_platform_card_content">
+                      <h3 class="heading-style-h4">{{ block.settings.heading }}</h3>
+                      <p>{{ block.settings.body }}</p>
+                    </div>
+                    <div class="component_platform_card_image_wrapper">
+                      {%- if block.settings.image != blank -%}
+                        <img src="{{ block.settings.image | image_url: width: 728 }}" loading="lazy" sizes="100vw" alt="{{ block.settings.image.alt | escape }}" class="component_platform_card_item_image">
+                      {%- elsif block.settings.fallback_image != blank -%}
+                        <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image">
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
             </div>
           </div>
         </div>
@@ -47,24 +43,32 @@
   "tag": "section",
   "class": "shopify-section-component-platform",
   "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true },
+    { "type": "header", "content": "Headline" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Environments Panthor Inhabits" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Crafted in lavish materials and low quantities, Panthor has been designed to inhabit environments of the highest standard." }
+  ],
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "show_section",
-      "label": "Show this section",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Imported from Webflow"
-    },
-    {
-      "type": "paragraph",
-      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+      "type": "card",
+      "name": "Environment card",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Environment name" },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "Describe this environment in one sentence." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Fallback image filename" }
+      ]
     }
   ],
+  "max_blocks": 9,
   "presets": [
     {
-      "name": "Platform"
+      "name": "Platform",
+      "blocks": [
+        { "type": "card", "settings": { "heading": "Superyachts", "body": "Seamlessly designed to suit life at sea. Luxury, performance, and precision in motion.", "fallback_image": "superyachts_1.webp" } },
+        { "type": "card", "settings": { "heading": "Boutique Studios & Apartments", "body": "A design that feels custom-built for your luxury space, in a size that doesn't get in the way.", "fallback_image": "botique-studios_1.webp" } },
+        { "type": "card", "settings": { "heading": "Private Jets", "body": "Take your training global, even at 40,000 feet.", "fallback_image": "private-jets_1.webp" } }
+      ]
     }
   ]
 }

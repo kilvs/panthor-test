@@ -8,7 +8,7 @@
           {%- form 'cart', cart, class: 'component_form' -%}
             <div class="cart_lines">
               {%- for line_item in cart.items -%}
-                <div class="cart_line">
+                <div class="cart_line" data-cart-line-key="{{ line_item.key }}">
                   <div class="cart_line_image">
                     {%- if line_item.image -%}
                       <img src="{{ line_item.image | image_url: width: 200 }}" alt="{{ line_item.title | escape }}" loading="lazy">
@@ -21,9 +21,11 @@
                   </div>
                   <div class="cart_line_qty">
                     <label for="updates_{{ line_item.key }}">Qty</label>
-                    <input type="number" id="updates_{{ line_item.key }}" name="updates[]" value="{{ line_item.quantity }}" min="0">
+                    <button type="button" data-cart-qty-step="-1" data-cart-line-key="{{ line_item.key }}" aria-label="Decrease quantity">&minus;</button>
+                    <input type="number" id="updates_{{ line_item.key }}" name="updates[{{ line_item.key }}]" value="{{ line_item.quantity }}" min="0" data-cart-line-change="{{ line_item.key }}">
+                    <button type="button" data-cart-qty-step="1" data-cart-line-key="{{ line_item.key }}" aria-label="Increase quantity">+</button>
                   </div>
-                  <a href="{{ line_item.url_to_remove }}" class="cart_line_remove">Remove</a>
+                  <button type="button" class="cart_line_remove" data-cart-line-remove="{{ line_item.key }}">Remove</button>
                 </div>
               {%- endfor -%}
             </div>

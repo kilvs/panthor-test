@@ -1,4 +1,13 @@
 {%- if section.settings.show_section -%}
+{%- liquid
+  assign default_answer = 'Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body strength.'
+
+  assign cta_url = section.settings.cta_url
+  if cta_url == blank and section.settings.cta_page != blank
+    assign cta_url = section.settings.cta_page.url
+  endif
+  assign cta_url = cta_url | default: routes.root_url | append: 'pages/contact'
+-%}
       <section class="component_faq_section">
         <div class="background-color-primary">
           <div class="padding-section-large">
@@ -6,103 +15,39 @@
               <div class="component_faq_headline">
                 <div class="component_divider_line"></div>
                 <div class="spacer-medium"></div>
-                <h2>FAQs</h2>
+                <h2>{{ section.settings.heading | default: 'FAQs' }}</h2>
                 <div class="spacer-xsmall"></div>
-                <p>Find answers to your questions about our products and services below.</p>
+                <p>{{ section.settings.description | default: 'Find answers to your questions about our products and services below.' }}</p>
               </div>
               <div class="spacer-xxlarge"></div>
               <div class="component_faq_list">
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>What is Panthor</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'item' -%}
+                    <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown" {{ block.shopify_attributes }}>
+                      <div class="component_faq_toggle w-dropdown-toggle">
+                        <div>{{ block.settings.question }}</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                      </div>
+                      <nav class="component_faq_content_wrap w-dropdown-list">
+                        <div class="component_faq_content">
+                          <div>{{ block.settings.answer | default: default_answer }}</div>
+                        </div>
+                      </nav>
                     </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>How to order?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>What are your shipping options?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>What are your delivery timeframes?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>Can I customise my equipment?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>What are Panthors warranty details?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>Does Panthor have any installation requirements?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
-                <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
-                  <div class="component_faq_toggle w-dropdown-toggle">
-                    <div>What are your finance options?</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
-                  </div>
-                  <nav class="component_faq_content_wrap w-dropdown-list">
-                    <div class="component_faq_content">
-                      <p>Panthor is an all-in-one strength training system designed to deliver comprehensive, full-body workouts. With over 50 upper and lower body exercises, it offers a unique and versatile solution for building total-body  strength.</p>
-                    </div>
-                  </nav>
-                </div>
+                  {%- endif -%}
+                {%- endfor -%}
               </div>
-              <div class="spacer-xxlarge"></div>
-              <div class="component_faq_cta_wrap">
-                <div class="text-align-center">
-                  <h3 class="heading-style-h4">Still have questions?</h3>
-                  <div class="spacer-small"></div>
-                  <p>We&#x27;re here to help you!</p>
-                  <div class="spacer-regular"></div>
-                  <a href="{{ routes.root_url }}pages/contact" class="button-secondary w-button">Contact</a>
+              {%- if section.settings.show_cta -%}
+                <div class="spacer-xxlarge"></div>
+                <div class="component_faq_cta_wrap">
+                  <div class="text-align-center">
+                    <h3 class="heading-style-h4">{{ section.settings.cta_heading | default: 'Still have questions?' }}</h3>
+                    <div class="spacer-small"></div>
+                    <p>{{ section.settings.cta_subheading | default: "We're here to help you!" }}</p>
+                    <div class="spacer-regular"></div>
+                    <a href="{{ cta_url }}" class="button-secondary w-button">{{ section.settings.cta_label | default: 'Contact' }}</a>
+                  </div>
                 </div>
-              </div>
+              {%- endif -%}
             </div>
           </div>
         </div>
@@ -115,24 +60,42 @@
   "tag": "section",
   "class": "shopify-section-component-faq",
   "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true },
+    { "type": "header", "content": "Headline" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "FAQs" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Find answers to your questions about our products and services below." },
+    { "type": "header", "content": "Bottom call-to-action" },
+    { "type": "checkbox", "id": "show_cta", "label": "Show CTA", "default": true },
+    { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Still have questions?" },
+    { "type": "text", "id": "cta_subheading", "label": "Subheading", "default": "We're here to help you!" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Contact" },
+    { "type": "page", "id": "cta_page", "label": "Page (link target)" },
+    { "type": "url", "id": "cta_url", "label": "Custom URL (fallback)" }
+  ],
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "show_section",
-      "label": "Show this section",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Imported from Webflow"
-    },
-    {
-      "type": "paragraph",
-      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+      "type": "item",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question goes here" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer goes here.</p>" }
+      ]
     }
   ],
+  "max_blocks": 30,
   "presets": [
     {
-      "name": "FAQ"
+      "name": "FAQ",
+      "blocks": [
+        { "type": "item", "settings": { "question": "What is Panthor" } },
+        { "type": "item", "settings": { "question": "How to order?" } },
+        { "type": "item", "settings": { "question": "What are your shipping options?" } },
+        { "type": "item", "settings": { "question": "What are your delivery timeframes?" } },
+        { "type": "item", "settings": { "question": "Can I customise my equipment?" } },
+        { "type": "item", "settings": { "question": "What are Panthors warranty details?" } },
+        { "type": "item", "settings": { "question": "Does Panthor have any installation requirements?" } },
+        { "type": "item", "settings": { "question": "What are your finance options?" } }
+      ]
     }
   ]
 }

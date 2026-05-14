@@ -2,42 +2,28 @@
       <section class="home_overview_section">
         <div class="page-width">
           <div class="home_overview_list">
-            <div class="home_overview_item">
-              <div class="home_overview_card">
-                <div class="home_overview_card_item">
-                  <div class="component_divider_line"></div>
-                  <div class="spacer-xsmall"></div>
-                  <h2 class="heading-style-h4">A Single System</h2>
-                  <div class="spacer-regular"></div>
-                  <p class="text-size-medium">Experience complete, full-body strength training in a single, space-saving Panthor machine, engineered to replace over 40m² of traditional gym equipment and potentially save you up to £50K.</p>
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'card' -%}
+                <div class="home_overview_item" {{ block.shopify_attributes }}>
+                  <div class="home_overview_card">
+                    <div class="home_overview_card_item">
+                      <div class="component_divider_line"></div>
+                      <div class="spacer-xsmall"></div>
+                      <h2 class="heading-style-h4">{{ block.settings.heading }}</h2>
+                      <div class="spacer-regular"></div>
+                      <p class="text-size-medium">{{ block.settings.body }}</p>
+                    </div>
+                    <div class="home_overview_card_item">
+                      {%- if block.settings.image != blank -%}
+                        <img src="{{ block.settings.image | image_url: width: 806 }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="{{ block.settings.image.alt | escape }}" class="home_overview_card_image">
+                      {%- elsif block.settings.fallback_image != blank -%}
+                        <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image">
+                      {%- endif -%}
+                    </div>
+                  </div>
                 </div>
-                <div class="home_overview_card_item"><img src="{{ 'a-single-system_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" srcset="{{ 'a-single-system_1a-single-system.webp' | asset_url }} 500w, {{ 'a-single-system_1a-single-system.webp' | asset_url }} 800w, {{ 'a-single-system_1.webp' | asset_url }} 806w" alt="" class="home_overview_card_image"></div>
-              </div>
-            </div>
-            <div class="home_overview_item">
-              <div class="home_overview_card">
-                <div class="home_overview_card_item">
-                  <div class="component_divider_line"></div>
-                  <div class="spacer-xsmall"></div>
-                  <h2 class="heading-style-h4">Any Stage.   Every Rep.</h2>
-                  <div class="spacer-regular"></div>
-                  <p class="text-size-medium">Adapt Panthor to any fitness goal with its precise, adjustable arc path, supporting all levels from beginner to advanced for reduced injury risk, simplified technique, and seamless exercise transitions.</p>
-                </div>
-                <div class="home_overview_card_item"><img src="{{ 'any-stage_1.webp' | asset_url }}" loading="lazy" width="806" height="604" alt="" srcset="{{ 'any-stage_1any-stage.webp' | asset_url }} 500w, {{ 'any-stage_1any-stage.webp' | asset_url }} 800w, {{ 'any-stage_1.webp' | asset_url }} 806w" sizes="(max-width: 806px) 100vw, 806px" class="home_overview_card_image"></div>
-              </div>
-            </div>
-            <div class="home_overview_item">
-              <div class="home_overview_card">
-                <div class="home_overview_card_item">
-                  <div class="component_divider_line"></div>
-                  <div class="spacer-xsmall"></div>
-                  <h2 class="heading-style-h4">Engineered Elegance</h2>
-                  <div class="spacer-regular"></div>
-                  <p class="text-size-medium">Unlike bulky multi-gyms, Panthor offers a refined, high-performance strength training system designed to complement sophisticated spaces with its thoughtful engineering and premium aesthetic.</p>
-                </div>
-                <div class="home_overview_card_item"><img src="{{ 'engineered-elegance_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" srcset="{{ 'engineered-elegance_1engineered-elegance.webp' | asset_url }} 500w, {{ 'engineered-elegance_1engineered-elegance.webp' | asset_url }} 800w, {{ 'engineered-elegance_1.webp' | asset_url }} 806w" alt="" class="home_overview_card_image"></div>
-              </div>
-            </div>
+              {%- endif -%}
+            {%- endfor -%}
           </div>
         </div>
       </section>
@@ -49,24 +35,29 @@
   "tag": "section",
   "class": "shopify-section-home-overview",
   "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true }
+  ],
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "show_section",
-      "label": "Show this section",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Imported from Webflow"
-    },
-    {
-      "type": "paragraph",
-      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+      "type": "card",
+      "name": "Overview card",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Section heading" },
+        { "type": "textarea", "id": "body", "label": "Body text", "default": "Describe this feature in one or two sentences." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Fallback asset filename", "info": "Used when no image is uploaded. Filename only (e.g. a-single-system_1.webp), referenced from assets/." }
+      ]
     }
   ],
+  "max_blocks": 12,
   "presets": [
     {
-      "name": "Home — Overview"
+      "name": "Home — Overview",
+      "blocks": [
+        { "type": "card", "settings": { "heading": "A Single System", "body": "Experience complete, full-body strength training in a single, space-saving Panthor machine, engineered to replace over 40m² of traditional gym equipment and potentially save you up to £50K.", "fallback_image": "a-single-system_1.webp" } },
+        { "type": "card", "settings": { "heading": "Any Stage. Every Rep.", "body": "Adapt Panthor to any fitness goal with its precise, adjustable arc path, supporting all levels from beginner to advanced for reduced injury risk, simplified technique, and seamless exercise transitions.", "fallback_image": "any-stage_1.webp" } },
+        { "type": "card", "settings": { "heading": "Engineered Elegance", "body": "Unlike bulky multi-gyms, Panthor offers a refined, high-performance strength training system designed to complement sophisticated spaces with its thoughtful engineering and premium aesthetic.", "fallback_image": "engineered-elegance_1.webp" } }
+      ]
     }
   ]
 }

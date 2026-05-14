@@ -60,10 +60,11 @@
                   </a>
                 </div>
                 <div class="component_nav_icon_item">
-                  <a href="{{ routes.cart_url }}" class="w-inline-block">
+                  <a href="{{ routes.cart_url }}" class="w-inline-block component_nav_list_icon_wrap" data-cart-open aria-label="Open cart">
                     <img src="{{ 'cart-icon.svg' | asset_url }}" loading="lazy" width="20" height="20" alt="Cart" class="component_nav_list_icon">
+                    <span data-cart-count{% if cart.item_count == 0 %} class="is-hidden"{% endif %} aria-hidden="true">{{ cart.item_count }}</span>
                     <div class="show-tablet">
-                      <p class="text-color-secondary">Cart{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}</p>
+                      <p class="text-color-secondary">Cart</p>
                     </div>
                   </a>
                 </div>

@@ -94,7 +94,7 @@
             <div class="product_detail_grid_item">
               <div class="product_detail_wrap">
                 <h1 class="product_detail_name">{{ product.title | default: 'Panthor Complete Strength System' }}</h1>
-                <p class="heading-style-h3">{% if product != blank %}{{ product.price | money }}{% else %}$50,000{% endif %}</p>
+                <p class="heading-style-h3" data-product-price>{% if product != blank %}{{ product.price | money }}{% else %}$50,000{% endif %}</p>
                 <div class="component_product_rating">
                   <div class="component_product_rating_item">
                     <div class="product_rating_icon_list"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"><img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="16" height="15" alt="" class="product_rating_icon"></div>
@@ -117,17 +117,19 @@
                   <p>This is an additional cost that is mandatory to purchasing the Panthor Complete Strength System</p>
                 </div>
                 {%- form 'product', product, id: 'wf-form-Product', class: 'product_form' -%}
+                {%- if product != blank -%}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-product-variant-id>
+                {%- endif -%}
                 <div class="product_variant_wrap">
                   <p>{{ product.options_with_values.first.name | default: 'Type of Panthor' }}</p>
                   <div class="spacer-small"></div>
-                  <div class="product_variant_list">
+                  <div class="product_variant_list" data-product-variant-list>
                     {%- if product != blank and product.variants.size > 1 -%}
                       {%- for variant in product.variants -%}
-                        <button type="submit" name="id" value="{{ variant.id }}" class="button-secondary is-variant{% if variant.id == product.selected_or_first_available_variant.id %} is-active{% endif %}"{% unless variant.available %} disabled{% endunless %}>{{ variant.title }}</button>
+                        <button type="button" data-product-variant="{{ variant.id }}" data-variant-price="{{ variant.price }}" data-variant-available="{{ variant.available }}" class="button-secondary is-variant{% if variant.id == product.selected_or_first_available_variant.id %} is-active{% endif %}"{% unless variant.available %} disabled{% endunless %}>{{ variant.title }}</button>
                       {%- endfor -%}
                     {%- elsif product != blank -%}
-                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                      <button type="button" class="button-secondary is-variant is-active">{{ product.selected_or_first_available_variant.title | default: product.title }}</button>
+                      <button type="button" data-product-variant="{{ product.selected_or_first_available_variant.id }}" class="button-secondary is-variant is-active">{{ product.selected_or_first_available_variant.title | default: product.title }}</button>
                     {%- else -%}
                       <button type="button" class="button-secondary is-variant">Bolt Down</button>
                       <button type="button" class="button-secondary is-variant">Freestanding</button>
@@ -156,13 +158,79 @@
                 <div class="product_total">
                   <div class="product_total_wrap">
                     <p class="text-size-medium text-weight-medium text-style-allcaps">Total</p>
-                    <p class="heading-style-h6">{% if product != blank %}{{ product.selected_or_first_available_variant.price | money }}{% else %}$55,000{% endif %}</p>
+                    <p class="heading-style-h6" data-product-total>{% if product != blank %}{{ product.selected_or_first_available_variant.price | money }}{% else %}$55,000{% endif %}</p>
                   </div>
                   <div class="spacer-xsmall"></div>
                   <div class="component_divider_line"></div>
                 </div>
-                <button type="submit" name="add" class="button-primary"{% if product != blank and product.selected_or_first_available_variant.available == false %} disabled{% endif %}>{% if product != blank and product.selected_or_first_available_variant.available == false %}Sold out{% else %}Add to cart{% endif %}</button>
+                <button type="submit" name="add" class="button-primary" data-product-add{% if product != blank and product.selected_or_first_available_variant.available == false %} disabled{% endif %}>{% if product != blank and product.selected_or_first_available_variant.available == false %}Sold out{% else %}Add to cart{% endif %}</button>
                 {%- endform -%}
+                <script>
+                (function () {
+                  var form = document.getElementById('wf-form-Product');
+                  if (!form) return;
+                  var hidden = form.querySelector('[data-product-variant-id]');
+                  var qtyInput = form.querySelector('.product_quantity_input');
+                  var addBtn = form.querySelector('[data-product-add]');
+                  var priceEls = document.querySelectorAll('[data-product-price]');
+                  var totalEls = document.querySelectorAll('[data-product-total]');
+                  var moneyFormat = (window.Shopify && Shopify.money_format) || '${{amount}}';
+
+                  function fmt(cents) {
+                    var amount = (cents / 100).toFixed(2);
+                    return moneyFormat
+                      .replace(/\{\{\s*amount\s*\}\}/g, amount)
+                      .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, Math.round(cents / 100))
+                      .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amount.replace('.', ','));
+                  }
+
+                  function selectVariant(btn) {
+                    form.querySelectorAll('[data-product-variant]').forEach(function (b) { b.classList.remove('is-active'); });
+                    btn.classList.add('is-active');
+                    if (hidden) hidden.value = btn.getAttribute('data-product-variant');
+                    var price = parseInt(btn.getAttribute('data-variant-price') || '0', 10);
+                    var available = btn.getAttribute('data-variant-available') !== 'false';
+                    if (price && !isNaN(price)) {
+                      priceEls.forEach(function (el) { el.textContent = fmt(price); });
+                      var qty = parseInt((qtyInput && qtyInput.value) || '1', 10) || 1;
+                      totalEls.forEach(function (el) { el.textContent = fmt(price * qty); });
+                    }
+                    if (addBtn) {
+                      addBtn.disabled = !available;
+                      addBtn.textContent = available ? 'Add to cart' : 'Sold out';
+                    }
+                  }
+
+                  form.querySelectorAll('[data-product-variant]').forEach(function (btn) {
+                    btn.addEventListener('click', function () { selectVariant(btn); });
+                  });
+
+                  form.querySelectorAll('[data-qty-step]').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                      if (!qtyInput) return;
+                      var step = parseInt(btn.getAttribute('data-qty-step'), 10) || 0;
+                      var v = Math.max(1, (parseInt(qtyInput.value, 10) || 1) + step);
+                      qtyInput.value = v;
+                      var active = form.querySelector('[data-product-variant].is-active');
+                      if (active) {
+                        var price = parseInt(active.getAttribute('data-variant-price') || '0', 10);
+                        if (price) totalEls.forEach(function (el) { el.textContent = fmt(price * v); });
+                      }
+                    });
+                  });
+
+                  if (qtyInput) {
+                    qtyInput.addEventListener('input', function () {
+                      var active = form.querySelector('[data-product-variant].is-active');
+                      var v = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+                      if (active) {
+                        var price = parseInt(active.getAttribute('data-variant-price') || '0', 10);
+                        if (price) totalEls.forEach(function (el) { el.textContent = fmt(price * v); });
+                      }
+                    });
+                  }
+                })();
+                </script>
                 <div class="product_finance_wrap">
                   <div class="product_finance">
                     <p class="text-align-center">See Finance Options</p>

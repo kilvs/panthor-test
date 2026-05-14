@@ -276,6 +276,33 @@ A Shopify section file is its own **type** — multiple JSON templates can refer
 
 **Why `show_section` defaults to `true`**: the page renders identically to the Webflow original out of the box. Merchants can toggle a section off without deleting it.
 
+### Making every text / image / button merchant-editable
+
+For each section, turn static markup into schema-driven defaults. The pattern that works across every section type:
+
+1. **Single text** → `{ "type": "text", "id": "heading", "default": "Static text from Webflow" }` rendered as `{{ section.settings.heading | default: 'Static text from Webflow' }}`. Use `textarea` for short body copy, `richtext` for anything with inline markup, `inline_richtext` for short formatted strings.
+2. **Single image** → `{ "type": "image_picker", "id": "image" }` rendered with `{% if section.settings.image != blank %}{{ section.settings.image | image_url: width: 1200 }}{% else %}{{ 'fallback.webp' | asset_url }}{% endif %}`. Always provide a fallback so the section never looks broken when the merchant clears the picker.
+3. **Single button** → group `cta_label` (text) + `cta_url` (url) + a typed picker (`product` / `collection` / `page` / `blog`) + a `show_cta` checkbox. Compute the URL once at the top of the section with `{%- liquid ... -%}` so the markup stays clean. Pattern:
+   ```liquid
+   {%- liquid
+     assign url = section.settings.cta_url
+     if url == blank and section.settings.cta_page != blank
+       assign url = section.settings.cta_page.url
+     endif
+     assign url = url | default: routes.collections_url | append: '/all'
+   -%}
+   {%- if section.settings.show_cta -%}
+     <a href="{{ url }}" class="button-primary w-button">{{ section.settings.cta_label | default: 'Buy Now' }}</a>
+   {%- endif -%}
+   ```
+4. **Repeating items (cards, logos, testimonials, FAQ items, news posts)** → `schema.blocks`. Render with `{% for block in section.blocks %}{% if block.type == 'card' %}…{% endif %}{% endfor %}`. Each block carries its own `heading`, `body`, `image`, `cta_label`, `cta_url` fields. Set sensible `max_blocks` (6–30 depending on layout). Provide `presets.blocks` matching the original static content so the section ships pre-populated.
+5. **Conditional visibility** → every section starts with `{ "type": "checkbox", "id": "show_section", "default": true }` and the markup is wrapped in `{%- if section.settings.show_section -%}…{%- endif -%}`. Same pattern within: `show_cta`, `show_view_all`, `show_secondary_cta`, etc.
+6. **Form labels** → `email_label`, `submit_label`, `consent_text`, `success_text`, `error_text`. The `wf-form-states` snippet accepts `success_text` and `error_text` as render parameters: `{% render 'wf-form-states', form: form, success_text: section.settings.success_text, error_text: section.settings.error_text %}`.
+7. **Star ratings, scores** → `{ "type": "range", "min": 0, "max": 5, "step": 1, "default": 5 }` then loop with `{% for i in (1..rating) %}<img …>{% endfor %}`.
+8. **Fallback asset filenames** → when the design depends on a specific image from `assets/` (e.g. an SVG watermark or default product placeholder), expose a hidden `fallback_image` text field carrying the filename. The render branches on `image != blank ? image_url : fallback_image | asset_url`. This lets each merchant override per-block without having to re-upload the default.
+
+Worked examples in this repo: [sections/home-02-overview.liquid](sections/home-02-overview.liquid) (block cards with image + heading + body), [sections/component-faq.liquid](sections/component-faq.liquid) (question/answer blocks + show_cta), [sections/component-newsletter.liquid](sections/component-newsletter.liquid) (form labels, submit text, success/error message), [sections/component-news.liquid](sections/component-news.liquid) (dynamic blog source OR block-based fallback).
+
 ### When a section contains a commerce CTA
 
 Add a `product` picker + `cta_url_fallback` + `cta_label` to the schema:
@@ -576,7 +603,90 @@ done
 
 ---
 
-## 14. What this conversion does NOT do
+## 14. AJAX cart
+
+The theme ships with an AJAX cart so adding a product, editing quantity, or removing a line never reloads the page. Implementation lives in three files:
+
+- `assets/cart-ajax.js` — fetches Shopify's `/cart/add.js`, `/cart/change.js`, `/cart/update.js`, `/cart.js` endpoints. Exposes `window.PanthorCart` for debugging.
+- `assets/cart-drawer.css` — slide-in drawer styling. Scoped under `.cart-drawer__*` classes so it never clashes with Webflow CSS.
+- `snippets/cart-drawer.liquid` — the drawer markup, rendered once in `layout/theme.liquid` (`{% render 'cart-drawer' %}`).
+
+### How elements opt in (data attributes)
+
+| Attribute | Element | Behaviour |
+|---|---|---|
+| `data-cart-open` | header cart icon | Click → opens drawer (also refetches cart state). |
+| `data-cart-close` | close button / overlay | Click → closes drawer. ESC also closes. |
+| `data-cart-count` | any element | Text is set to `cart.item_count`. Add the class `is-hidden` when count is 0. |
+| `data-cart-drawer` | drawer root `<aside>` | Toggle target. |
+| `data-cart-drawer-items` | container | Re-rendered with the live cart on every change. |
+| `data-cart-drawer-subtotal` | element | Text is set to `moneyFormat(cart.total_price)`. |
+| `data-cart-empty-state` | element | Shown when cart is empty. |
+| `data-cart-quick-add="<variantId>"` | `<button>` | Click → adds 1 of that variant, opens drawer. Use on product cards. |
+| `data-cart-line-change="<key>"` | `<input type="number">` | Change → calls `/cart/change.js` for that line. |
+| `data-cart-line-remove="<key>"` | `<button>` | Click → removes that line. |
+| `data-cart-qty-step="-1\|1"` + `data-cart-line-key="<key>"` | `<button>` | Stepper for cart-drawer / cart-page line items. |
+
+Forms with `action$="/cart/add"` (Shopify's `{% form 'product' %}` emits this) are auto-intercepted and submitted via AJAX. Opt out per form by adding `data-cart-no-ajax`.
+
+### Required setup in `theme.liquid`
+
+Drop into `<head>` so the JS knows where to POST and how to format money:
+
+```liquid
+<script>
+  window.Shopify = window.Shopify || {};
+  Shopify.routes = { root: '{{ routes.root_url }}' };
+  Shopify.money_format = {{ shop.money_format | json }};
+</script>
+```
+
+Load the assets:
+
+```liquid
+{{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
+<!-- ...other stylesheets... -->
+<!-- ...sections, footer... -->
+{% render 'cart-drawer' %}
+<script src="{{ 'cart-ajax.js' | asset_url }}" defer></script>
+```
+
+### Variant selection on the product page
+
+Variant buttons should be `type="button"` (not submit), each carrying `data-product-variant="<id>"` and optional `data-variant-price="<cents>"` / `data-variant-available="true|false"`. A small inline script in `sections/page-product.liquid`:
+
+1. Toggles the `is-active` class
+2. Writes the selected variant id into `<input type="hidden" name="id" data-product-variant-id>`
+3. Updates any `[data-product-price]` and `[data-product-total]` text using `Shopify.money_format`
+4. Disables the Add-to-cart button if the variant is unavailable
+
+When the user clicks "Add to cart", the form (`action="/cart/add"`) is intercepted by `cart-ajax.js`, AJAX-POSTed, and the drawer opens with the new line.
+
+### Cart page (`/cart`)
+
+The `sections/main-cart.liquid` page uses the same `data-cart-line-*` attributes as the drawer. After any AJAX change, `Cart.refreshCartPage()` re-fetches the page HTML and swaps `.cart_section` in place — so per-line prices, line subtotals, and the page-level subtotal stay accurate without a full reload.
+
+### Custom listeners
+
+The cart dispatches a `cart:updated` event on `document` after every successful change. Use it for header animations, recently-added popups, analytics:
+
+```js
+document.addEventListener('cart:updated', function (e) {
+  console.log('new cart state', e.detail.cart);
+});
+```
+
+### Gotchas
+
+- **Quick-add `<a>`-wrapped cards**: when the card is wrapped in `<a href="{{ product.url }}">`, the quick-add `<button>` must call `event.stopPropagation()` and `event.preventDefault()` to avoid following the card link.
+- **Variant id missing**: form submissions without an `id` input fail silently. Always have a hidden `<input name="id">` even when there's only one variant.
+- **Webflow form animations**: if the original Webflow design animates form submits (e.g. shows a success state), that animation won't fire on AJAX submit. The drawer opening is the replacement signal.
+- **Money format**: Shopify's `shop.money_format` is a templated string like `${{amount}}`. The JS replaces `{{amount}}`, `{{amount_no_decimals}}`, `{{amount_with_comma_separator}}`. Custom money formats with unusual tokens need additional handling in `cart-ajax.js → moneyFormat()`.
+- **Currency / locale**: if you enable Shopify Markets with multiple currencies, the response from `/cart.js` returns the localised currency. The money format passed in `theme.liquid` should be `{{ cart.currency.symbol }}{{...}}` or use a `Shopify.currency` object — extend `cart-ajax.js → moneyFormat()` accordingly.
+
+---
+
+## 15. What this conversion does NOT do
 
 - Re-style any element. CSS is byte-identical.
 - Rebuild the JS bundle. Webflow's `panthor-dev.js` ships verbatim.

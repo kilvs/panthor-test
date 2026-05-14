@@ -5,46 +5,22 @@
             <div class="spacer-medium"></div>
             <div class="component_marquee_wrap">
               <div class="component_marquee">
-                <div class="component_marquee_clone">
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Space Efficient</p>
+                {%- for clone in (1..2) -%}
+                  <div class="component_marquee_clone">
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'item' -%}
+                        <div class="component_marquee_item" {{ block.shopify_attributes }}>
+                          {%- if block.settings.icon != blank -%}
+                            <img src="{{ block.settings.icon | image_url: width: 118 }}" loading="lazy" width="59" height="46" alt="{{ block.settings.label | escape }}" class="component_marquee_logo">
+                          {%- else -%}
+                            <img src="{{ block.settings.fallback_icon | default: 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
+                          {%- endif -%}
+                          <p class="heading-style-h6">{{ block.settings.label }}</p>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
                   </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">All exercises in one machine</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Variable Resistance</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Space Efficient</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">All exercises in one machine</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Variable Resistance</p>
-                  </div>
-                </div>
-                <div class="component_marquee_clone">
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Space Efficient</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">All exercises in one machine</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Variable Resistance</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Space Efficient</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">All exercises in one machine</p>
-                  </div>
-                  <div class="component_marquee_item"><img src="{{ 'phantor-icon.svg' | asset_url }}" loading="lazy" width="59" height="46" alt="" class="component_marquee_logo">
-                    <p class="heading-style-h6">Variable Resistance</p>
-                  </div>
-                </div>
+                {%- endfor -%}
               </div>
             </div>
             <div class="spacer-medium"></div>
@@ -59,24 +35,32 @@
   "tag": "section",
   "class": "shopify-section-component-marquee",
   "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show this section", "default": true },
+    { "type": "paragraph", "content": "Each block below is repeated twice in the marquee so the animation loops seamlessly. Add 4-8 items for a balanced loop." }
+  ],
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "show_section",
-      "label": "Show this section",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Imported from Webflow"
-    },
-    {
-      "type": "paragraph",
-      "content": "Markup is preserved verbatim from the Webflow export. Add more settings here to make text/images merchant-editable."
+      "type": "item",
+      "name": "Marquee item",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Marquee item" },
+        { "type": "image_picker", "id": "icon", "label": "Icon (svg or webp)" },
+        { "type": "text", "id": "fallback_icon", "label": "Fallback icon filename", "info": "Used when no icon image is uploaded.", "default": "phantor-icon.svg" }
+      ]
     }
   ],
+  "max_blocks": 20,
   "presets": [
     {
-      "name": "Marquee"
+      "name": "Marquee",
+      "blocks": [
+        { "type": "item", "settings": { "label": "Space Efficient", "fallback_icon": "phantor-icon.svg" } },
+        { "type": "item", "settings": { "label": "All exercises in one machine", "fallback_icon": "phantor-icon.svg" } },
+        { "type": "item", "settings": { "label": "Variable Resistance", "fallback_icon": "phantor-icon.svg" } },
+        { "type": "item", "settings": { "label": "Space Efficient", "fallback_icon": "phantor-icon.svg" } },
+        { "type": "item", "settings": { "label": "All exercises in one machine", "fallback_icon": "phantor-icon.svg" } },
+        { "type": "item", "settings": { "label": "Variable Resistance", "fallback_icon": "phantor-icon.svg" } }
+      ]
     }
   ]
 }

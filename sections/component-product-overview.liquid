@@ -56,7 +56,7 @@
                               <h3 class="heading-style-h6">{{ product.title }}</h3>
                               <p>{{ product.price | money }}</p>
                             </div>
-                            <div class="component_product_card_add-wrap"><span class="component_product_card_add_button"><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></span></div>
+                            <div class="component_product_card_add-wrap"><button type="button" class="component_product_card_add_button" data-cart-quick-add="{{ product.selected_or_first_available_variant.id }}" onclick="event.stopPropagation();event.preventDefault();" aria-label="Add {{ product.title | escape }} to cart"{% unless product.available %} disabled{% endunless %}><img src="{{ 'plus-dark-icon.svg' | asset_url }}" loading="lazy" alt=""></button></div>
                           </div>
                         </a>
                       </div>
