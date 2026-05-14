@@ -2,28 +2,70 @@
       <section class="home_overview_section">
         <div class="page-width">
           <div class="home_overview_list">
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'card' -%}
-                <div class="home_overview_item" {{ block.shopify_attributes }}>
-                  <div class="home_overview_card">
-                    <div class="home_overview_card_item">
-                      <div class="component_divider_line"></div>
-                      <div class="spacer-xsmall"></div>
-                      <h2 class="heading-style-h4">{{ block.settings.heading }}</h2>
-                      <div class="spacer-regular"></div>
-                      <p class="text-size-medium">{{ block.settings.body }}</p>
-                    </div>
-                    <div class="home_overview_card_item">
-                      {%- if block.settings.image != blank -%}
-                        <img src="{{ block.settings.image | image_url: width: 806 }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="{{ block.settings.image.alt | escape }}" class="home_overview_card_image">
-                      {%- elsif block.settings.fallback_image != blank -%}
-                        <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image">
-                      {%- endif -%}
+            {%- if section.blocks.size > 0 -%}
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'card' -%}
+                  <div class="home_overview_item" {{ block.shopify_attributes }}>
+                    <div class="home_overview_card">
+                      <div class="home_overview_card_item">
+                        <div class="component_divider_line"></div>
+                        <div class="spacer-xsmall"></div>
+                        <h2 class="heading-style-h4">{{ block.settings.heading }}</h2>
+                        <div class="spacer-regular"></div>
+                        <p class="text-size-medium">{{ block.settings.body }}</p>
+                      </div>
+                      <div class="home_overview_card_item">
+                        {%- if block.settings.image != blank -%}
+                          <img src="{{ block.settings.image | image_url: width: 806 }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="{{ block.settings.image.alt | escape }}" class="home_overview_card_image">
+                        {%- elsif block.settings.fallback_image != blank -%}
+                          <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image">
+                        {%- else -%}
+                          <img src="{{ 'a-single-system_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image">
+                        {%- endif -%}
+                      </div>
                     </div>
                   </div>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%}Static fallback — matches the original Webflow markup so the section always looks correct, even with no blocks configured.{%- endcomment -%}
+              <div class="home_overview_item">
+                <div class="home_overview_card">
+                  <div class="home_overview_card_item">
+                    <div class="component_divider_line"></div>
+                    <div class="spacer-xsmall"></div>
+                    <h2 class="heading-style-h4">A Single System</h2>
+                    <div class="spacer-regular"></div>
+                    <p class="text-size-medium">Experience complete, full-body strength training in a single, space-saving Panthor machine, engineered to replace over 40m² of traditional gym equipment and potentially save you up to £50K.</p>
+                  </div>
+                  <div class="home_overview_card_item"><img src="{{ 'a-single-system_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image"></div>
                 </div>
-              {%- endif -%}
-            {%- endfor -%}
+              </div>
+              <div class="home_overview_item">
+                <div class="home_overview_card">
+                  <div class="home_overview_card_item">
+                    <div class="component_divider_line"></div>
+                    <div class="spacer-xsmall"></div>
+                    <h2 class="heading-style-h4">Any Stage. Every Rep.</h2>
+                    <div class="spacer-regular"></div>
+                    <p class="text-size-medium">Adapt Panthor to any fitness goal with its precise, adjustable arc path, supporting all levels from beginner to advanced for reduced injury risk, simplified technique, and seamless exercise transitions.</p>
+                  </div>
+                  <div class="home_overview_card_item"><img src="{{ 'any-stage_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image"></div>
+                </div>
+              </div>
+              <div class="home_overview_item">
+                <div class="home_overview_card">
+                  <div class="home_overview_card_item">
+                    <div class="component_divider_line"></div>
+                    <div class="spacer-xsmall"></div>
+                    <h2 class="heading-style-h4">Engineered Elegance</h2>
+                    <div class="spacer-regular"></div>
+                    <p class="text-size-medium">Unlike bulky multi-gyms, Panthor offers a refined, high-performance strength training system designed to complement sophisticated spaces with its thoughtful engineering and premium aesthetic.</p>
+                  </div>
+                  <div class="home_overview_card_item"><img src="{{ 'engineered-elegance_1.webp' | asset_url }}" loading="lazy" sizes="(max-width: 806px) 100vw, 806px" alt="" class="home_overview_card_image"></div>
+                </div>
+              </div>
+            {%- endif -%}
           </div>
         </div>
       </section>

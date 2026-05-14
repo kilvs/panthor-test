@@ -17,27 +17,48 @@
               </div>
               <div id="testimonial-slider" class="component_testimonial_swiper swiper">
                 <div class="component_testimonial_wrap swiper-wrapper">
-                  {%- for block in section.blocks -%}
-                    {%- if block.type == 'testimonial' -%}
-                      <div class="component_testimonial_slide swiper-slide" {{ block.shopify_attributes }}>
-                        <div class="component_testimonial_card">
-                          {%- assign rating = block.settings.rating | default: 5 | at_most: 5 | at_least: 0 -%}
-                          {%- if rating > 0 -%}
-                            <div class="component_testimonial_stars">
-                              {%- for i in (1..rating) -%}
-                                <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
-                              {%- endfor -%}
-                            </div>
+                  {%- if section.blocks.size > 0 -%}
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'testimonial' -%}
+                        <div class="component_testimonial_slide swiper-slide" {{ block.shopify_attributes }}>
+                          <div class="component_testimonial_card">
+                            {%- assign rating = block.settings.rating | default: 5 | at_most: 5 | at_least: 0 -%}
+                            {%- if rating > 0 -%}
+                              <div class="component_testimonial_stars">
+                                {%- for i in (1..rating) -%}
+                                  <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
+                                {%- endfor -%}
+                              </div>
+                              <div class="spacer-regular"></div>
+                            {%- endif -%}
+                            <p>{{ block.settings.quote }}</p>
                             <div class="spacer-regular"></div>
-                          {%- endif -%}
-                          <p>{{ block.settings.quote }}</p>
+                            <p class="text-weight-semibold">{{ block.settings.author }}</p>
+                            {%- if block.settings.role != blank -%}<p>{{ block.settings.role }}</p>{%- endif -%}
+                          </div>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- for i in (1..6) -%}
+                      <div class="component_testimonial_slide swiper-slide">
+                        <div class="component_testimonial_card">
+                          <div class="component_testimonial_stars">
+                            <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
+                            <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
+                            <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
+                            <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
+                            <img src="{{ 'star-icon.svg' | asset_url }}" loading="lazy" width="20" height="19" alt="" class="component_testimonial_star_icon">
+                          </div>
                           <div class="spacer-regular"></div>
-                          <p class="text-weight-semibold">{{ block.settings.author }}</p>
-                          {%- if block.settings.role != blank -%}<p>{{ block.settings.role }}</p>{%- endif -%}
+                          <p>“Lorem ipsum dolor sit amet consectetur. Quis tortor diam dictum ultrices eget justo nibh nibh. Massa nisi odio est ultrices arcu tortor nibh.”</p>
+                          <div class="spacer-regular"></div>
+                          <p class="text-weight-semibold">John Doe</p>
+                          <p>Fitness Director, Yacht Co.</p>
                         </div>
                       </div>
-                    {%- endif -%}
-                  {%- endfor -%}
+                    {%- endfor -%}
+                  {%- endif -%}
                 </div>
               </div>
             </div>

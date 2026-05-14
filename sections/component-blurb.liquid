@@ -14,35 +14,97 @@
               </div>
               <div class="spacer-xlarge"></div>
               <div class="component_blurb_list">
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'card' -%}
-                    <div class="component_blurb_item{% if forloop.index > 1 %} is-{{ forloop.index }}{% endif %}" {{ block.shopify_attributes }}>
-                      <div class="component_blurb_card">
-                        {%- if block.settings.image != blank -%}
-                          <img src="{{ block.settings.image | image_url: width: 886 }}" loading="lazy" alt="{{ block.settings.image.alt | escape }}" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
-                        {%- elsif block.settings.fallback_image != blank -%}
-                          <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
-                        {%- endif -%}
-                        <div class="spacer-regular"></div>
-                        <div class="component_divider_line"></div>
-                        <div class="spacer-xsmall"></div>
-                        <h3 class="heading-style-h5">{{ block.settings.heading }}</h3>
-                        <div class="spacer-xsmall"></div>
-                        <div class="component_blurb_description w-richtext">
-                          {{ block.settings.list }}
-                        </div>
-                        <div class="component_blurb_bottom">
-                          <div class="spacer-xsmall"></div>
-                          <p>{{ block.settings.more_text | default: '+ More' }}</p>
-                          {%- if block.settings.footnote != blank -%}
-                            <div class="spacer-xxsmall"></div>
-                            <p class="component_blurb_note">{{ block.settings.footnote }}</p>
+                {%- if section.blocks.size > 0 -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'card' -%}
+                      <div class="component_blurb_item{% if forloop.index > 1 %} is-{{ forloop.index }}{% endif %}" {{ block.shopify_attributes }}>
+                        <div class="component_blurb_card">
+                          {%- if block.settings.image != blank -%}
+                            <img src="{{ block.settings.image | image_url: width: 886 }}" loading="lazy" alt="{{ block.settings.image.alt | escape }}" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
+                          {%- elsif block.settings.fallback_image != blank -%}
+                            <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
+                          {%- else -%}
+                            <img src="{{ 'full-body_2.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
                           {%- endif -%}
+                          <div class="spacer-regular"></div>
+                          <div class="component_divider_line"></div>
+                          <div class="spacer-xsmall"></div>
+                          <h3 class="heading-style-h5">{{ block.settings.heading }}</h3>
+                          <div class="spacer-xsmall"></div>
+                          <div class="component_blurb_description w-richtext">
+                            {{ block.settings.list }}
+                          </div>
+                          <div class="component_blurb_bottom">
+                            <div class="spacer-xsmall"></div>
+                            <p>{{ block.settings.more_text | default: '+ More' }}</p>
+                            {%- if block.settings.footnote != blank -%}
+                              <div class="spacer-xxsmall"></div>
+                              <p class="component_blurb_note">{{ block.settings.footnote }}</p>
+                            {%- endif -%}
+                          </div>
                         </div>
                       </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  <div class="component_blurb_item">
+                    <div class="component_blurb_card"><img src="{{ 'full-body_2.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
+                      <div class="spacer-regular"></div>
+                      <div class="component_divider_line"></div>
+                      <div class="spacer-xsmall"></div>
+                      <h3 class="heading-style-h5">full body</h3>
+                      <div class="spacer-xsmall"></div>
+                      <div class="component_blurb_description w-richtext">
+                        <ul role="list"><li>Squat Press</li></ul>
+                        <ul role="list"><li>Jammer Press</li></ul>
+                        <ul role="list"><li>Lunges*</li></ul>
+                        <ul role="list"><li>Deadlifts*</li></ul>
+                      </div>
+                      <div class="component_blurb_bottom">
+                        <div class="spacer-xsmall"></div>
+                        <p>+ More</p>
+                        <div class="spacer-xxsmall"></div>
+                        <p class="component_blurb_note">* multiple angles and variations</p>
+                      </div>
                     </div>
-                  {%- endif -%}
-                {%- endfor -%}
+                  </div>
+                  <div class="component_blurb_item is-2">
+                    <div class="component_blurb_card"><img src="{{ 'lower-body_3.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
+                      <div class="spacer-regular"></div>
+                      <div class="component_divider_line"></div>
+                      <div class="spacer-xsmall"></div>
+                      <h3 class="heading-style-h5">Lower body</h3>
+                      <div class="spacer-xsmall"></div>
+                      <div class="component_blurb_description w-richtext">
+                        <ul role="list"><li>Kickbacks*</li><li>Hamstring Curls</li><li>Leg Extensions</li><li>Leg Presses*</li><li>Glute Bridges</li></ul>
+                      </div>
+                      <div class="component_blurb_bottom">
+                        <div class="spacer-xsmall"></div>
+                        <p>+ More</p>
+                        <div class="spacer-xxsmall"></div>
+                        <p class="component_blurb_note">* multiple angles and variations</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="component_blurb_item is-3">
+                    <div class="component_blurb_card"><img src="{{ 'upper-body_2.webp' | asset_url }}" loading="lazy" alt="" sizes="(max-width: 886px) 100vw, 886px" class="component_blurb_image">
+                      <div class="spacer-regular"></div>
+                      <div class="component_divider_line"></div>
+                      <div class="spacer-xsmall"></div>
+                      <h3 class="heading-style-h5">Upper Body</h3>
+                      <div class="spacer-xsmall"></div>
+                      <div class="component_blurb_description w-richtext">
+                        <ul role="list"><li>Shoulder Press</li><li>Chest Press*</li><li>Lat Pull Down</li><li>Bicep &amp; Triceps*</li><li>Rows*</li></ul>
+                      </div>
+                      <div class="component_blurb_bottom">
+                        <div class="spacer-xsmall"></div>
+                        <p>+ More</p>
+                        <div class="spacer-xxsmall"></div>
+                        <p class="component_blurb_note">* multiple angles and variations</p>
+                      </div>
+                    </div>
+                  </div>
+                {%- endif -%}
               </div>
             </div>
           </div>

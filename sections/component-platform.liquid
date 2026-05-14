@@ -14,23 +14,49 @@
             </div>
             <div class="spacer-xxlarge"></div>
             <div class="component_platform_card_grid">
-              {%- for block in section.blocks -%}
-                {%- if block.type == 'card' -%}
-                  <div class="component_platform_card_wrapper" {{ block.shopify_attributes }}>
-                    <div class="component_platform_card_content">
-                      <h3 class="heading-style-h4">{{ block.settings.heading }}</h3>
-                      <p>{{ block.settings.body }}</p>
+              {%- if section.blocks.size > 0 -%}
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'card' -%}
+                    <div class="component_platform_card_wrapper" {{ block.shopify_attributes }}>
+                      <div class="component_platform_card_content">
+                        <h3 class="heading-style-h4">{{ block.settings.heading }}</h3>
+                        <p>{{ block.settings.body }}</p>
+                      </div>
+                      <div class="component_platform_card_image_wrapper">
+                        {%- if block.settings.image != blank -%}
+                          <img src="{{ block.settings.image | image_url: width: 728 }}" loading="lazy" sizes="100vw" alt="{{ block.settings.image.alt | escape }}" class="component_platform_card_item_image">
+                        {%- elsif block.settings.fallback_image != blank -%}
+                          <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image">
+                        {%- else -%}
+                          <img src="{{ 'superyachts_1.webp' | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image">
+                        {%- endif -%}
+                      </div>
                     </div>
-                    <div class="component_platform_card_image_wrapper">
-                      {%- if block.settings.image != blank -%}
-                        <img src="{{ block.settings.image | image_url: width: 728 }}" loading="lazy" sizes="100vw" alt="{{ block.settings.image.alt | escape }}" class="component_platform_card_item_image">
-                      {%- elsif block.settings.fallback_image != blank -%}
-                        <img src="{{ block.settings.fallback_image | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image">
-                      {%- endif -%}
-                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- else -%}
+                <div class="component_platform_card_wrapper">
+                  <div class="component_platform_card_content">
+                    <h3 class="heading-style-h4">Superyachts</h3>
+                    <p>Seamlessly designed to suit life at sea. Luxury, performance, and precision in motion.</p>
                   </div>
-                {%- endif -%}
-              {%- endfor -%}
+                  <div class="component_platform_card_image_wrapper"><img src="{{ 'superyachts_1.webp' | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image"></div>
+                </div>
+                <div class="component_platform_card_wrapper">
+                  <div class="component_platform_card_content">
+                    <h3 class="heading-style-h4">Boutique Studios &amp; Apartments</h3>
+                    <p>A design that feels custom-built for your luxury space, in a size that doesn’t get in the way.</p>
+                  </div>
+                  <div class="component_platform_card_image_wrapper"><img src="{{ 'botique-studios_1.webp' | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image"></div>
+                </div>
+                <div class="component_platform_card_wrapper">
+                  <div class="component_platform_card_content">
+                    <h3 class="heading-style-h4">Private Jets</h3>
+                    <p>Take your training global, even at 40,000 feet.</p>
+                  </div>
+                  <div class="component_platform_card_image_wrapper"><img src="{{ 'private-jets_1.webp' | asset_url }}" loading="lazy" sizes="100vw" alt="" class="component_platform_card_item_image"></div>
+                </div>
+              {%- endif -%}
             </div>
           </div>
         </div>

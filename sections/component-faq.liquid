@@ -21,20 +21,36 @@
               </div>
               <div class="spacer-xxlarge"></div>
               <div class="component_faq_list">
-                {%- for block in section.blocks -%}
-                  {%- if block.type == 'item' -%}
-                    <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown" {{ block.shopify_attributes }}>
+                {%- if section.blocks.size > 0 -%}
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'item' -%}
+                      <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown" {{ block.shopify_attributes }}>
+                        <div class="component_faq_toggle w-dropdown-toggle">
+                          <div>{{ block.settings.question }}</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                        </div>
+                        <nav class="component_faq_content_wrap w-dropdown-list">
+                          <div class="component_faq_content">
+                            <div>{{ block.settings.answer | default: default_answer }}</div>
+                          </div>
+                        </nav>
+                      </div>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- assign default_questions = "What is Panthor|How to order?|What are your shipping options?|What are your delivery timeframes?|Can I customise my equipment?|What are Panthors warranty details?|Does Panthor have any installation requirements?|What are your finance options?" | split: '|' -%}
+                  {%- for q in default_questions -%}
+                    <div data-hover="false" data-delay="0" class="component_faq_accordion w-dropdown">
                       <div class="component_faq_toggle w-dropdown-toggle">
-                        <div>{{ block.settings.question }}</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
+                        <div>{{ q }}</div><img src="{{ 'plus-icon.svg' | asset_url }}" loading="lazy" alt="" class="component_faq_icon">
                       </div>
                       <nav class="component_faq_content_wrap w-dropdown-list">
                         <div class="component_faq_content">
-                          <div>{{ block.settings.answer | default: default_answer }}</div>
+                          <p>{{ default_answer }}</p>
                         </div>
                       </nav>
                     </div>
-                  {%- endif -%}
-                {%- endfor -%}
+                  {%- endfor -%}
+                {%- endif -%}
               </div>
               {%- if section.settings.show_cta -%}
                 <div class="spacer-xxlarge"></div>
