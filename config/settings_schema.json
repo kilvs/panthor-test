@@ -21,23 +21,23 @@
   {
     "name": "Colors",
     "settings": [
-      { "type": "paragraph", "content": "Overrides the brand CSS variables defined in panthor-dev.css. Leave blank to keep the design's defaults." },
+      { "type": "paragraph", "content": "Overrides the brand CSS variables defined in panthor-dev.css. Leave a swatch blank to keep the design's original color — only pick one when you want to actively change it." },
       { "type": "header", "content": "Brand" },
-      { "type": "color", "id": "color_brand_accent", "label": "Brand accent (orange)", "default": "#FF8856" },
+      { "type": "color", "id": "color_brand_accent", "label": "Brand accent" },
       { "type": "header", "content": "Backgrounds" },
-      { "type": "color", "id": "color_bg_primary", "label": "Background — primary", "default": "#FFFFFF" },
-      { "type": "color", "id": "color_bg_secondary", "label": "Background — secondary", "default": "#F5F5F5" },
-      { "type": "color", "id": "color_bg_tertiary", "label": "Background — tertiary", "default": "#E5E5E5" },
-      { "type": "color", "id": "color_bg_alternate", "label": "Background — alternate", "default": "#000000" },
-      { "type": "color", "id": "color_bg_dark", "label": "Background — dark", "default": "#0A0A0A" },
+      { "type": "color", "id": "color_bg_primary", "label": "Background — primary" },
+      { "type": "color", "id": "color_bg_secondary", "label": "Background — secondary" },
+      { "type": "color", "id": "color_bg_tertiary", "label": "Background — tertiary" },
+      { "type": "color", "id": "color_bg_alternate", "label": "Background — alternate" },
+      { "type": "color", "id": "color_bg_dark", "label": "Background — dark" },
       { "type": "header", "content": "Text" },
-      { "type": "color", "id": "color_text_primary", "label": "Text — primary", "default": "#000000" },
-      { "type": "color", "id": "color_text_secondary", "label": "Text — secondary", "default": "#555555" },
-      { "type": "color", "id": "color_text_alternate", "label": "Text — alternate (on dark bg)", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_text_primary", "label": "Text — primary" },
+      { "type": "color", "id": "color_text_secondary", "label": "Text — secondary" },
+      { "type": "color", "id": "color_text_alternate", "label": "Text — alternate (on dark bg)" },
       { "type": "header", "content": "Borders" },
-      { "type": "color", "id": "color_border_primary", "label": "Border — primary", "default": "#E5E5E5" },
-      { "type": "color", "id": "color_border_secondary", "label": "Border — secondary", "default": "#CCCCCC" },
-      { "type": "color", "id": "color_border_alternate", "label": "Border — alternate", "default": "#222222" }
+      { "type": "color", "id": "color_border_primary", "label": "Border — primary" },
+      { "type": "color", "id": "color_border_secondary", "label": "Border — secondary" },
+      { "type": "color", "id": "color_border_alternate", "label": "Border — alternate" }
     ]
   },
 
