@@ -3,8 +3,9 @@
     <div class="component_header_wrap">
       <div class="component_header_logo_child">
         <a href="{{ routes.root_url }}"{% if template == 'index' %} aria-current="page"{% endif %} class="component_header_logo_link w-inline-block{% if template == 'index' %} w--current{% endif %}">
-          {%- if section.settings.logo != blank -%}
-            <img src="{{ section.settings.logo | image_url: width: 400 }}" loading="lazy" alt="{{ shop.name | escape }}" class="component_header_logo">
+          {%- assign header_logo = section.settings.logo | default: settings.logo -%}
+          {%- if header_logo != blank -%}
+            <img src="{{ header_logo | image_url: width: 400 }}" loading="lazy" alt="{{ shop.name | escape }}" class="component_header_logo"{% if settings.logo_width %} style="max-width:{{ settings.logo_width }}px;"{% endif %}>
           {%- else -%}
             <div class="component_header_logo w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 193 30" fill="none">
               <path d="M0 13.7152H19.7708C18.3787 17.5339 14.7341 20.0777 10.6517 20.0777H7.4819V29.2694H0.00154321V13.7136L0 13.7152Z" fill="currentColor"></path>

@@ -26,9 +26,23 @@
       <div class="spacer-medium"></div>
     </div>
     <div class="component_footer_social_list">
+      {%- comment -%}
+        Source of truth is theme settings → Social. Section blocks (legacy)
+        still render if present, so existing customizations don't break.
+      {%- endcomment -%}
+      {%- assign social_platforms = 'facebook,instagram,twitter,linkedin,youtube,tiktok' | split: ',' -%}
+      {%- for platform in social_platforms -%}
+        {%- assign setting_key = 'social_' | append: platform | append: '_link' -%}
+        {%- assign url = settings[setting_key] -%}
+        {%- if url != blank -%}
+          <a href="{{ url }}" class="component_footer_social_link w-inline-block" target="_blank" rel="noopener" aria-label="{{ platform | capitalize }}">
+            <div class="icon-embed w-embed">{% render 'social-icon', platform: platform %}</div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
       {%- for block in section.blocks -%}
-        {%- if block.type == 'social' -%}
-          <a href="{{ block.settings.url | default: '#' }}" class="component_footer_social_link w-inline-block"{{ block.shopify_attributes }}>
+        {%- if block.type == 'social' and block.settings.url != blank -%}
+          <a href="{{ block.settings.url }}" class="component_footer_social_link w-inline-block" target="_blank" rel="noopener"{{ block.shopify_attributes }}>
             <div class="icon-embed w-embed">{% render 'social-icon', platform: block.settings.platform %}</div>
           </a>
         {%- endif -%}

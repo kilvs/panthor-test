@@ -688,56 +688,69 @@ document.addEventListener('cart:updated', function (e) {
 
 ## 15. Theme settings (global merchant controls)
 
-The kit ships a comprehensive `config/settings_schema.json` so merchants can rebrand without code. Settings live in **Shopify Admin → Online Store → Themes → Customize → Theme settings** (sidebar).
+Settings live in **Shopify Admin → Online Store → Themes → Customize → Theme settings** (sidebar). Keep this panel **minimal** — only put genuinely global, design-system-level controls here. Anything page-specific belongs in a section's schema instead.
 
-### Schema groups
+### Default schema (4 groups)
 
-| Group | What it controls | How it gets applied |
+| Group | Settings | How it's applied |
 |---|---|---|
-| Brand identity | Logo + width, favicon, OG share image | Header section reads `settings.logo`; `theme.liquid` reads `settings.favicon` + `settings.social_share_image` |
-| Colors | 12 brand colors mapped to CSS variables | `snippets/theme-variables.liquid` emits `:root { --base-color-brand--orange: {{ settings.color_brand_accent }}; … }` |
-| Typography | Base font-size scale (80–120%) | Same snippet emits `:root { font-size: 110%; }` (rem-based scale, untouches the design's pixel hard-codes) |
-| Layout | Max content width, section padding scale | Snippet rewrites `.page-width` `max-width` and `.padding-section-*` paddings |
-| Header | Sticky / transparent-on-home / show search-account-cart toggles | Snippet emits `.component_header { position: sticky; … }` + `[data-cart-open] { display: none }` style overrides |
-| Cart | Drawer enabled, free-shipping threshold + messages, upsell product | Drawer snippet conditionally renders the FS bar and reads thresholds via `settings.cart_free_shipping_*` |
-| Newsletter | Default customer tag, default success / error text | Newsletter sections fall back to `settings.newsletter_*` if their per-section text is blank |
-| Social | URLs for FB/IG/X/LI/YT/TikTok | Footer section's social blocks fall back to these URLs |
-| SEO | Default meta description, breadcrumbs toggle | `theme.liquid` emits `<meta name="description">` when the page has none |
-| Animations & accessibility | Global animation toggle, custom cursor toggle | Snippet emits `*, *::before, *::after { animation: none !important }` when off; respects `@media (prefers-reduced-motion: reduce)` always |
+| **Brand identity** | `logo`, `logo_width`, `favicon`, `social_share_image` | Header section reads `settings.logo` (falls back to inline SVG); `theme.liquid` reads `settings.favicon` + `settings.social_share_image` |
+| **Custom CSS** | `custom_css` (textarea) | `snippets/theme-variables.liquid` emits `<style>{{ settings.custom_css }}</style>` in `<head>` after the theme's stylesheets — overrides anything without touching files |
+| **Social** | `social_facebook_link`, `_instagram_`, `_twitter_`, `_linkedin_`, `_youtube_`, `_tiktok_` | Footer section loops through these and renders icons via `{% render 'social-icon' %}` |
 
-### The variables → CSS bridge
+That's it by default. Three groups — every line is a setting a merchant will actually touch.
 
-Webflow CSS exposes brand tokens as CSS variables (`--background-color--background-primary`, `--text-color--text-primary`, `--base-color-brand--orange`, etc.). The merchant's theme-setting colors override those variables, so the entire site rebrands without touching the CSS file. `snippets/theme-variables.liquid` is the one place that bridges them.
+### Why so few — and what was deliberately removed
 
-Detect what variables your CSS exposes (run from your theme root):
+Earlier versions of this kit shipped 10 groups (colors, typography, layout, header, cart, newsletter, SEO, animations…). It was overkill and **dangerous**: hard-coded color defaults in the schema seeded merchants with light-theme values (`#000` text on `#FFF` background) that overrode the Webflow CSS's dark-theme variables and made text invisible on dark backgrounds. The lesson: **theme settings that override CSS need to be empty-by-default** so they only apply when the merchant actively picks a value.
 
-```bash
-grep -oE -- "--[a-z][a-z0-9-]+:" assets/*.css | sort -u
+The **Custom CSS** textarea is the safety valve. Merchants who want to change a brand color, tweak spacing, swap a font weight, etc., paste a `:root { … }` block there. No theme update needed. No risk of breaking the design with wrong defaults.
+
+### How to add more global settings (safely)
+
+When you genuinely need a global setting (e.g. a sticky-header toggle), add it like this in `settings_schema.json`:
+
+```json
+{ "type": "checkbox", "id": "header_sticky", "label": "Sticky header", "default": true }
 ```
 
-Then update `snippets/theme-variables.liquid` to override the ones you want merchant-controlled. If the Webflow CSS doesn't use CSS variables for a particular property, the merchant can't change it through theme settings — they'd have to edit CSS directly.
-
-### Wiring it up
-
-In `theme.liquid` `<head>`, **after** all stylesheet links and **before** `{{ content_for_header }}`:
+…and in `snippets/theme-variables.liquid`:
 
 ```liquid
-{{ 'site.css' | asset_url | stylesheet_tag }}
-{% render 'theme-variables' %}
+{%- if settings.header_sticky -%}
+  .component_header { position: sticky; top: 0; z-index: 100; }
+{%- endunless -%}
 ```
 
-The order matters — the snippet must come AFTER the base CSS so its `:root` rules win on specificity ties.
+For settings that override CSS variables, **always** use the `!= blank` guard so the design's defaults survive when the merchant hasn't picked a value:
+
+```liquid
+{%- if settings.color_brand_accent != blank -%}
+  :root { --base-color-brand--orange: {{ settings.color_brand_accent }}; }
+{%- endif -%}
+```
+
+And **never** put `"default": "#…"` on a color setting unless you're certain it matches what the CSS already uses.
 
 ### Per-section settings vs theme settings
 
 | Use theme settings for… | Use section settings for… |
 |---|---|
-| Brand colors, fonts, logo, favicon | Per-section copy, images, blocks |
-| Cart drawer behavior | A section's specific CTA URL |
-| Header sticky / transparent | Whether a specific section is visible (`show_section`) |
-| Social URLs, SEO defaults | Per-section animation/preset |
+| Logo, favicon, social URLs | Per-section copy, images, blocks |
+| Custom CSS that affects the whole site | A section's specific CTA URL |
+| OG share image default | Whether a specific section is visible (`show_section`) |
 
-Rule of thumb: **theme setting** if it should change everywhere at once; **section setting** if a merchant might want it different on each page.
+Rule of thumb: **theme setting** if it should change everywhere at once; **section setting** if it might vary per page or per instance.
+
+### Detecting your CSS's variables (for Custom CSS hints)
+
+When merchants ask "what colors can I change?", point them at the variables your Webflow CSS exposes:
+
+```bash
+grep -oE -- "--[a-z][a-z0-9-]+:" assets/*.css | sort -u
+```
+
+The `Custom CSS` textarea's placeholder can hint at the most-overridable ones — e.g. `:root { --base-color-brand--orange: #E74C3C; }` for Panthor's accent.
 
 ---
 

@@ -11,112 +11,31 @@
   {
     "name": "Brand identity",
     "settings": [
-      { "type": "image_picker", "id": "logo", "label": "Logo (header)", "info": "Used by the header section. Leave empty to keep the original Webflow SVG logo." },
-      { "type": "range", "id": "logo_width", "label": "Logo width (px)", "min": 80, "max": 400, "step": 10, "default": 180, "unit": "px" },
-      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "32×32 recommended. Falls back to assets/favicon.png." },
-      { "type": "image_picker", "id": "social_share_image", "label": "Default social share image (OG)", "info": "1200×630 recommended. Used when a page has no own image set." }
+      { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Shown in the header. Leave empty to keep the original SVG logo from the Webflow export." },
+      { "type": "range", "id": "logo_width", "label": "Logo max width (px)", "min": 80, "max": 400, "step": 10, "default": 180, "unit": "px" },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "32×32 PNG recommended. Falls back to assets/favicon.png." },
+      { "type": "image_picker", "id": "social_share_image", "label": "Default social share image (Open Graph)", "info": "1200×630 recommended. Shown when a page is linked on Facebook/X/etc. and has no own share image set." }
     ]
   },
 
   {
-    "name": "Colors",
+    "name": "Custom CSS",
     "settings": [
-      { "type": "paragraph", "content": "Overrides the brand CSS variables defined in panthor-dev.css. Leave a swatch blank to keep the design's original color — only pick one when you want to actively change it." },
-      { "type": "header", "content": "Brand" },
-      { "type": "color", "id": "color_brand_accent", "label": "Brand accent" },
-      { "type": "header", "content": "Backgrounds" },
-      { "type": "color", "id": "color_bg_primary", "label": "Background — primary" },
-      { "type": "color", "id": "color_bg_secondary", "label": "Background — secondary" },
-      { "type": "color", "id": "color_bg_tertiary", "label": "Background — tertiary" },
-      { "type": "color", "id": "color_bg_alternate", "label": "Background — alternate" },
-      { "type": "color", "id": "color_bg_dark", "label": "Background — dark" },
-      { "type": "header", "content": "Text" },
-      { "type": "color", "id": "color_text_primary", "label": "Text — primary" },
-      { "type": "color", "id": "color_text_secondary", "label": "Text — secondary" },
-      { "type": "color", "id": "color_text_alternate", "label": "Text — alternate (on dark bg)" },
-      { "type": "header", "content": "Borders" },
-      { "type": "color", "id": "color_border_primary", "label": "Border — primary" },
-      { "type": "color", "id": "color_border_secondary", "label": "Border — secondary" },
-      { "type": "color", "id": "color_border_alternate", "label": "Border — alternate" }
-    ]
-  },
-
-  {
-    "name": "Typography",
-    "settings": [
-      { "type": "paragraph", "content": "Webflow's fonts (Clash Display + Satoshi) ship in assets/ and are loaded via @font-face. To change the actual typefaces, upload new font files and update panthor-dev.css. The scale below adjusts SIZES only." },
-      { "type": "range", "id": "type_base_size", "label": "Base font size (rem multiplier × 100)", "min": 80, "max": 120, "step": 5, "default": 100, "info": "100 = original. 110 = 10% larger across the whole site." }
-    ]
-  },
-
-  {
-    "name": "Layout",
-    "settings": [
-      { "type": "range", "id": "layout_page_width", "label": "Max content width (px)", "min": 1024, "max": 1920, "step": 32, "default": 1440, "unit": "px" },
-      { "type": "range", "id": "layout_section_padding", "label": "Section vertical padding scale", "min": 60, "max": 140, "step": 10, "default": 100, "info": "100 = design default." }
-    ]
-  },
-
-  {
-    "name": "Header",
-    "settings": [
-      { "type": "checkbox", "id": "header_sticky", "label": "Sticky header", "default": true },
-      { "type": "checkbox", "id": "header_transparent_on_home", "label": "Transparent header on homepage", "default": false },
-      { "type": "checkbox", "id": "header_show_search", "label": "Show search icon", "default": true },
-      { "type": "checkbox", "id": "header_show_account", "label": "Show account icon", "default": true },
-      { "type": "checkbox", "id": "header_show_cart", "label": "Show cart icon", "default": true },
-      { "type": "link_list", "id": "header_main_menu", "label": "Main menu", "info": "Falls back to the static nav links if empty." }
-    ]
-  },
-
-  {
-    "name": "Cart",
-    "settings": [
-      { "type": "checkbox", "id": "cart_drawer_enabled", "label": "Open cart in slide-in drawer", "default": true, "info": "When off, clicking the cart icon goes to /cart instead." },
-      { "type": "header", "content": "Free shipping bar" },
-      { "type": "checkbox", "id": "cart_free_shipping_enabled", "label": "Show free-shipping progress bar in drawer", "default": false },
-      { "type": "number", "id": "cart_free_shipping_threshold", "label": "Free shipping at (in store currency, no symbol)", "default": 100 },
-      { "type": "text", "id": "cart_free_shipping_message_pending", "label": "Below threshold message", "default": "Spend {{ remaining }} more for free shipping" },
-      { "type": "text", "id": "cart_free_shipping_message_met", "label": "Threshold met message", "default": "You qualify for free shipping!" },
-      { "type": "header", "content": "Upsell" },
-      { "type": "product", "id": "cart_upsell_product", "label": "Suggested add-on product", "info": "Shown in cart drawer if not already in cart." }
-    ]
-  },
-
-  {
-    "name": "Newsletter",
-    "settings": [
-      { "type": "text", "id": "newsletter_default_tag", "label": "Customer tag for signups", "default": "newsletter" },
-      { "type": "text", "id": "newsletter_success_text", "label": "Default success message", "default": "Thank you! Your submission has been received!" },
-      { "type": "text", "id": "newsletter_error_text", "label": "Default error message", "default": "Oops! Something went wrong while submitting the form." }
+      { "type": "paragraph", "content": "Anything pasted here is emitted in <head> on every page, after the theme's stylesheets — so it can override Webflow CSS without touching the original files. Useful for one-off tweaks, brand-color overrides, or temporary styling changes." },
+      { "type": "textarea", "id": "custom_css", "label": "Custom CSS", "placeholder": ":root { --base-color-brand--orange: #E74C3C; }\n.component_header { backdrop-filter: blur(8px); }" }
     ]
   },
 
   {
     "name": "Social",
     "settings": [
+      { "type": "paragraph", "content": "Used by the footer's social icon row and the social meta tags. Leave a URL blank to hide that platform." },
       { "type": "url", "id": "social_facebook_link", "label": "Facebook URL" },
       { "type": "url", "id": "social_instagram_link", "label": "Instagram URL" },
       { "type": "url", "id": "social_twitter_link", "label": "X / Twitter URL" },
       { "type": "url", "id": "social_linkedin_link", "label": "LinkedIn URL" },
       { "type": "url", "id": "social_youtube_link", "label": "YouTube URL" },
       { "type": "url", "id": "social_tiktok_link", "label": "TikTok URL" }
-    ]
-  },
-
-  {
-    "name": "SEO",
-    "settings": [
-      { "type": "text", "id": "seo_default_description", "label": "Default meta description", "default": "Whole-body strength training in one complete system." },
-      { "type": "checkbox", "id": "seo_show_breadcrumbs", "label": "Show breadcrumbs on product/blog pages", "default": true }
-    ]
-  },
-
-  {
-    "name": "Animations & accessibility",
-    "settings": [
-      { "type": "checkbox", "id": "animations_enabled", "label": "Enable Webflow + GSAP animations", "default": true, "info": "Off respects prefers-reduced-motion users and disables scroll-trigger animations." },
-      { "type": "checkbox", "id": "show_custom_cursor", "label": "Show custom cursor on draggable elements", "default": true }
     ]
   }
 ]

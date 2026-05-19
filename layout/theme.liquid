@@ -42,9 +42,6 @@
   {{ 'cart-drawer.css' | asset_url | stylesheet_tag }}
   {% render 'theme-variables' %}
   <script>window.Shopify = window.Shopify || {}; Shopify.routes = { root: '{{ routes.root_url }}' }; Shopify.money_format = {{ shop.money_format | json }};</script>
-  {%- if settings.seo_default_description != blank and page_description == blank -%}
-    <meta name="description" content="{{ settings.seo_default_description | escape }}">
-  {%- endif -%}
   {%- if settings.social_share_image != blank -%}
     <meta property="og:image" content="{{ settings.social_share_image | image_url: width: 1200 }}">
     <meta name="twitter:card" content="summary_large_image">

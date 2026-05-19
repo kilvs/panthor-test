@@ -1,90 +1,17 @@
 {%- comment -%}
-  Emits :root CSS variable overrides driven by theme settings. Rendered once
-  inside <head> of layout/theme.liquid. Keeps panthor-dev.css untouched —
-  merchants rebrand from the theme editor.
+  Rendered once inside <head> of layout/theme.liquid (and password.liquid).
 
-  Only emits a variable when the setting differs from the panthor-dev.css
-  baked-in default, so the file stays tiny.
+  Currently emits merchant-pasted Custom CSS so it can override anything
+  in panthor-dev.css / components.css without touching the original files.
+
+  If you later want merchant-controlled brand colors / font scale / layout
+  toggles, add :root { --var: {{ settings.X }}; } blocks here and the
+  matching settings to config/settings_schema.json. Keep the
+  `{% if settings.X != blank %}` guard so empty settings never override
+  the design's defaults (this is what bit us with the dark-mode bug).
 {%- endcomment -%}
-<style id="theme-variables">
-  :root {
-    {%- if settings.color_brand_accent != blank -%}
-      --base-color-brand--orange: {{ settings.color_brand_accent }};
-    {%- endif -%}
-    {%- if settings.color_bg_primary != blank -%}
-      --background-color--background-primary: {{ settings.color_bg_primary }};
-    {%- endif -%}
-    {%- if settings.color_bg_secondary != blank -%}
-      --background-color--background-secondary: {{ settings.color_bg_secondary }};
-    {%- endif -%}
-    {%- if settings.color_bg_tertiary != blank -%}
-      --background-color--background-tertiary: {{ settings.color_bg_tertiary }};
-    {%- endif -%}
-    {%- if settings.color_bg_alternate != blank -%}
-      --background-color--background-alternate: {{ settings.color_bg_alternate }};
-    {%- endif -%}
-    {%- if settings.color_bg_dark != blank -%}
-      --background-color--background-dark: {{ settings.color_bg_dark }};
-    {%- endif -%}
-    {%- if settings.color_text_primary != blank -%}
-      --text-color--text-primary: {{ settings.color_text_primary }};
-    {%- endif -%}
-    {%- if settings.color_text_secondary != blank -%}
-      --text-color--text-secondary: {{ settings.color_text_secondary }};
-    {%- endif -%}
-    {%- if settings.color_text_alternate != blank -%}
-      --text-color--text-alternate: {{ settings.color_text_alternate }};
-    {%- endif -%}
-    {%- if settings.color_border_primary != blank -%}
-      --border-color--border-primary: {{ settings.color_border_primary }};
-    {%- endif -%}
-    {%- if settings.color_border_secondary != blank -%}
-      --border-color--border-secondary: {{ settings.color_border_secondary }};
-    {%- endif -%}
-    {%- if settings.color_border_alternate != blank -%}
-      --border-color--border-alternate: {{ settings.color_border_alternate }};
-    {%- endif -%}
-    {%- if settings.type_base_size and settings.type_base_size != 100 -%}
-      font-size: {{ settings.type_base_size }}%;
-    {%- endif -%}
-    {%- if settings.layout_page_width and settings.layout_page_width != 1440 -%}
-      --page-width: {{ settings.layout_page_width }}px;
-    {%- endif -%}
-  }
-
-  {%- comment -%} Layout settings that aren't in the CSS variables {%- endcomment -%}
-  {%- if settings.layout_page_width and settings.layout_page_width != 1440 -%}
-    .page-width, .page-width-full, .page-width-narrower, .container-large { max-width: {{ settings.layout_page_width }}px; }
-  {%- endif -%}
-  {%- if settings.layout_section_padding and settings.layout_section_padding != 100 -%}
-    {%- assign pad_scale = settings.layout_section_padding | divided_by: 100.0 -%}
-    .padding-section-regular { padding-top: calc(var(--padding-base, 4rem) * {{ pad_scale }}); padding-bottom: calc(var(--padding-base, 4rem) * {{ pad_scale }}); }
-    .padding-section-medium  { padding-top: calc(var(--padding-base, 6rem) * {{ pad_scale }}); padding-bottom: calc(var(--padding-base, 6rem) * {{ pad_scale }}); }
-    .padding-section-large   { padding-top: calc(var(--padding-base, 8rem) * {{ pad_scale }}); padding-bottom: calc(var(--padding-base, 8rem) * {{ pad_scale }}); }
-    .padding-section-xlarge  { padding-top: calc(var(--padding-base, 10rem) * {{ pad_scale }}); padding-bottom: calc(var(--padding-base, 10rem) * {{ pad_scale }}); }
-  {%- endif -%}
-
-  {%- comment -%} Accessibility — respect reduced motion or merchant toggle {%- endcomment -%}
-  {%- unless settings.animations_enabled -%}
-    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  {%- endunless -%}
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  }
-
-  {%- unless settings.show_custom_cursor -%}
-    .component_cursor_wrap { display: none !important; }
-  {%- endunless -%}
-
-  {%- if settings.header_sticky -%}
-    .component_header { position: sticky; top: 0; z-index: 100; }
-  {%- endif -%}
-
-  {%- if settings.header_transparent_on_home and template.name == 'index' -%}
-    .component_header { background: transparent; }
-  {%- endif -%}
-
-  {%- unless settings.header_show_search -%}.component_nav_icon_item:has(img[src*="search-icon"]) { display: none !important; }{%- endunless -%}
-  {%- unless settings.header_show_account -%}.component_nav_icon_item:has(img[src*="profile-icon"]) { display: none !important; }{%- endunless -%}
-  {%- unless settings.header_show_cart -%}.component_nav_icon_item:has([data-cart-open]) { display: none !important; }{%- endunless -%}
+{%- if settings.custom_css != blank -%}
+<style id="theme-custom-css">
+{{ settings.custom_css }}
 </style>
+{%- endif -%}
