@@ -13,6 +13,8 @@ webflow-to-shopify-kit/
 ├── README.md                 # this file
 ├── CONVERSION_GUIDE.md       # full ~700-line recipe with every step + gotcha
 ├── scripts/
+│   ├── install-skills.sh     # one-shot: installs shopify-dev + shopify-liquid AI skills
+│   ├── install-skills.ps1    # PowerShell equivalent for Windows
 │   ├── convert.cjs           # bulk page-content extractor (HTML → sections + templates)
 │   ├── convert-forms.cjs     # bulk Webflow newsletter form → Shopify {% form %} converter
 │   ├── split-page.cjs        # splits one monolithic page section into per-block sections
@@ -63,9 +65,32 @@ Brand-specific files (`sections/header.liquid`, `sections/footer.liquid`, `secti
 ## Quickstart
 
 ### Prerequisites
-- Node.js 18+
+- Node.js 18+ (with `pnpm` or `npx`)
 - The Webflow export unzipped at a known location
 - A Shopify dev store (`shopify.dev/themes/getting-started`)
+
+### Step 0 — install Shopify's AI-assistant skills (recommended)
+
+From your new project's root, run the bundled installer to drop **shopify-dev** + **shopify-liquid** skills into `.agents/skills/`:
+
+```bash
+# Unix / git-bash
+bash webflow-to-shopify-kit/scripts/install-skills.sh
+
+# Windows PowerShell
+pwsh webflow-to-shopify-kit/scripts/install-skills.ps1
+```
+
+These are Shopify's official skills for AI coding assistants (Claude Code, GitHub Copilot, Cursor, Amp, Cline, Codex, etc.). Once installed, any AI agent working on the repo has authoritative reference for Liquid tags, Shopify objects, the cart/customer/product APIs, and theme architecture — meaning fewer hallucinated Liquid filters, less guessing about schema settings, faster, more correct PRs.
+
+Commit `.agents/` so collaborators get them too:
+
+```powershell
+git add .agents
+git commit -m "chore: add shopify-dev + shopify-liquid skills"
+```
+
+Skip this step if you're not using AI tooling — nothing else in the kit depends on it.
 
 ### Step 1 — audit the source
 
