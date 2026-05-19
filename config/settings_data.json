@@ -1,18 +1,46 @@
 {
   "current": {
-    "social_facebook_link": "https://facebook.com/",
-    "social_instagram_link": "https://instagram.com/",
-    "social_twitter_link": "https://x.com/",
-    "social_linkedin_link": "https://linkedin.com/",
-    "social_youtube_link": "https://youtube.com/"
+    "logo_width": 180,
+    "color_brand_accent": "#FF8856",
+    "color_bg_primary": "#FFFFFF",
+    "color_bg_secondary": "#F5F5F5",
+    "color_bg_tertiary": "#E5E5E5",
+    "color_bg_alternate": "#000000",
+    "color_bg_dark": "#0A0A0A",
+    "color_text_primary": "#000000",
+    "color_text_secondary": "#555555",
+    "color_text_alternate": "#FFFFFF",
+    "color_border_primary": "#E5E5E5",
+    "color_border_secondary": "#CCCCCC",
+    "color_border_alternate": "#222222",
+    "type_base_size": 100,
+    "layout_page_width": 1440,
+    "layout_section_padding": 100,
+    "header_sticky": true,
+    "header_transparent_on_home": false,
+    "header_show_search": true,
+    "header_show_account": true,
+    "header_show_cart": true,
+    "cart_drawer_enabled": true,
+    "cart_free_shipping_enabled": false,
+    "cart_free_shipping_threshold": 100,
+    "cart_free_shipping_message_pending": "Spend {{ remaining }} more for free shipping",
+    "cart_free_shipping_message_met": "You qualify for free shipping!",
+    "newsletter_default_tag": "newsletter",
+    "newsletter_success_text": "Thank you! Your submission has been received!",
+    "newsletter_error_text": "Oops! Something went wrong while submitting the form.",
+    "social_facebook_link": "",
+    "social_instagram_link": "",
+    "social_twitter_link": "",
+    "social_linkedin_link": "",
+    "social_youtube_link": "",
+    "social_tiktok_link": "",
+    "seo_default_description": "Whole-body strength training in one complete system.",
+    "seo_show_breadcrumbs": true,
+    "animations_enabled": true,
+    "show_custom_cursor": true
   },
   "presets": {
-    "Default": {
-      "social_facebook_link": "https://facebook.com/",
-      "social_instagram_link": "https://instagram.com/",
-      "social_twitter_link": "https://x.com/",
-      "social_linkedin_link": "https://linkedin.com/",
-      "social_youtube_link": "https://youtube.com/"
-    }
+    "Default": {}
   }
 }

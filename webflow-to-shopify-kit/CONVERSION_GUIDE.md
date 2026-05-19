@@ -686,7 +686,62 @@ document.addEventListener('cart:updated', function (e) {
 
 ---
 
-## 15. What this conversion does NOT do
+## 15. Theme settings (global merchant controls)
+
+The kit ships a comprehensive `config/settings_schema.json` so merchants can rebrand without code. Settings live in **Shopify Admin → Online Store → Themes → Customize → Theme settings** (sidebar).
+
+### Schema groups
+
+| Group | What it controls | How it gets applied |
+|---|---|---|
+| Brand identity | Logo + width, favicon, OG share image | Header section reads `settings.logo`; `theme.liquid` reads `settings.favicon` + `settings.social_share_image` |
+| Colors | 12 brand colors mapped to CSS variables | `snippets/theme-variables.liquid` emits `:root { --base-color-brand--orange: {{ settings.color_brand_accent }}; … }` |
+| Typography | Base font-size scale (80–120%) | Same snippet emits `:root { font-size: 110%; }` (rem-based scale, untouches the design's pixel hard-codes) |
+| Layout | Max content width, section padding scale | Snippet rewrites `.page-width` `max-width` and `.padding-section-*` paddings |
+| Header | Sticky / transparent-on-home / show search-account-cart toggles | Snippet emits `.component_header { position: sticky; … }` + `[data-cart-open] { display: none }` style overrides |
+| Cart | Drawer enabled, free-shipping threshold + messages, upsell product | Drawer snippet conditionally renders the FS bar and reads thresholds via `settings.cart_free_shipping_*` |
+| Newsletter | Default customer tag, default success / error text | Newsletter sections fall back to `settings.newsletter_*` if their per-section text is blank |
+| Social | URLs for FB/IG/X/LI/YT/TikTok | Footer section's social blocks fall back to these URLs |
+| SEO | Default meta description, breadcrumbs toggle | `theme.liquid` emits `<meta name="description">` when the page has none |
+| Animations & accessibility | Global animation toggle, custom cursor toggle | Snippet emits `*, *::before, *::after { animation: none !important }` when off; respects `@media (prefers-reduced-motion: reduce)` always |
+
+### The variables → CSS bridge
+
+Webflow CSS exposes brand tokens as CSS variables (`--background-color--background-primary`, `--text-color--text-primary`, `--base-color-brand--orange`, etc.). The merchant's theme-setting colors override those variables, so the entire site rebrands without touching the CSS file. `snippets/theme-variables.liquid` is the one place that bridges them.
+
+Detect what variables your CSS exposes (run from your theme root):
+
+```bash
+grep -oE -- "--[a-z][a-z0-9-]+:" assets/*.css | sort -u
+```
+
+Then update `snippets/theme-variables.liquid` to override the ones you want merchant-controlled. If the Webflow CSS doesn't use CSS variables for a particular property, the merchant can't change it through theme settings — they'd have to edit CSS directly.
+
+### Wiring it up
+
+In `theme.liquid` `<head>`, **after** all stylesheet links and **before** `{{ content_for_header }}`:
+
+```liquid
+{{ 'site.css' | asset_url | stylesheet_tag }}
+{% render 'theme-variables' %}
+```
+
+The order matters — the snippet must come AFTER the base CSS so its `:root` rules win on specificity ties.
+
+### Per-section settings vs theme settings
+
+| Use theme settings for… | Use section settings for… |
+|---|---|
+| Brand colors, fonts, logo, favicon | Per-section copy, images, blocks |
+| Cart drawer behavior | A section's specific CTA URL |
+| Header sticky / transparent | Whether a specific section is visible (`show_section`) |
+| Social URLs, SEO defaults | Per-section animation/preset |
+
+Rule of thumb: **theme setting** if it should change everywhere at once; **section setting** if a merchant might want it different on each page.
+
+---
+
+## 16. What this conversion does NOT do
 
 - Re-style any element. CSS is byte-identical.
 - Rebuild the JS bundle. Webflow's `panthor-dev.js` ships verbatim.
