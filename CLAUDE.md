@@ -6,7 +6,7 @@ This file gives AI assistants (Claude, Copilot, Cursor, etc.) the context they n
 
 ## What this repo is
 
-A **Shopify Online Store 2.0 theme** converted from a Webflow export for the Panthor brand. The original Webflow `*.html` files, plus `css/`, `js/`, `images/`, `fonts/` directories, are kept at the repo root for side-by-side verification and are excluded from theme deploys via `.shopifyignore`.
+A **Shopify Online Store 2.0 theme** converted from a Webflow export for the Panthor brand. The original Webflow export lives in `webflow-source/` for side-by-side verification and is excluded from theme deploys via `.shopifyignore`. Shopify theme files (assets/, config/, layout/, sections/, snippets/, templates/) live at the repo root where Shopify's GitHub integration expects them.
 
 The conversion is **visual-parity first** — original Webflow CSS, JS bundle, class names, and `data-wf-*` attributes are preserved verbatim. See `CONVERSION_GUIDE.md` for the recipe.
 
@@ -14,18 +14,30 @@ The conversion is **visual-parity first** — original Webflow CSS, JS bundle, c
 
 ## Repo layout
 
+**Shopify theme files** (at repo root — picked up by Shopify CLI / GitHub integration):
+
 | Path | What lives here |
 |---|---|
 | `assets/` | Flat folder — CSS, JS, fonts, images. Shopify forbids subdirs. |
 | `config/` | `settings_schema.json` (theme settings) + `settings_data.json` (values). |
 | `layout/` | `theme.liquid` (main wrapper) + `password.liquid`. |
 | `locales/` | i18n strings (`en.default.json`). |
-| `sections/` | One file per editable block + `header.liquid`, `footer.liquid`, `page-*.liquid` per source page, plus section group JSONs. |
-| `snippets/` | Reusable partials (`social-icon.liquid`, `wf-form-states.liquid`). |
-| `templates/` | JSON templates wiring sections to routes (`index.json`, `product.json`, `page.about.json`, etc.). |
-| *(root `*.html`, `css/`, `js/`, `images/`, `fonts/`)* | Original Webflow export — reference only, not deployed. |
-| `CONVERSION_GUIDE.md` | Reusable Webflow→Shopify recipe. |
-| `convert.cjs`, `convert-forms.cjs` | One-shot bulk-conversion scripts. |
+| `sections/` | `header.liquid`, `footer.liquid`, `home-*` (page-specific), `component-*` (reusable across pages), `page-*` (static pages), `main-*` (cart/search/404/password/list-collections). |
+| `snippets/` | `social-icon.liquid`, `wf-form-states.liquid`, `cart-drawer.liquid`, `theme-variables.liquid`. |
+| `templates/` | JSON templates wiring sections to routes; `customers/*.liquid` (required); `gift_card.liquid` (required, must be .liquid). |
+| `.shopifyignore` | Excludes `webflow-source/`, `webflow-to-shopify-kit/`, `.agents/`, conversion scripts, and docs from theme uploads. |
+
+**Source + tooling** (at repo root — excluded from theme deploys):
+
+| Path | What lives here |
+|---|---|
+| `webflow-source/` | Original Webflow export — all `*.html` plus `css/`, `js/`, `images/`, `fonts/`. Reference only, never deployed. |
+| `webflow-to-shopify-kit/` | Reusable starter kit for converting other Webflow exports. Self-contained — copy this folder to a new project. |
+| `.agents/skills/` | Shopify's official AI-assistant skills (shopify-dev, shopify-liquid) for Claude Code / Copilot / Cursor / etc. |
+| `CONVERSION_GUIDE.md` | The full recipe — every step, every gotcha. |
+| `CLAUDE.md` | This file — AI commit-message context. |
+| `convert.cjs`, `convert-forms.cjs`, `split-home.cjs`, `rename-component-schemas.cjs` | One-shot bulk-conversion scripts (already run; kept for re-runs and reference). |
+| `sample-products.csv` | Shopify product import for the Panthor Complete Strength System with 3 variants. |
 
 ---
 

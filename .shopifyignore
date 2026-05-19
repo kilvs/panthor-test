@@ -1,14 +1,23 @@
-# Source files (Webflow export) — not part of the deployed theme
-*.html
-css/
-js/
-images/
-fonts/
+# Webflow export — kept for reference, not part of the deployed theme
+webflow-source/
 
 # Conversion artifacts
 convert.cjs
 convert-forms.cjs
+split-home.cjs
+rename-component-schemas.cjs
+sample-products.csv
+
+# Kit (lives inside repo, not part of the deployed theme)
+webflow-to-shopify-kit/
+
+# AI assistant skills (project tooling, not theme files)
+.agents/
+
+# Repo docs / config
 CONVERSION_GUIDE.md
+CLAUDE.md
+skills-lock.json
 
 # Editor / OS
 .DS_Store

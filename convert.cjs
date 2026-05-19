@@ -14,6 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = __dirname;
+const SOURCE_DIR = path.join(ROOT, 'webflow-source'); // Webflow export lives here
 
 const PAGES = [
   { html: 'index.html',             section: 'page-index',        template: 'index',         templateFile: 'templates/index.json' },
@@ -142,7 +143,7 @@ ensureDir(path.join(ROOT, 'sections'));
 ensureDir(path.join(ROOT, 'templates'));
 
 for (const p of PAGES) {
-  const srcPath = path.join(ROOT, p.html);
+  const srcPath = path.join(SOURCE_DIR, p.html);
   if (!fs.existsSync(srcPath)) {
     console.warn(`MISSING: ${p.html}`);
     continue;

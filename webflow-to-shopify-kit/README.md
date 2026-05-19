@@ -20,6 +20,7 @@ webflow-to-shopify-kit/
 │   ├── split-page.cjs        # splits one monolithic page section into per-block sections
 │   └── check-required-files.sh  # pre-push verifier — confirms Shopify's required files exist
 └── starter-theme/            # universal theme files you can copy verbatim
+    ├── CLAUDE.md             # template AI commit-message context — edit <BRAND> placeholder
     ├── assets/
     │   ├── cart-ajax.js      # AJAX cart module — vanilla JS, no jQuery dep
     │   └── cart-drawer.css   # drawer styling, scoped under .cart-drawer__*
@@ -92,32 +93,47 @@ git commit -m "chore: add shopify-dev + shopify-liquid skills"
 
 Skip this step if you're not using AI tooling — nothing else in the kit depends on it.
 
-### Step 1 — audit the source
+### Step 1 — drop the Webflow export into `webflow-source/`
 
-From inside the unzipped Webflow export:
+Unzip your Webflow export and place the contents in `webflow-source/` at the project root. The structure inside is the raw export — `*.html` files plus `css/`, `js/`, `images/`, `fonts/` subfolders:
+
+```
+your-project/
+├── webflow-source/         ← here
+│   ├── index.html
+│   ├── product-template.html
+│   ├── …other.html
+│   ├── css/  js/  images/  fonts/
+└── webflow-to-shopify-kit/
+```
+
+This keeps Shopify-required files at the repo root (where Shopify expects them) and the Webflow originals isolated for reference + side-by-side comparison. `.shopifyignore` excludes `webflow-source/` from theme uploads.
+
+Then audit the source — run from the project root:
 
 ```bash
 # Reusable components vs page-specific sections
-for f in *.html; do
-  printf "\n--- %s ---\n" "$f"
+for f in webflow-source/*.html; do
+  printf "\n--- %s ---\n" "$(basename $f)"
   grep -oE '<section[^>]*class="[^"]*component_[a-z_]+_section[^"]*"' "$f" \
     | grep -oE 'component_[a-z_]+_section' | sort -u
 done
 
 # data-wf-page per page (you'll need these for theme.liquid)
-for f in *.html; do echo "$f: $(grep -o 'data-wf-page="[^"]*"' "$f" | head -1)"; done
+for f in webflow-source/*.html; do echo "$(basename $f): $(grep -o 'data-wf-page="[^"]*"' "$f" | head -1)"; done
 
 # data-wf-site (should be constant)
-grep -oE 'data-wf-site="[^"]+"' *.html | head -1
+grep -oE 'data-wf-site="[^"]+"' webflow-source/*.html | head -1
 ```
 
 ### Step 2 — flatten assets
 
 ```bash
 mkdir -p assets
-cp css/*.css js/*.js images/* fonts/* assets/
+cp webflow-source/css/*.css webflow-source/js/*.js webflow-source/images/* webflow-source/fonts/* assets/
 
-# Rewrite ../fonts/ and ../images/ from CSS:
+# Rewrite ../fonts/ and ../images/ from CSS (they referenced sibling subfolders
+# which no longer exist in the flat assets/ layout):
 sed -i "s|\.\./fonts/||g; s|\.\./images/||g" assets/*.css
 ```
 
@@ -129,11 +145,17 @@ Check for collisions: `ls assets/ | sort | uniq -d` — should be empty.
 cp -r webflow-to-shopify-kit/starter-theme/* .
 ```
 
-This drops in every Shopify-required file: layout, customer templates, gift_card, password, list-collections, AJAX cart, snippets, config, locales.
+This drops in every Shopify-required file: layout, customer templates, gift_card, password, list-collections, AJAX cart, snippets, config, locales, **plus a `CLAUDE.md` template** so AI assistants on this project know its conventions immediately.
 
-### Step 4 — fill placeholders in `layout/theme.liquid`
+### Step 4 — fill placeholders
 
-Search for `<your data-wf-site>` and replace with the constant `data-wf-site` value from step 1. Search for `<homepage data-wf-page>` etc. and replace with the per-template values from step 1.
+Three files have `<…>` placeholders:
+
+| File | What to replace |
+|---|---|
+| `layout/theme.liquid` | `<YOUR_WF_SITE_ID>` (constant `data-wf-site` from step 1), `<WF_PAGE_*>` (per-template `data-wf-page` IDs from step 1), `<WEBFLOW_BUNDLE>.js` (filename of your site's main JS bundle in assets/), and `'site.css'` (rename to your CSS filename if different) |
+| `layout/password.liquid` | Same `<YOUR_WF_SITE_ID>` and `<WEBFLOW_BUNDLE>` placeholders |
+| `CLAUDE.md` | `<BRAND>` (your project / client name) and `<your-org>` in the kit link |
 
 ### Step 5 — extract page content
 

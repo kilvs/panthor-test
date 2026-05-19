@@ -19,8 +19,12 @@
 const fs = require('fs');
 const path = require('path');
 
-// Path to the repo root (where the Webflow HTML files live). Default: project root.
+// Project root (where layout/, sections/, templates/ etc. live)
 const ROOT = process.cwd();
+// Where the unzipped Webflow export lives. Default: webflow-source/ at the
+// project root. Change to '' if your HTML files are at the root, or to a
+// nested path if your export is structured differently.
+const SOURCE_DIR = path.join(ROOT, 'webflow-source');
 
 // ────────────────────────────────────────────────────────────────────────────
 // EDIT ME — your source pages and where they should end up in Shopify
@@ -128,7 +132,7 @@ ensureDir(path.join(ROOT, 'templates'));
 
 let ok = 0, missing = 0;
 for (const p of PAGES) {
-  const srcPath = path.join(ROOT, p.html);
+  const srcPath = path.join(SOURCE_DIR, p.html);
   if (!fs.existsSync(srcPath)) { console.warn(`MISSING: ${p.html}`); missing++; continue; }
   const raw = fs.readFileSync(srcPath, 'utf8');
   let main = extractMain(raw);
