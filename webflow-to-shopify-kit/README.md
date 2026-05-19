@@ -12,13 +12,16 @@ Drop this folder next to the unzipped Webflow export, run the scripts in order, 
 webflow-to-shopify-kit/
 ├── README.md                 # this file
 ├── CONVERSION_GUIDE.md       # full ~700-line recipe with every step + gotcha
+├── CONVERT_PROMPT.md              # paste into Claude Code for hands-off conversion
 ├── scripts/
-│   ├── install-skills.sh     # one-shot: installs shopify-dev + shopify-liquid AI skills
-│   ├── install-skills.ps1    # PowerShell equivalent for Windows
-│   ├── convert.cjs           # bulk page-content extractor (HTML → sections + templates)
-│   ├── convert-forms.cjs     # bulk Webflow newsletter form → Shopify {% form %} converter
-│   ├── split-page.cjs        # splits one monolithic page section into per-block sections
-│   └── check-required-files.sh  # pre-push verifier — confirms Shopify's required files exist
+│   ├── convert-all.{sh,ps1}       # ▶ orchestrator: runs every automatable step in sequence
+│   ├── install-skills.{sh,ps1}    # Step 0 — installs shopify-dev + shopify-liquid AI skills
+│   ├── audit-source.{sh,ps1}      # Step 2 — writes AUDIT.md with data-wf-* IDs + components
+│   ├── flatten-assets.{sh,ps1}    # Step 3 — copies + rewrites webflow-source/ into flat assets/
+│   ├── convert.cjs                # Step 6 — bulk page-content extractor (HTML → sections + templates)
+│   ├── convert-forms.cjs          # Step 7 — bulk Webflow newsletter → Shopify {% form %} converter
+│   ├── split-page.cjs             # Step 9 — splits monolithic page section into per-block sections
+│   └── check-required-files.sh    # Step 10 — pre-push verifier
 └── starter-theme/            # universal theme files you can copy verbatim
     ├── CLAUDE.md             # template AI commit-message context — edit <BRAND> placeholder
     ├── assets/
@@ -63,7 +66,24 @@ Brand-specific files (`sections/header.liquid`, `sections/footer.liquid`, `secti
 
 ---
 
-## Quickstart
+## Hands-off mode (recommended)
+
+If you'd rather not run the steps yourself, do exactly this:
+
+1. **Create a project folder.** `git init` it.
+2. **Drop the kit folder in.** Copy `webflow-to-shopify-kit/` into the project root.
+3. **Unzip your Webflow export into `webflow-source/`** at the project root.
+4. **Open the project in Claude Code** (or another AI coding agent) and paste `webflow-to-shopify-kit/CONVERT_PROMPT.md` as your **first message**.
+
+The AI runs the orchestrator (`bash webflow-to-shopify-kit/scripts/convert-all.sh`) for the mechanical steps, then handles the judgement-call steps (placeholder fill, header/footer build, commerce wiring) using the kit's `CONVERSION_GUIDE.md` and the installed Shopify AI skills. You review the result and push.
+
+**Your total active time: ~20 minutes** (drop files in + review the AI's diff + commit + connect Shopify + import products + publish). Everything else runs without you.
+
+If you want to follow along step-by-step instead, the manual quickstart is below.
+
+---
+
+## Manual quickstart
 
 ### Prerequisites
 - Node.js 18+ (with `pnpm` or `npx`)
@@ -109,37 +129,39 @@ your-project/
 
 This keeps Shopify-required files at the repo root (where Shopify expects them) and the Webflow originals isolated for reference + side-by-side comparison. `.shopifyignore` excludes `webflow-source/` from theme uploads.
 
-Then audit the source — run from the project root:
+### Step 2 — audit the source (one command)
 
 ```bash
-# Reusable components vs page-specific sections
-for f in webflow-source/*.html; do
-  printf "\n--- %s ---\n" "$(basename $f)"
-  grep -oE '<section[^>]*class="[^"]*component_[a-z_]+_section[^"]*"' "$f" \
-    | grep -oE 'component_[a-z_]+_section' | sort -u
-done
+# Unix / git-bash
+bash webflow-to-shopify-kit/scripts/audit-source.sh
 
-# data-wf-page per page (you'll need these for theme.liquid)
-for f in webflow-source/*.html; do echo "$(basename $f): $(grep -o 'data-wf-page="[^"]*"' "$f" | head -1)"; done
-
-# data-wf-site (should be constant)
-grep -oE 'data-wf-site="[^"]+"' webflow-source/*.html | head -1
+# Windows PowerShell
+pwsh webflow-to-shopify-kit/scripts/audit-source.ps1
 ```
 
-### Step 2 — flatten assets
+Writes `AUDIT.md` at the project root containing:
+- `data-wf-site` (constant)
+- `data-wf-page` ID per HTML page (as a table)
+- Reusable `component_*_section` classes per page
+- Webflow JS bundle filename
+- CSS filenames
+- Form IDs needing manual conversion
+
+You'll reference these values in Step 7 when filling layout placeholders. Keep `AUDIT.md` open in another tab.
+
+### Step 3 — flatten assets (one command)
 
 ```bash
-mkdir -p assets
-cp webflow-source/css/*.css webflow-source/js/*.js webflow-source/images/* webflow-source/fonts/* assets/
+# Unix / git-bash
+bash webflow-to-shopify-kit/scripts/flatten-assets.sh
 
-# Rewrite ../fonts/ and ../images/ from CSS (they referenced sibling subfolders
-# which no longer exist in the flat assets/ layout):
-sed -i "s|\.\./fonts/||g; s|\.\./images/||g" assets/*.css
+# Windows PowerShell
+pwsh webflow-to-shopify-kit/scripts/flatten-assets.ps1
 ```
 
-Check for collisions: `ls assets/ | sort | uniq -d` — should be empty.
+Copies `webflow-source/{css,js,images,fonts}/*` → `assets/`, rewrites `url('../fonts/X')` and `url('../images/X')` in CSS to bare filenames, and checks for filename collisions. Exits with an error (no destructive overwrite) if any are found.
 
-### Step 3 — copy the kit's starter-theme
+### Step 4 — copy the kit's starter-theme
 
 ```bash
 cp -r webflow-to-shopify-kit/starter-theme/* .
@@ -147,7 +169,7 @@ cp -r webflow-to-shopify-kit/starter-theme/* .
 
 This drops in every Shopify-required file: layout, customer templates, gift_card, password, list-collections, AJAX cart, snippets, config, locales, **plus a `CLAUDE.md` template** so AI assistants on this project know its conventions immediately.
 
-### Step 4 — fill placeholders
+### Step 5 — fill placeholders
 
 Three files have `<…>` placeholders:
 
@@ -157,7 +179,7 @@ Three files have `<…>` placeholders:
 | `layout/password.liquid` | Same `<YOUR_WF_SITE_ID>` and `<WEBFLOW_BUNDLE>` placeholders |
 | `CLAUDE.md` | `<BRAND>` (your project / client name) and `<your-org>` in the kit link |
 
-### Step 5 — extract page content
+### Step 6 — extract page content
 
 Edit `webflow-to-shopify-kit/scripts/convert.cjs` to list your source HTML files in the `PAGES` array, then:
 
@@ -167,7 +189,7 @@ node webflow-to-shopify-kit/scripts/convert.cjs
 
 Produces `sections/page-*.liquid` and `templates/*.json` for each page. Internal `*.html` links and `images/*` asset references are rewritten to Shopify routes and `{{ 'foo.png' | asset_url }}`.
 
-### Step 6 — convert Webflow forms
+### Step 7 — convert Webflow forms
 
 ```bash
 node webflow-to-shopify-kit/scripts/convert-forms.cjs
@@ -175,11 +197,11 @@ node webflow-to-shopify-kit/scripts/convert-forms.cjs
 
 Bulk-replaces Webflow newsletter forms with Shopify's `{% form 'customer' %}` carrying a `newsletter` tag. Contact forms (Webflow's `wf-form-Enquiry-Form`) need manual conversion — see `CONVERSION_GUIDE.md §8`.
 
-### Step 7 — build header + footer sections
+### Step 8 — build header + footer sections
 
 These need to be hand-built from each export because the logo SVG, nav menu, and footer socials are unique per brand. See `CONVERSION_GUIDE.md §C` for the template — copy `<header class="component_header">` from your `index.html` verbatim into `sections/header.liquid` and add a `{% schema %}` block.
 
-### Step 8 — split high-traffic pages (optional but recommended)
+### Step 9 — split high-traffic pages (optional but recommended)
 
 For the homepage and any landing page where the merchant should be able to reorder blocks in the theme editor:
 
@@ -190,7 +212,7 @@ node webflow-to-shopify-kit/scripts/split-page.cjs
 
 Output: `sections/<page>-NN-<slug>.liquid` for page-specific blocks, `sections/component-<slug>.liquid` for reusable ones (matched by Webflow's `component_*_section` class prefix).
 
-### Step 9 — verify required files
+### Step 10 — verify required files
 
 ```bash
 bash webflow-to-shopify-kit/scripts/check-required-files.sh
@@ -198,7 +220,7 @@ bash webflow-to-shopify-kit/scripts/check-required-files.sh
 
 Lists any Shopify-required file that's missing. Must be empty before you try to publish.
 
-### Step 10 — preview + ship
+### Step 11 — preview + ship
 
 ```bash
 shopify theme dev --store <your-store>.myshopify.com
@@ -226,14 +248,14 @@ In Shopify Admin → Themes → publish. If you get **"Role can't be set to main
 
 | After step | Run this | Expected output |
 |---|---|---|
-| 2 | `ls assets/ \| sort \| uniq -d` | empty (no collisions) |
-| 2 | `grep -c "\.\./" assets/*.css` | 0 |
-| 4 | open `theme.liquid` | no `<...>` placeholders left |
-| 5 | `node convert.cjs` | "OK" line per source page |
-| 5 | `ls sections/page-*.liquid` | one per source HTML |
-| 6 | `grep -l "<form\b" sections/*.liquid` | no Webflow newsletter forms remain |
-| 9 | `bash check-required-files.sh` | "All required files present." |
-| 10 | DevTools console | no 404s on fonts/images; `document.documentElement.className` contains `w-mod-js w-mod-ix3` |
+| 2 | open `AUDIT.md` | data-wf-site + per-page data-wf-page table populated |
+| 3 | `ls assets/ \| sort \| uniq -d` | empty (no collisions) |
+| 3 | `grep -c "\.\./" assets/*.css` | 0 |
+| 5 | open `layout/theme.liquid` | no `<...>` placeholders left |
+| 6 | `ls sections/page-*.liquid` | one per source HTML |
+| 7 | `grep -l "<form\b" sections/*.liquid` | no Webflow newsletter forms remain |
+| 10 | `bash webflow-to-shopify-kit/scripts/check-required-files.sh` | "All required files present." |
+| 11 | DevTools console | no 404s on fonts/images; `document.documentElement.className` contains `w-mod-js w-mod-ix3` |
 
 ---
 
