@@ -1,6 +1,22 @@
 # Claude project guide
 
+> **AI assistants — read these once before answering anything else:**
+>
+> 1. `webflow-to-shopify-kit/CONVERSION_GUIDE.md` — full Webflow → Shopify recipe (~16 sections, every gotcha)
+> 2. `webflow-to-shopify-kit/CONVERT_PROMPT.md` — the hands-off conversion brief
+>
+> Reading them first prevents re-inventing the dark-mode-default bug, the `{% liquid %}` semicolon trap, and the "missing layout/theme.liquid" rabbit hole. For maintenance on this theme, the guide is your reference.
+
 This file gives AI assistants (Claude, Copilot, Cursor, etc.) the context they need to write good commit messages and PRs for this repo. It is also loaded automatically by Claude Code.
+
+---
+
+## User preferences
+
+- **Commit messages**: don't prefix with `git add …` instructions — just the message body in a copyable block. The user runs `git add` themselves.
+- **Conventional Commits** format: `type(scope): summary`.
+- **Don't ask permission to read** the guide / prompt / shopify-liquid skill — read when relevant.
+- **Surface flagged-out-of-scope work** (gotchas the user might miss) rather than silently fixing everything.
 
 ---
 

@@ -10,7 +10,23 @@ markdown files as project context.
 
 # Claude project guide
 
+> **AI assistants — read these once before answering anything else:**
+>
+> 1. `webflow-to-shopify-kit/CONVERSION_GUIDE.md` — the full Webflow → Shopify recipe (~16 sections, every gotcha worth knowing)
+> 2. `webflow-to-shopify-kit/CONVERT_PROMPT.md` — the hands-off conversion brief (steps, conventions, what NOT to do)
+>
+> They're ~30 KB combined. Reading them first means you won't re-invent the dark-mode bug, the `{% liquid %}` semicolon trap, or the "missing layout/theme.liquid" rabbit hole. If this is a fresh Webflow conversion, follow `CONVERT_PROMPT.md` end-to-end. If it's maintenance on an existing theme, the guide is your reference.
+
 This file gives AI assistants the context they need to write good commit messages and PRs for this repo.
+
+---
+
+## User preferences
+
+- **Commit messages**: don't prefix with `git add ...` instructions — just the message body in a copyable block. The user runs `git add` themselves.
+- **Conventional Commits** format: `type(scope): summary` (see "Commit conventions" below).
+- **Don't ask permission to read** the guide / prompt / shopify-liquid skill — read them when relevant.
+- **Surface flagged-out-of-scope work** (gotchas the user might miss) rather than silently fixing everything.
 
 ---
 
